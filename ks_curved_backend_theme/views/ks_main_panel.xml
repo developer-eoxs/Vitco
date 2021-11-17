@@ -1,0 +1,77 @@
+<odoo>
+    <template id="ks_main_panel" inherit_id="web.webclient_bootstrap" name="Main Sidebar Panel">
+        <xpath expr="//t[@t-set='body_classname']" position="after">
+            <!-- Left Sidebar Panel -->
+            <div class="ks_left_sidebar_panel">
+                <div class="ks_app_sidebar">
+                    <div class="inner-sidebar">
+                        <t t-set="ks_vertical_menu_bar"
+                           t-value="request.env['ks.global.config'].ks_get_value_from_scope(['ks_menu_bar'])"/>
+                        <t t-if="ks_vertical_menu_bar['ks_menu_bar'] == 'Vertical'">
+                            <nav class="o_main_navbar">
+                                <ul class="o_menu_apps"/>
+                            </nav>
+                            <div class="ks_company_short_logo_outer">
+                                <t t-set="ks_company_short_logo"
+                                   t-value="request.env['ks.global.config'].ks_get_value_from_scope(['ks_small_company_logo'])"/>
+                                <t t-if="ks_company_short_logo and ks_company_short_logo['ks_small_company_logo']">
+                                    <img t-attf-src="data:image/png;base64,#{ks_company_short_logo['ks_small_company_logo']}"
+                                         class="ks_company_short_logo" alt="Company Logo" title="Company Logo"/>
+                                </t>
+                            </div>
+                            <ul class="ks-menu-systray o_menu_systray"/>
+                            <ul class="ks_user_menu"/>
+                            <button class="phone-menu-btn">
+                                <svg width="24" height="16" viewBox="0 0 28 20" fill="none"
+                                     xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M2.00043 10.0001H26" stroke="#616266" stroke-width="2.5"
+                                          stroke-linecap="round"
+                                          stroke-linejoin="round"/>
+                                    <path d="M2 2H25.9996" stroke="#616266" stroke-width="2.5" stroke-linecap="round"
+                                          stroke-linejoin="round"/>
+                                    <path d="M2.00043 18H26" stroke="#616266" stroke-width="2.5" stroke-linecap="round"
+                                          stroke-linejoin="round"/>
+                                </svg>
+                            </button>
+                            <!-- PhoneSideMenu -->
+                            <div class="ks-phone-side-menu">
+                                <div class="overlay">
+                                </div>
+                                <div class="ks-phone-menu-list">
+                                    <div class="ks-phone-profile">
+                                        <div class="ks-user-profile-img">
+                                            <img src="https://st.depositphotos.com/2101611/4338/v/600/depositphotos_43381243-stock-illustration-male-avatar-profile-picture.jpg"/>
+                                        </div>
+                                        <div class="dropdown">
+                                            <button class="dropdown-toggle ks_user_name" type="button"
+                                                    id="dropdownMenu2"
+                                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+
+                                            </button>
+                                            <div class="dropdown-menu ks_user_action" aria-labelledby="dropdownMenu2">
+<!--                                                <t t-call="UserMenu.Actions"/>-->
+                                            </div>
+                                        </div>
+                                        <!-- Menu List -->
+                                    </div>
+                                </div>
+                            </div>
+                        </t>
+                    </div>
+                </div>
+            </div>
+            <t t-if="ks_vertical_menu_bar['ks_menu_bar'] == 'Vertical'">
+                <div class="ks_vertical_menus d-flex flex-column">
+                    <div class="ks_vertical_menu_header p-4 text-center">
+                        <img alt="alt" title="title" class="ks_vertical_app_icon mb-3" src="#"/>
+                        <a class="ks_menubrand o_menu_brand" role="button"/>
+                    </div>
+                    <div class="ks_vertical_menu_body px-4 pb-4 h-100">
+                        <ul class="ks_menusections o_menu_sections" role="menu"/>
+                    </div>
+                </div>
+            </t>
+            <div class="ks_right_sidebar_panel"/>
+        </xpath>
+    </template>
+</odoo>

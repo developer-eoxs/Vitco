@@ -1,0 +1,20 @@
+<odoo>
+	<report
+	    id="transporter_report_menu"
+	    string="Transporter"
+	    model="res.partner"
+	    report_type="qweb-pdf"
+	    name="odx_km_freight_management.transporter_report"
+	    file="odx_km_freight_management.transporter_report"
+	    menu="True"
+	    />
+
+	<!-- <record id="action_serveraction_transporter" model="ir.actions.server">
+        <field name="name">Transporter Details</field>
+        <field name="model_id" ref="base.model_res_partner"/>
+        <field name="state">code</field>
+        <field name="code">action = model.daily_transporter_email()</field>
+        <field name="binding_model_id" eval="False"/>
+    </record> -->
+
+</odoo>

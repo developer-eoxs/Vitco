@@ -1,0 +1,28 @@
+<odoo>
+    <data>
+        <record id="purchase_order_form_inherited" model="ir.ui.view">
+            <field name="name">purchase.order.inherited</field>
+            <field name="model">purchase.order</field>
+            <field name="inherit_id" ref="purchase.purchase_order_form"/>
+            <field name="arch" type="xml">
+                <!-- <xpath expr="//page[@name='purchase_delivery_invoice']" position="before">
+                    <page id="details" string="Technical Details" name="details">
+                        <group>
+                            <group >
+                                <field name="shipped_via"  attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                            </group>
+                            <group>
+                            </group>
+                        </group>
+                        <group string="Technical Delivery Conditions">
+                            <field name="technical_delivery_cond" attrs="{'readonly': [('state', '!=', 'draft')]}" nolabel="1"/>
+                        </group>
+                    </page>
+                </xpath> -->
+                <field name="partner_ref" position="replace">
+                    <field name="partner_ref" string="Vendor Code"/>
+                </field>
+            </field>
+        </record>
+    </data>
+</odoo>

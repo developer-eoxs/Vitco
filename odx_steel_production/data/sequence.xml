@@ -1,0 +1,40 @@
+<odoo>
+    <data>
+        <record id="steel_production_custom_sequence" model="ir.sequence">
+            <field name="name">Steel Production Sequence</field>
+            <field name="code">steel.production.sequence</field>
+            <field name="prefix">PRO/</field>
+            <field name="padding">4</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <record id="job_order_custom_sequence" model="ir.sequence">
+            <field name="name">Job Order Sequence</field>
+            <field name="code">job.order.sequence</field>
+            <field name="prefix">JOB/</field>
+            <field name="padding">4</field>
+            <field name="company_id" eval="False"/>
+        </record>
+<!--bnnnnnnn-->
+        <record id="sequence_lot_skid" model="ir.sequence">
+            <field name="name">Lot Skid</field>
+            <field name="code">lot.skid</field>
+            <field name="prefix">SK/</field>
+            <field name="padding">4</field>
+        </record>
+         <record id="production_instruction_sequence" model="ir.sequence">
+            <field name="name">Production Instruction</field>
+            <field name="code">production.instruction.sequence</field>
+            <field name="prefix">WO/</field>
+            <field name="padding">4</field>
+        </record>
+        <record id="production_run_sequence" model="ir.sequence">
+            <field name="name">Production Run Sequence</field>
+            <field name="code">production.run.sequence</field>
+            <field name="prefix">PR-</field>
+            <field name="padding">4</field>
+        </record>
+
+        <!--bnnnnnnn-->
+    </data>
+</odoo>

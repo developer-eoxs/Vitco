@@ -1,0 +1,189 @@
+<odoo>
+    <data>
+        <record id="sale_order_form_view_inherited_optional" model="ir.ui.view">
+            <field name="name">sale.order.form.view.inherited.optional</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <!--optional products-->
+                <xpath expr="//notebook/page[@name='optional_products']" position="attributes">
+
+                    <attribute name="string">Options</attribute>
+                </xpath>
+                <xpath expr="//page/field[@name='sale_order_option_ids']/tree//field[@name='product_id']"
+                       position="attributes">
+                    <attribute name="readonly">True</attribute>
+                </xpath>
+                <xpath expr="//page/field[@name='sale_order_option_ids']/tree//field[@name='name']"
+                       position="attributes">
+                    <attribute name="readonly">True</attribute>
+                </xpath>
+                <xpath expr="//page/field[@name='sale_order_option_ids']/tree//field[@name='quantity']"
+                       position="attributes">
+                    <attribute name="readonly">True</attribute>
+                </xpath>
+                <xpath expr="//page/field[@name='sale_order_option_ids']/tree//field[@name='uom_id']"
+                       position="attributes">
+                    <attribute name="readonly">True</attribute>
+                </xpath>
+                <xpath expr="//page/field[@name='sale_order_option_ids']/tree//button[@name='button_add_to_order']"
+                       position="attributes">
+                    <attribute name="invisible">True</attribute>
+                </xpath>
+
+
+                <xpath expr="//page/field[@name='sale_order_option_ids']/tree//field[@name='product_id']"
+                       position="before">
+                    <field name="select"/>
+                    <field name="category_id"/>
+                    <field name="sub_category_id"/>
+                </xpath>
+                <xpath expr="//page/field[@name='sale_order_option_ids']/tree//field[@name='product_id']"
+                       position='after'>
+                    <field name="lot_id" string="Lot Number"/>
+                </xpath>
+                <xpath expr="//page/field[@name='sale_order_option_ids']/tree//field[@name='uom_id']"
+                       position="after">
+                    <field name="thickness_in"/>
+                    <field name="width_in"/>
+                </xpath>
+                <xpath expr="//page/field[@name='sale_order_option_ids']/tree//field[@name='price_unit']"
+                       position="after">
+                    <field name="price_subtotal"/>
+                </xpath>
+
+                <xpath expr="//page/field[@name='sale_order_option_ids']/tree//field[@name='product_id']"
+                       position="attributes">
+
+                    <attribute name="string">Sub Product</attribute>
+                </xpath>
+                <xpath expr="//page/field[@name='sale_order_option_ids']/tree//field[@name='quantity']"
+                       position="attributes">
+
+                    <attribute name="string">Weight</attribute>
+                </xpath>
+                <xpath expr="//page/field[@name='sale_order_option_ids']/tree//field[@name='quantity']"
+                       position="attributes">
+
+                    <attribute name="widget">integer</attribute>
+                </xpath>
+
+                <xpath expr="//page/field[@name='sale_order_option_ids']" position="before">
+                    <div>
+                        <br/>
+                        <br/>
+                        <table width="100%">
+                            <tr>
+                                <td width="15%">
+                                    <span style="font-size:14px;font-weight:bold">Master</span>
+                                </td>
+                                <td width="15%">
+                                    <span style="font-size:14px;font-weight:bold">Sub Category</span>
+                                </td>
+                                <td width="15%">
+                                    <span style="font-size:14px;font-weight:bold">Sub Product</span>
+                                </td>
+                                <td width="10%"></td>
+                                <td width="15%"></td>
+                                <td width="10%"></td>
+                                <td width="10%"></td>
+                                <td style="width:10%;text-align:center"></td>
+
+                            </tr>
+                            <tr>
+                                <td>
+                                    <field name="category_id" options="{'no_create_edit': True}"/>
+                                </td>
+                                <td>
+                                    <field name="sub_category_id" options="{'no_create_edit': True}"/>
+                                </td>
+                                <td>
+                                    <field name="product_id" options="{'no_create_edit': True}"/>
+                                </td>
+                                <td>
+                                    <span style="font-size:13px;font-weight:bold;">Width(in)</span>
+
+                                </td>
+                                <td>
+                                    <field name="width_operator"/>
+
+                                </td>
+                                <td>
+                                    <field name="width_in"/>
+
+                                </td>
+                                <td>
+                                    <field name="width_ibt"
+                                           attrs="{'invisible':[('width_operator', '!=', 'ibt')]}"/>
+                                </td>
+                                <td>
+
+                                </td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td>
+                                    <span style="font-size:13px;font-weight:bold;">Thickness(in)</span>
+                                </td>
+                                <td>
+                                    <field name="thickness_operator"/>
+                                </td>
+                                <td>
+                                    <field name="thickness_in"/>
+                                </td>
+                                <td>
+                                    <field name="thickness_ibt"
+                                           attrs="{'invisible':[('thickness_operator', '!=', 'ibt')]}"/>
+                                </td>
+
+                                <td>
+
+                                </td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td>
+                                    <label for="coil_search" string="Search By Lot"/>
+                                </td>
+                                <td colspan="2">
+                                    <field name="coil_search" help="Provide Lot number to get the specificied lot.
+                                            Criteria based search works only if the lot number is vacant."/>
+                                </td>
+
+
+                                <td></td>
+                                <td>
+                                    <button type="object" class="btn-primary text-right"
+                                            name="action_search_product"
+                                            string="Search" help="Provide Lot number to get the specificied lot.
+                                            Criteria based search works only if the lot number is vacant."/>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <br/>
+                    <button type="object" class="btn-secondary"
+                            name="select_all_lines" icon="fa-check"
+                            style="padding-top:10px;" help="Select all records"/>&amp;nbsp;&amp;nbsp;
+                    <button type="object" class="btn-secondary"
+                            name="un_select_all_lines" icon="fa-times"
+                            style="padding-top:10px;" help="Un Select all records"/>
+                    <button type="object" class="btn-primary"
+                            name="action_update_order_line"
+                            string="Update to Order Lines" style="margin-left:10px;"/>
+                    <button type="object" class="btn-secondary"
+                            name="action_clear_option_lines"
+                            string="Clear Options" style="margin-left:10px;"/>
+
+                </xpath>
+                <!--optional products-->
+            </field>
+        </record>
+
+    </data>
+</odoo>

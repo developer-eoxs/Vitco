@@ -1,0 +1,30 @@
+<odoo>
+    <data>
+        <record id="product_pricelist_item_form_inherited" model="ir.ui.view">
+            <field name="name">product.pricelist.item.form.inherited</field>
+            <field name="model">product.pricelist.item</field>
+            <field name="inherit_id" ref="product.product_pricelist_item_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='product_tmpl_id']" position="before">
+                    <field name="sub_category_id"
+                           attrs="{ 'invisible':[('applied_on', 'in', ['2_product_category','3_global'])]}"
+                           options="{'no_create':1}"/>
+                </xpath>
+                <xpath expr="//field[@name='product_tmpl_id']" position="after">
+
+<!--                        <label for="thickness_ll" string="Thickness Range(in.)" style="font-weight:bold;"/>-->
+                        <field name="thickness_ll"/>
+                        <span>to</span>
+                        <field name="thickness_ul"/>
+
+                </xpath>
+                <xpath expr="//field[@name='categ_id']" position="attributes">
+                    <attribute name="attrs">{'invisible': [('applied_on', 'in', ('3_global','0_product_variant'))],
+                        'required':[('applied_on', '=', '2_product_category')]}
+                    </attribute>
+
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

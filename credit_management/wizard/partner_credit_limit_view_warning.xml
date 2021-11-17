@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2019 Sodexis
+     License OPL-1 (See LICENSE file for full copyright and licensing details). -->
+
+<odoo>
+	<record id="view_partner_credit_limit_view_wizard" model="ir.ui.view">
+		<field name="name">Partner Credit Limit Warning Form</field>
+		<field name="model">partner.credit.limit.warning</field>
+		<field name="arch" type="xml">
+			<form string="Credit Limit" style="width:70%;">
+			    <group name="credit_limit_waring">
+				    <field name="message" style="margin-left:10px; font-weight:bold" nolabel="1"/>
+				</group>
+				<footer>
+					<button string="OK" class="oe_highlight" special="cancel" />
+				</footer>
+			</form>
+		</field>
+	</record>
+
+	<record id="act_partner_credit_limit_warning" model="ir.actions.act_window">
+		<field name="name">Parter Credit Limit Warning</field>
+		<field name="type">ir.actions.act_window</field>
+		<field name="res_model">partner.credit.limit.warning</field>
+		<field name="view_mode">form</field>
+		<field name="context">{}</field>
+		<field name="target">new</field>
+	</record>
+</odoo>

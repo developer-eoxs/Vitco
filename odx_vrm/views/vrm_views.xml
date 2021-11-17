@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+        <!-- Top menu item -->
+        <!--
+            This menu item's purpose is to overwrite another one defined in
+            the base module in order to set new groups.
+        -->
+        <menuitem
+            id="vrm_menu_root"
+            name="VRM"
+            web_icon="odx_vrm,static/description/icon.png"
+            groups="sales_team.group_sale_salesman,sales_team.group_sale_manager,"
+            sequence="6"/>
+
+        <menuitem
+            id="vrm_menu_config"
+            name="Configuration"
+            parent="vrm_menu_root"
+            sequence="25" groups="sales_team.group_sale_manager"/>
+
+        <menuitem
+            id="menu_vrm_config_lead"
+            name="Pipeline"
+            parent="vrm_menu_config"
+            sequence="15"
+            groups="sales_team.group_sale_manager"/>
+
+        <menuitem
+            id="menu_vrm_config_opportunity"
+            name="Opportunities"
+            parent="vrm_menu_config"
+            sequence="1"
+            groups="sales_team.group_sale_manager"/>
+
+        <record id="odx_vrm.vrm_menu_root" model="ir.ui.menu">
+            <field name="groups_id" eval="[(6,0, [ref('odx_vrm.group_vrm_access')])]"/>
+        </record>
+        <record id="odx_vrm.vrm_menu_config" model="ir.ui.menu">
+            <field name="groups_id" eval="[(6,0, [ref('odx_vrm.group_vrm_access')])]"/>
+        </record>
+
+
+
+<!--        <menuitem id="vrm_config_settings_menu"-->
+<!--            name="Settings"-->
+<!--            parent="vrm_menu_config"-->
+<!--            action="vrm_config_settings_action"-->
+<!--            groups="base.group_system"-->
+<!--            sequence="0"/>-->
+
+<!--        <menuitem id="vrm_menu_report"-->
+<!--            name="Reporting"-->
+<!--            parent="vrm_menu_root"-->
+<!--            sequence="20"-->
+<!--            groups="sales_team.group_sale_manager"/>-->
+
+<!--        <menuitem id="vrm_team_config"-->
+<!--            name="Sales Teams"-->
+<!--            parent="vrm_menu_config"-->
+<!--            action="sales_team.sales_team_config_action"-->
+<!--            sequence="5"/>-->
+
+        <menuitem id="vrm_team_menu_config_activity_types"
+            name="Activity Types"
+            parent="vrm_menu_config"
+            action="sales_team.mail_activity_type_action_config_sales"
+            sequence="10"/>
+
+</odoo>

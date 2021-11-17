@@ -1,0 +1,67 @@
+<odoo>
+    <data>
+        <record id="button_purchase_order_line_form" model="ir.ui.view">
+            <field name="name">button.purchase.order.line.form</field>
+            <field name="model">purchase.order.line</field>
+            <field name="arch" type="xml">
+                <form string="purchase order">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="width_tolerance_min"/>
+                                <field name="gauge_tolerance_min"/>
+                                <field name="dia_od_min"/>
+                                <field name="rockwell_min"/>
+                                <field name="dia_id"/>
+                                <field name="fork_lift"/>
+                                <field name="spacers"/>
+                            </group>
+                            <group>
+                                <field name="width_tolerance_max"/>
+                                <field name="gauge_tolerance_max"/>
+                                <field name="dia_od_max"/>
+                                <field name="rockwell_max"/>
+                                <field name="part_no"/>
+                                <field name="certsreq"/>
+                                <field name="mx_skid_wt"/>
+                                <field name="over_head_crar"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="button_sale_order_line_form" model="ir.ui.view">
+            <field name="name">button.sale.order.line.form</field>
+            <field name="model">sale.order.line</field>
+            <field name="arch" type="xml">
+                <form string="Sale Order">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="width_tolerance_min"/>
+                                <field name="gauge_tolerance_min"/>
+                                <field name="dia_od_min"/>
+                                <field name="rockwell_min"/>
+                                <field name="dia_id"/>
+                                <field name="fork_lift"/>
+                                <field name="spacers"/>
+                            </group>
+                            <group>
+                                <field name="width_tolerance_max"/>
+                                <field name="gauge_tolerance_max"/>
+                                <field name="dia_od_max"/>
+                                <field name="rockwell_max"/>
+                                <field name="part_no"/>
+                                <field name="certsreq"/>
+                                <field name="mx_skid_wt"/>
+                                <field name="over_head_crar"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+    </data>
+</odoo>

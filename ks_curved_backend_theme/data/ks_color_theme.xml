@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<!--    <data noupdate="1">-->
+    <data>
+        <record model="ks.color.theme" id="ks_color_theme_temp_1">
+            <field name="ks_body_background">#ffffff</field>
+            <field name="ks_menu">#454546</field>
+            <field name="ks_menu_hover">#f5f5f5</field>
+            <field name="ks_button">#28C397</field>
+            <field name="ks_border">#28C397</field>
+            <field name="ks_heading">#28C397</field>
+            <field name="ks_link">#28C397</field>
+            <field name="ks_primary_color">#28C397</field>
+            <field name="ks_tooltip">#dee2e6</field>
+            <field name="ks_default">True</field>
+            <field name="ks_template">True</field>
+            <field name="name">Default</field>
+        </record>
+        <record model="ks.color.theme" id="ks_color_theme_temp_2">
+            <field name="ks_body_background">#032E71</field>
+            <field name="ks_menu">#ffffff</field>
+            <field name="ks_menu_hover">#092755</field>
+            <field name="ks_button">#3CB0F1</field>
+            <field name="ks_border">#3CB0F1</field>
+            <field name="ks_heading">#3CB0F1</field>
+            <field name="ks_link">#3CB0F1</field>
+            <field name="ks_primary_color">#3CB0F1</field>
+            <field name="ks_tooltip">#3CB0F1</field>
+            <field name="ks_template">True</field>
+            <field name="name">Theme 1</field>
+        </record>
+
+        <record model="ks.color.theme" id="ks_color_theme_temp_3">
+            <field name="ks_body_background">#086674</field>
+            <field name="ks_menu">#ffffff</field>
+            <field name="ks_menu_hover">#024c56</field>
+            <field name="ks_button">#24b1c5</field>
+            <field name="ks_border">#24b1c5</field>
+            <field name="ks_heading">#24b1c5</field>
+            <field name="ks_link">#24b1c5</field>
+            <field name="ks_primary_color">#24b1c5</field>
+            <field name="ks_tooltip">#24b1c5</field>
+            <field name="ks_template">True</field>
+            <field name="name">Theme 2</field>
+        </record>
+
+        <record model="ks.color.theme" id="ks_color_theme_temp_4">
+            <field name="ks_body_background">#554441</field>
+            <field name="ks_menu">#ffffff</field>
+            <field name="ks_menu_hover">#42302c</field>
+            <field name="ks_button">#cc8073</field>
+            <field name="ks_border">#cc8073</field>
+            <field name="ks_heading">#cc8073</field>
+            <field name="ks_link">#cc8073</field>
+            <field name="ks_primary_color">#cc8073</field>
+            <field name="ks_tooltip">#cc8073</field>
+            <field name="ks_template">True</field>
+            <field name="name">Theme 3</field>
+        </record>
+
+        <record model="ks.color.theme" id="ks_color_theme_temp_5">
+            <field name="ks_body_background">#e5f7ff</field>
+            <field name="ks_menu">#454546</field>
+            <field name="ks_menu_hover">#bee0ef</field>
+            <field name="ks_button">#013585</field>
+            <field name="ks_border">#e5f7ff</field>
+            <field name="ks_heading">#013585</field>
+            <field name="ks_link">#013585</field>
+            <field name="ks_primary_color">#013585</field>
+            <field name="ks_tooltip">#7f9cc7</field>
+            <field name="ks_template">True</field>
+            <field name="name">Theme 4</field>
+        </record>
+
+        <record model="ks.color.theme" id="ks_color_theme_temp_6">
+            <field name="ks_body_background">#3f5270</field>
+            <field name="ks_menu">#ffffff</field>
+            <field name="ks_menu_hover">#223452</field>
+            <field name="ks_button">#081e41</field>
+            <field name="ks_border">#7d8faa</field>
+            <field name="ks_heading">#081e41</field>
+            <field name="ks_link">#081e41</field>
+            <field name="ks_primary_color">#081e41</field>
+            <field name="ks_tooltip">#7d8faa</field>
+            <field name="ks_template">True</field>
+            <field name="name">Theme 5</field>
+        </record>
+    </data>
+</odoo>

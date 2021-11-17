@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <report 
+            string="Request for Quote" 
+            id="purchase.report_purchase_quotation" 
+            model="purchase.order"
+            report_type="qweb-pdf"
+            name="purchase.report_purchasequotation" 
+            file="purchase.report_purchasequotation"
+            print_report_name="'Request for Quote - %s' % (object.name)"
+        />
+    </data>
+</odoo>

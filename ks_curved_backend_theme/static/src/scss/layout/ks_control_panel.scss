@@ -1,0 +1,354 @@
+$ks_search_options_bg: $white;
+$ks_white_bg: $white;
+$rounded: 2rem;
+$square_rounded: 4rem;
+
+%round_circle {
+  @include rounded($rounded);
+}
+
+%o_cp_bottom_corner {
+  background: var(--cp_bottom-bg);
+  .btn-secondary {
+    background: var(--cp_bottom-bg);
+    color: var(--color);
+  }
+  @extend %round_circle;
+  padding: 0.3rem;
+  border: 1px solid var(--ks-border);
+
+  .btn {
+    &:not(.dropdown-toggle) {
+      border-color: transparent;
+      margin: 0 1px;
+    }
+    &:focus {
+      box-shadow: none;
+      outline: none;
+    }
+  }
+}
+
+.ks_fullscreen_div {
+  @extend %o_cp_bottom_corner;
+  //     @extend .ml-auto;
+  order: 7;
+
+  .btn.ks_fullscreen {
+    padding-left: 9px !important;
+    padding-right: 9px !important;
+    &:focus,
+    &:active {
+      box-shadow: none !important;
+      border-color: transparent;
+      color: var(--color);
+    }
+  }
+  .ks_fullscreen:not(.fa-expand):not(.fa-compress) {
+    &:before {
+      content: "\f0b2";
+    }
+  }
+}
+
+.o_control_panel {
+  border-bottom: none;
+  .dropdown-menu {
+    animation: leftScale ease-in-out 0.3s;
+    transform-origin: left top;
+    top: 100% !important;
+    transform: none !important;
+  }
+
+  .o_cp_top {
+    min-height: 38px;
+
+    .o_cp_top_left {
+      .breadcrumb {
+        .breadcrumb-item {
+          &.active {
+            color: var(--color);
+          }
+          a {
+            color: var(--heading-color);
+          }
+        }
+      }
+    }
+    // o_cp_top_left / end
+    .o_cp_top_right {
+      .o_cp_searchview {
+        .o_searchview {
+          padding: 4px 115px 5px 5px;
+          @extend %round_circle;
+          border-color: var(--ks-border);
+          background-color: var(--cp_bottom-bg);
+          margin-right: 5px;
+
+          .o_searchview_facet {
+            background-color: transparent;
+            .o_searchview_facet_label {
+              background-color: var(--primary);
+            }
+          }
+          .o_searchview_autocomplete {
+            li.o_selection_focus {
+              background-color: var(--primary);
+            }
+          }
+
+          .o_searchview_icon {
+            top: 0;
+            right: -1px;
+            width: 95px;
+            height: 100%;
+            background: var(--primary);
+            @extend %round_circle;
+            @extend %pointer;
+            text-align: right;
+
+            &:after {
+              content: "Search";
+              position: absolute;
+              left: 1.2rem;
+              color: $white;
+              font-size: 1.15rem;
+              font-family: sans-serif;
+              @include vertical-center();
+            }
+
+            &:before {
+              position: relative;
+              //top: 7px;
+              top: calc(50% - 0.7rem);
+              right: 0.8rem;
+              font-size: $font-12;
+              color: $white;
+            }
+          }
+
+          .o_searchview_input_container {
+            .o_searchview_facet {
+              @extend %round_circle;
+
+              .o_searchview_facet_label {
+                padding-left: 0.5rem;
+                padding-right: 0.5rem;
+                border-top-left-radius: var(--theme-style-radius-10);
+                border-bottom-left-radius: var(--theme-style-radius-10);
+              }
+            }
+
+            .o_searchview_input {
+              @extend %bg-transparent;
+              text-indent: 5px;
+              color: var(--color);
+              &::placeholder {
+                color: var(--color);
+                opacity: 0.6;
+              }
+            }
+          }
+        }
+      }
+    }
+    // o_cp_top_right / end
+  }
+  // o_cp_top / end
+  .o_cp_bottom {
+    .o_cp_left {
+      .o_calendar_scale_buttons {
+        .btn-group {
+          @extend %o_cp_bottom_corner;
+          .btn {
+            @extend %round_circle;
+          }
+        }
+      }
+      .o_cp_sidebar{
+        padding: 0;
+        > .btn-group{
+          margin: 0;
+          padding: 0;
+          border: 1px solid var(--ks-border);
+          .o_dropdown{
+            border: none;
+            margin: 0;
+          }
+        }
+      }
+      .btn-group {
+        &[aria-label="Change graph"],
+        &[aria-label="Sort graph"],
+        &[aria-label="Pivot settings"] {
+          @extend %o_cp_bottom_corner;
+
+          .btn {
+            &:not(.dropdown-toggle) {
+              @include square(2.6rem, $square_rounded);
+            }
+          }
+        }
+      }
+      .btn-group {
+        @extend %o_cp_bottom_corner;
+        margin-right: 1rem;
+        border: none;
+//         background: none;
+        .o_dropdown {
+          .o_dropdown_toggler_btn {
+            background: transparent;
+            border: none;
+          }
+        }
+      }
+    }
+    // o_cp_bottom_left / end
+
+    .o_cp_right {
+      align-items: center;
+      justify-content: space-between;
+
+      .btn {
+        padding-left: 0.55rem;
+        padding-right: 0.55rem;
+      }
+
+      .o_searchview {
+        @extend %bg-transparent;
+        @extend %round_circle;
+
+        .o_searchview_input {
+          @extend %bg-transparent;
+        }
+      }
+
+      //  group filter section / start
+      .o_search_options {
+        @extend %o_cp_bottom_corner;
+        @extend %empty;
+        position: relative !important;
+        > div{
+          display: flex;
+        }
+        .o_dropdown {
+          @media (max-width: 1800px) {
+            .o_dropdown_toggler_btn {
+              @include square(2.6rem, $square_rounded);
+              visibility: hidden;
+            }
+            .o_dropdown_toggler_btn span {
+              visibility: visible;
+            }
+          }
+        }
+
+        button.o_dropdown_toggler_btn {
+          border-color: transparent;
+          @extend %round_circle;
+
+          &:first-child {
+            @extend %ml_auto;
+            margin-right: auto;
+          }
+        }
+      }
+      //  group filter section / end
+
+      .o_cp_switch_buttons {
+        order: 2;
+        @extend %ml_auto;
+        @extend %o_cp_bottom_corner;
+
+        .btn.o_switch_view {
+          @include square(2.6rem, $square_rounded);
+          margin-right: 1px;
+        }
+
+        > .btn:first-child {
+          @extend %ml_auto;
+        }
+      }
+
+      .o_cp_pager {
+        order: 3;
+        @extend %empty;
+
+        .o_pager {
+          @extend %o_cp_bottom_corner;
+          padding-left: 8px;
+          input.o_pager_value {
+            width: 2.5rem;
+            margin-left: 5px;
+          }
+
+          .btn-group {
+            .btn.btn-secondary {
+              @include square(2.4rem, $square_rounded);
+              @extend %pointer;
+              @extend %bg-transparent;
+              border-color: $ks_border;
+
+              &:hover {
+                background-color: var(--primary) !important;
+                opacity: 1;
+                color: $white;
+              }
+            }
+          }
+        }
+      }
+    }
+    // o_cp_right / end
+  }
+  // o_cp_bottom / end
+}
+// o_control_panel / end
+
+.o_calendar_buttons {
+  .o_calendar_navigation_buttons {
+    border-radius: 20px;
+    @extend .d-inline-block;
+    background-color: var(--primary-btn);
+  }
+}
+// Secondary Button
+.btn-secondary {
+  background: var(--secondary-btn-bg);
+  border-color: var(--bg-light-block);
+  color: var(--table-th-color);
+  &:hover {
+    background-color: var(--hover-nav-bg);
+    color: var(--table-th-color);
+    border-color: var(--hover-nav-bg);
+  }
+}
+
+.ks-phone-sr-btn,
+.ks-phone-filter-btn,
+.ks-search-close {
+  display: none;
+}
+
+element.style {
+}
+.o_control_panel .o_cp_bottom .o_cp_bottom_right {
+  align-items: center;
+  justify-content: space-between;
+}
+.o_control_panel .o_cp_bottom_right {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+}
+@media (min-width: 768px) {
+  .o_control_panel .o_cp_top_left,
+  .o_control_panel .o_cp_top_right,
+  .o_control_panel .o_cp_left,
+  .o_control_panel .o_cp_right {
+    width: 50%;
+  }
+  .o_control_panel .o_cp_searchview {
+    width: 100%;
+  }
+}

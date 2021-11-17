@@ -1,0 +1,19 @@
+<odoo>
+    <data>
+        <record id="production_sale_attach_form_view" model="ir.ui.view">
+            <field name="name">Sale Attchment Wizard</field>
+            <field name="model">production.sale.attach.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Sale Attachment Completed">
+                    <group>
+                        <p><strong><center>Lot is successfully attached to the Sale Order</center></strong></p>
+                    </group>
+                    <footer>
+                        <button string="Okay" class="btn-primary" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+    </data>
+</odoo>
+

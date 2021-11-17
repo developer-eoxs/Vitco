@@ -1,0 +1,9 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+
+access_freight_management,access_freight_management,model_freight_management,,1,1,1,1
+access_freight_line,access_freight_line,model_freight_line,,1,1,1,1
+access_frm_vehicle,frm.vehicle,model_frm_vehicle,,1,1,1,1
+access_frm_location,frm.location,model_frm_location,,1,1,1,1
+access_frm_mode_operation,frm.mode.operation,model_frm_mode_operation,,1,1,1,1
+access_cargo_line,frm.cargo.line,model_cargo_line,,1,1,1,1
+

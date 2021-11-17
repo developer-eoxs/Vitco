@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="ks_curved_backend_theme.layout" inherit_id="web.layout">
+        <xpath expr="//head" position="inside">
+            <t t-if="ks_login_background">
+                <style type="text/css">
+                    body {
+                    background: none;
+                    background-image: url(<t t-raw="ks_login_background['background-img']"/>) !important;
+                    background-repeat: no-repeat;
+                    background-size: cover;
+                    background-position: center;
+                    }
+                </style>
+            </t>
+            <t t-if="not ks_login_background">
+                <t t-set="ks_background"
+                   t-value="request.env['ks.global.config'].get_body_background(['ks_body_background', 'ks_app_drawer_background'])"/>
+                <t t-if="ks_background['ks_body_background']">
+                    <t t-if="ks_background['ks_body_background']['type'] == 'color'">
+                        <style type="text/css">
+                            body.brightness{
+                            background:
+                            <t t-raw="ks_background['ks_body_background']['value']"/>
+                            !important;
+                            }
+                            body.brightness .o_action_manager{
+                            background-color: rgba(var(--opacity-bg), 0.5);
+                            }
+                            body.brightness .o_action_manager .o_control_panel .o_cp_top .o_cp_top_right
+                            .o_cp_searchview .o_searchview{
+                            background-color: transparent;
+                            }
+
+                            body.brightness .o_action_manager .o_control_panel .o_cp_bottom .o_cp_right
+                            .o_cp_pager .o_pager{
+                            background-color: transparent;
+                            }
+
+                            body.brightness .o_action_manager .o_control_panel .o_cp_bottom .o_cp_bottom_right
+                            .btn-group .btn-secondary{
+                            background-color: transparent;
+                            }
+
+                            body.brightness .o_action_manager .o_control_panel .o_cp_bottom .o_cp_bottom_left
+                            .o_cp_action_menus{
+                            background-color: transparent;
+                            }
+
+                            body.brightness .o_action_manager .ks_fullscreen_div{
+                            background: transparent;
+                            }
+                            body.brightness .o_action_manager .ks_fullscreen_div .ks_fullscreen{
+                            background: transparent;
+                            }
+                            body.brightness .o_action_manager .btn-group, .btn-group-vertical{
+                            background: transparent !important;
+                            }
+                            body.brightness .o_action_manager .btn-group,
+                            body.brightness .o_action_manager .btn-group .btn-secondary {
+                            background: transparent !important;
+                            }
+                        </style>
+                    </t>
+                    <t t-if="ks_background['ks_body_background']['type'] == 'image' and ks_background['ks_body_background']['value']">
+                        <style type="text/css">
+                            body.brightness{
+                            background: none;
+                            background: linear-gradient(rgba(var(--opacity-bg),<t
+                                t-esc="ks_background['ks_body_background']['opacity']"/>), rgba(var(--opacity-bg),<t
+                                t-esc="ks_background['ks_body_background']['opacity']"/>)), url(<t
+                                t-esc="ks_background['ks_body_background']['value']"/>);
+                            }
+                            body.brightness .o_action_manager{
+                            background-color: rgba(var(--opacity-bg), 0.5);
+                            }
+                            body.brightness .o_action_manager .o_control_panel .o_cp_top .o_cp_top_right
+                            .o_cp_searchview .o_searchview{
+                            background-color: transparent;
+                            }
+                            body.brightness .o_action_manager .o_control_panel .o_cp_bottom .o_cp_right
+                            .o_cp_pager .o_pager{
+                            background-color: transparent;
+                            }
+
+                            body.brightness .o_action_manager .o_control_panel .o_cp_bottom .o_cp_bottom_right
+                            .btn-group .btn-secondary{
+                            background-color: transparent;
+                            }
+
+                            body.brightness .o_action_manager .o_control_panel .o_cp_bottom .o_cp_bottom_left
+                            .o_cp_action_menus{
+                            background-color: transparent;
+                            }
+
+                            body.brightness .o_action_manager .ks_fullscreen_div{
+                            background: transparent;
+                            }
+                            body.brightness .o_action_manager .ks_fullscreen_div .ks_fullscreen{
+                            background: transparent;
+                            }
+                            body.brightness .o_action_manager .btn-group, .btn-group-vertical{
+                            background: transparent !important;
+                            }
+                            body.brightness .o_action_manager .btn-group,
+                            body.brightness .o_action_manager .btn-group .btn-secondary {
+                            background: transparent !important;
+                            }
+                        </style>
+                    </t>
+                    <t t-if="ks_background['ks_body_background']['value']">
+                        <style type="text/css">
+                            .brightness .o_action_manager{
+                            background-color: rgba(var(--opacity-bg), 0.5);
+                            }
+                        </style>
+                    </t>
+                </t>
+                <t t-if="ks_background['ks_app_drawer_background']">
+                    <t t-if="ks_background['ks_app_drawer_background']['type'] == 'color' and ks_background['ks_app_drawer_background']['value']">
+                        <style type="text/css">
+                            body.ks_appsmenu_active {
+                            background:
+                            <t t-raw="ks_background['ks_app_drawer_background']['value']"/>
+                            !important;
+                            }
+                        </style>
+                    </t>
+                    <t t-if="ks_background['ks_app_drawer_background']['type'] == 'image' and ks_background['ks_app_drawer_background']['value']">
+                        <style type="text/css">
+                            body.ks_appsmenu_active{
+                            background: none;
+                            background: linear-gradient(rgba(var(--opacity-bg),<t
+                                t-esc="ks_background['ks_app_drawer_background']['opacity']"/>), rgba(var(--opacity-bg),
+                            <t t-esc="ks_background['ks_app_drawer_background']['opacity']"/>)), url(<t
+                                t-esc="ks_background['ks_app_drawer_background']['value']"/>) !important;
+
+                            position: relative;
+                            background-repeat: no-repeat !important;
+                            background-size: cover !important;
+                            background-position: center !important;
+
+                            }
+                        </style>
+                    </t>
+                </t>
+            </t>
+        </xpath>
+        <xpath expr="//body" position="attributes">
+            <attribute name="t-att-class">body_classname + ' brightness' if body_classname else 'brightness'</attribute>
+        </xpath>
+    </template>
+</odoo>

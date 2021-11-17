@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        <record id="mrp_workorder_form_inherit_steel" model="ir.ui.view">
+            <field name="name">mrp.workorder.form.inherit.steel</field>
+            <field name="model">mrp.workorder</field>
+            <field name="inherit_id" ref="mrp.mrp_production_workorder_form_view_inherit"/>
+            <field name="arch" type="xml">
+                 <xpath expr="//field[@name='finished_lot_id']" position="after">
+                    <button name="generate_lot" type="object" string="Generate Lot" class="btn-success"
+                            attrs="{'invisible': ['|',  ('state', 'not in', ['ready', 'progress']), ('finished_lot_id', '!=', False),]}"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

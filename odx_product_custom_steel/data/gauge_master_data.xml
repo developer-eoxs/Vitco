@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <record model="steel.gauge" id="data_gauge_6">
+            <field name="name">Gauge6</field>
+            <field name="gauge_no">6</field>
+            <field name="gauge_inch">.2031</field>
+            <field name="gauge_mm">5.16</field>
+        </record>
+        <record model="steel.gauge" id="data_gauge_7">
+            <field name="name">Gauge7</field>
+            <field name="gauge_no">7</field>
+            <field name="gauge_inch">.1875</field>
+            <field name="gauge_mm">4.76</field>
+        </record>
+        <record model="steel.gauge" id="data_gauge_8">
+            <field name="name">Gauge8</field>
+            <field name="gauge_no">8</field>
+            <field name="gauge_inch">.1719</field>
+            <field name="gauge_mm">4.37</field>
+        </record>
+        <record model="steel.gauge" id="data_gauge_9">
+            <field name="name">Gauge9</field>
+            <field name="gauge_no">9</field>
+            <field name="gauge_inch">.1563</field>
+            <field name="gauge_mm">3.97</field>
+        </record>
+        <record model="steel.gauge" id="data_gauge_10">
+            <field name="name">Gauge10</field>
+            <field name="gauge_no">10</field>
+            <field name="gauge_inch">.1406</field>
+            <field name="gauge_mm">3.57</field>
+        </record>
+        <record model="steel.gauge" id="data_gauge_11">
+            <field name="name">Gauge11</field>
+            <field name="gauge_no">11</field>
+            <field name="gauge_inch">.1250</field>
+            <field name="gauge_mm">3.18</field>
+        </record>
+        <record model="steel.gauge" id="data_gauge_12">
+            <field name="name">Gauge12</field>
+            <field name="gauge_no">12</field>
+            <field name="gauge_inch">.1094</field>
+            <field name="gauge_mm">2.78</field>
+        </record>
+        <record model="steel.gauge" id="data_gauge_13">
+            <field name="name">Gauge13</field>
+            <field name="gauge_no">13</field>
+            <field name="gauge_inch">.0938</field>
+            <field name="gauge_mm">2.38</field>
+        </record>
+        <record model="steel.gauge" id="data_gauge_14">
+            <field name="name">Gauge14</field>
+            <field name="gauge_no">14</field>
+            <field name="gauge_inch">.0781</field>
+            <field name="gauge_mm">1.98</field>
+        </record>
+        <record model="steel.gauge" id="data_gauge_15">
+            <field name="name">Gauge15</field>
+            <field name="gauge_no">15</field>
+            <field name="gauge_inch">.0703</field>
+            <field name="gauge_mm">1.79</field>
+        </record>
+        <record model="steel.gauge" id="data_gauge_16">
+            <field name="name">Gauge16</field>
+            <field name="gauge_no">16</field>
+            <field name="gauge_inch">.0625</field>
+            <field name="gauge_mm">1.59</field>
+        </record>
+        <record model="steel.gauge" id="data_gauge_17">
+            <field name="name">Gauge17</field>
+            <field name="gauge_no">17</field>
+            <field name="gauge_inch">.0563</field>
+            <field name="gauge_mm">1.43</field>
+        </record>
+        <record model="steel.gauge" id="data_gauge_18">
+            <field name="name">Gauge18</field>
+            <field name="gauge_no">18</field>
+            <field name="gauge_inch">.0500</field>
+            <field name="gauge_mm">1.27</field>
+        </record>
+        <record model="steel.gauge" id="data_gauge_19">
+            <field name="name">Gauge19</field>
+            <field name="gauge_no">19</field>
+            <field name="gauge_inch">.0438</field>
+            <field name="gauge_mm">1.11</field>
+        </record>
+        <record model="steel.gauge" id="data_gauge_20">
+            <field name="name">Gauge20</field>
+            <field name="gauge_no">20</field>
+            <field name="gauge_inch">.0375</field>
+            <field name="gauge_mm">.953</field>
+        </record>
+        <record model="steel.gauge" id="data_gauge_21">
+            <field name="name">Gauge21</field>
+            <field name="gauge_no">21</field>
+            <field name="gauge_inch">.0344</field>
+            <field name="gauge_mm">.873</field>
+        </record>
+        <record model="steel.gauge" id="data_gauge_22">
+            <field name="name">Gauge22</field>
+            <field name="gauge_no">22</field>
+            <field name="gauge_inch">.0313</field>
+            <field name="gauge_mm">.794</field>
+        </record>
+        <record model="steel.gauge" id="data_gauge_23">
+            <field name="name">Gauge23</field>
+            <field name="gauge_no">23</field>
+            <field name="gauge_inch">.0281</field>
+            <field name="gauge_mm">.714</field>
+        </record>
+        <record model="steel.gauge" id="data_gauge_24">
+            <field name="name">Gauge24</field>
+            <field name="gauge_no">24</field>
+            <field name="gauge_inch">.0250</field>
+            <field name="gauge_mm">.635</field>
+        </record>
+        <record model="steel.gauge" id="data_gauge_25">
+            <field name="name">Gauge25</field>
+            <field name="gauge_no">25</field>
+            <field name="gauge_inch">.0219</field>
+            <field name="gauge_mm">.556</field>
+        </record>
+        <record model="steel.gauge" id="data_gauge_26">
+            <field name="name">Gauge26</field>
+            <field name="gauge_no">26</field>
+            <field name="gauge_inch">.0188</field>
+            <field name="gauge_mm">.478</field>
+        </record>
+        <record model="steel.gauge" id="data_gauge_27">
+            <field name="name">Gauge27</field>
+            <field name="gauge_no">27</field>
+            <field name="gauge_inch">.0172</field>
+            <field name="gauge_mm">.437</field>
+        </record>
+        <record model="steel.gauge" id="data_gauge_28">
+            <field name="name">Gauge28</field>
+            <field name="gauge_no">28</field>
+            <field name="gauge_inch">.0156</field>
+            <field name="gauge_mm">.396</field>
+        </record>
+        <record model="steel.gauge" id="data_gauge_29">
+            <field name="name">Gauge29</field>
+            <field name="gauge_no">29</field>
+            <field name="gauge_inch">.0141</field>
+            <field name="gauge_mm">.358</field>
+        </record>
+        <record model="steel.gauge" id="data_gauge_30">
+            <field name="name">Gauge30</field>
+            <field name="gauge_no">30</field>
+            <field name="gauge_inch">.0125</field>
+            <field name="gauge_mm">.318</field>
+        </record>
+        <record model="steel.gauge" id="data_gauge_31">
+            <field name="name">Gauge31</field>
+            <field name="gauge_no">31</field>
+            <field name="gauge_inch">.0109</field>
+            <field name="gauge_mm">.277</field>
+        </record>
+        <record model="steel.gauge" id="data_gauge_32">
+            <field name="name">Gauge32</field>
+            <field name="gauge_no">32</field>
+            <field name="gauge_inch">.0102</field>
+            <field name="gauge_mm">.259</field>
+        </record>
+        <record model="steel.gauge" id="data_gauge_33">
+            <field name="name">Gauge33</field>
+            <field name="gauge_no">33</field>
+            <field name="gauge_inch">.0094</field>
+            <field name="gauge_mm">.239</field>
+        </record>
+        <record model="steel.gauge" id="data_gauge_34">
+            <field name="name">Gauge34</field>
+            <field name="gauge_no">34</field>
+            <field name="gauge_inch">.0086</field>
+            <field name="gauge_mm">.218</field>
+        </record>
+        <record model="steel.gauge" id="data_gauge_35">
+            <field name="name">Gauge35</field>
+            <field name="gauge_no">35</field>
+            <field name="gauge_inch">.0078</field>
+            <field name="gauge_mm">.198</field>
+        </record>
+    </data>
+</odoo>

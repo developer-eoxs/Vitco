@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <!-- Copyright (c) 2017-Present Webkul Software Pvt. Ltd. (<https://webkul.com/>) -->
+  <!-- See LICENSE URL <https://store.webkul.com/license.html/> for full copyright and licensing details. -->
+  
+  <record id="view_delivery_carrier_form" model="ir.ui.view">
+      <field name="name">delivery.carrier.form.provider.ups</field>
+      <field name="model">delivery.carrier</field>
+      <field name="inherit_id" ref="delivery.view_delivery_carrier_form"/>
+      <field name="arch" type="xml">
+        <xpath expr="//group[@name='Delivery Setting']" position="after">
+              <group string="UPS Shipping Infomation "
+                  attrs="{'invisible':[('delivery_type', '!=', 'ups')]}">
+                      <field 
+                          name="ups_service_type"  
+                          attrs="{'required':[('delivery_type', '==', 'ups')]}" />
+                      <field 
+                          name="ups_pickup_type"  
+                          attrs="{'required':[('delivery_type', '==', 'ups')]}"/>
+                      <field 
+                          name="ups_return_service_type"  
+                          attrs="{'required':[('delivery_type', '==', 'ups')]}"/>                          
+                      <field  
+                          name="ups_rate_negotiation"  
+                              attrs="{'required':[('delivery_type', '==', 'ups')]}"/>
+                      <field name="ups_delivery_confirmation" />
+              </group>  
+          </xpath>
+          <xpath expr="//notebook" position='inside'>
+              <page string="UPS Credentials" attrs="{'invisible': [('delivery_type', '!=', 'ups')]}">
+                <group>
+                    <group>
+                        <field name="ups_access_license_no" attrs="{'required': [('delivery_type', '=', 'ups')]}"/>
+                        <field name="ups_shipper_no" attrs="{'required': [('delivery_type', '=', 'ups')]}"/>
+                    
+                    </group>
+                    <group>
+                      <field name="ups_user_id" attrs="{'required': [('delivery_type', '=', 'ups')]}"/>
+                      <field name="ups_password" password ='1' attrs="{'required': [('delivery_type', '=', 'ups')]}"/>
+                    </group>
+                </group>
+            </page>
+        </xpath>
+    </field>
+</record>
+
+    <record id="delivery_carrier_ups_pickup_form" model="ir.ui.view">
+        <field name="name">delivery.carrier.ups.pickup.form</field>
+        <field name="model">delivery.carrier.ups.pickup</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="code"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+     <record id="delivery_carrier_ups_pickupe_tree" model="ir.ui.view">
+        <field name="name">delivery.carrier.ups.pickup.tree</field>
+        <field name="model">delivery.carrier.ups.pickup</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="Pickup">
+                <field name="name"/>
+               <field name="code"/>
+            </tree>
+        </field>
+    </record>
+    <record model="ir.actions.act_window" id="action_delivery_carrier_ups_pickup">
+            <field name="name">UPS Pickup Type</field>
+            <field name="res_model">delivery.carrier.ups.pickup</field>
+            <!-- <field name="view_type">form</field> -->
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="delivery_carrier_ups_pickupe_tree"/>
+    </record>
+
+    <record id="delivery_carrier_ups_service_form" model="ir.ui.view">
+        <field name="name">delivery.carrier.ups.service.form</field>
+        <field name="model">delivery.carrier.ups.service</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                   <group name='code'>
+                    <group>
+                        <field name="name"/>
+                        <field name="code"/>
+                    </group>
+                    <group></group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+     <record id="delivery_carrier_ups_service_tree" model="ir.ui.view">
+        <field name="name">delivery.carrier.ups.service.tree</field>
+        <field name="model">delivery.carrier.ups.service</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="Service">
+                <field name="name"/>
+               <field name="code"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_delivery_carrier_ups_service">
+            <field name="name">UPS Service List</field>
+            <field name="res_model">delivery.carrier.ups.service</field>
+            <!-- <field name="view_type">form</field> -->
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="delivery_carrier_ups_service_tree"/>
+    </record>
+
+<!-- *************************************************************************** -->
+<!-- **************************** UPS Return Service ******************************* -->
+<!-- *************************************************************************** -->
+
+
+    <record id="delivery_carrier_ups_return_service_form" model="ir.ui.view">
+        <field name="name">delivery.carrier.ups.return.service.form</field>
+        <field name="model">delivery.carrier.ups.return.service</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="code"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+     <record id="delivery_carrier_ups_return_service_tree" model="ir.ui.view">
+        <field name="name">delivery.carrier.ups.return.service.tree</field>
+        <field name="model">delivery.carrier.ups.return.service</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="UPS Return Service">
+                <field name="name"/>
+               <field name="code"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_delivery_carrier_ups_return_service">
+            <field name="name">UPS Return Service List</field>
+            <field name="res_model">delivery.carrier.ups.return.service</field>
+            <!-- <field name="view_type">form</field> -->
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="delivery_carrier_ups_return_service_tree"/>
+    </record>
+
+<!-- *************************************************************************** -->
+<!-- *************************************************************************** -->
+<!-- *************************************************************************** -->
+
+
+
+    <menuitem
+        id="menu_shipping_ups"
+        name="UPS Services"
+        parent="delivery.menu_delivery"
+        string="UPS" />
+         <menuitem
+            id="menu_shipping_ups_service"
+            parent="menu_shipping_ups"
+            string="Service Type"
+            action="action_delivery_carrier_ups_service"/>
+        <menuitem
+            id="menu_shipping_ups_pickup"
+            parent="menu_shipping_ups"
+            string="Pickup Type"
+            action="action_delivery_carrier_ups_pickup" />
+        <menuitem
+            id="menu_shipping_ups_return_service"
+            parent="menu_shipping_ups"
+            string="UPS Return Service Type"
+            action="action_delivery_carrier_ups_return_service" />
+</odoo>

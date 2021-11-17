@@ -1,0 +1,228 @@
+<odoo>
+    <data>
+        <record id="purchase_order_inherited_view" model="ir.ui.view">
+            <field name="name">purchase.inherit.view</field>
+            <field name="model">purchase.order</field>
+            <field name="inherit_id" ref="purchase.purchase_order_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form/sheet/group[1]" position="attributes">
+                    <attribute name="string">Supplier Info</attribute>
+                </xpath>
+                <xpath expr="//button[@name='action_view_invoice'][1]" position="attributes">
+                    <attribute name="string">Receive Invoice</attribute>
+                </xpath>
+                <xpath expr="//button[@name='action_view_invoice'][2]" position="attributes">
+                    <attribute name="string">Receive Invoice</attribute>
+                </xpath>
+                <xpath expr="//field[@name='partner_id']" position="after">
+                    <field name="sale_order_id"/>
+                    <field name="heat_number" invisible="1"/>
+                    <field name="lift_number" invisible="1"/>
+                    <field name="part_number" invisible="1"/>
+                    <field name="tag_number" invisible="1"/>
+                </xpath>
+                <xpath expr="//field[@name='order_line']/tree/field[@name='product_id']" position="before">
+                    <field name="product_category_id" string="Master" options="{'no_create_edit': True}"
+                           attrs="{'readonly': [('parent.state', '=', 'purchase')]}"/>
+                    <field name="sub_category_id" string="Sub Category" options="{'no_create_edit': True}"
+                           attrs="{'readonly': [('parent.state', '=', 'purchase')]}"/>
+                    <field name="product_template_id" string="Product" invisible="1"/>
+                    <field name="offer_id" string="Offer Ref" invisible="1"/>
+
+                </xpath>
+
+                <xpath expr="//field[@name='order_line']/tree/field[@name='product_id']" position="attributes">
+                    <attribute name="string">Sub Product</attribute>
+                    <attribute name="options">{'no_create_edit': True, }</attribute>
+                </xpath>
+
+                <xpath expr="//field[@name='order_line']/tree/field[@name='product_qty']" position="attributes">
+                    <attribute name="string">Weight</attribute>
+                </xpath>
+
+                <xpath expr="//field[@name='order_line']/tree/field[@name='product_qty']" position="before">
+                    <field name="thickness_in" attrs="{'readonly': [('parent.state', '=', 'purchase')]}"/>
+                    <field name="width_in" attrs="{'readonly': [('parent.state', '=', 'purchase')]}"/>
+                    <field name="length_in" attrs="{'readonly': [('parent.state', '=', 'purchase')]}"/>
+                </xpath>
+
+                <!-- <xpath expr="//field[@name='order_line']/tree/field[@name='price_subtotal']" position="after">
+                    <button style="float:right;margin-right:3px;" type="object"
+                            name="line_duplicate" class="oe_highlight" string="Duplicate"
+                            attrs="{'invisible': [('parent.state', '=', 'purchase')]}" />
+
+
+                </xpath> -->
+
+
+                <xpath expr="//field[@name='order_line']/tree/field[@name='product_qty']" position="attributes">
+                    <attribute name="widget">integer</attribute>
+                </xpath>
+                <xpath expr="//field[@name='order_line']/tree/field[@name='qty_received']" position="attributes">
+                    <attribute name="widget">integer</attribute>
+                </xpath>
+                <xpath expr="//field[@name='order_line']/tree/field[@name='qty_invoiced']" position="attributes">
+                    <attribute name="widget">integer</attribute>
+                </xpath>
+                <xpath expr="//field[@name='order_line']/tree/field[@name='price_unit']" position="before">
+                    <field name="cwt_price" string="Price(CWT)" optional="hide"/>
+                </xpath>
+                <xpath expr="//field[@name='order_line']/tree/field[@name='price_unit']" position="attributes">
+                    <attribute name="optional">hide</attribute>
+                </xpath>
+                <xpath expr="//field[@name='order_line']/tree/field[@name='price_subtotal']" position="after">
+                    <button type="object" name="action_view_purchase" class="oe_highlight"
+                            string="Add. Specs"/>
+                </xpath>
+                <xpath expr="//field[@name='order_line']/tree/field[@name='price_subtotal']" position="attributes">
+                    <attribute name="optional">hide</attribute>
+                </xpath>
+
+
+                <xpath expr="//field[@name='picking_type_id']" position="replace"></xpath>
+                <xpath expr="//field[@name='company_id']" position="after">
+                    <field name="picking_type_id"
+                           domain="[('code','=','incoming'), '|', ('warehouse_id', '=', False), ('warehouse_id.company_id', '=', company_id)]"
+                           options="{'no_create': True}" groups="stock.group_stock_multi_locations"/>
+                </xpath>
+
+                <xpath expr="//notebook/page[@name='purchase_delivery_invoice']" position="before">
+                    <page string="Offers Received">
+                        <br/>
+                        <button type="object" class="btn-secondary"
+                                name="select_all_lines" icon="fa-check"
+                                style="padding-top:10px;" help="Select all records"/>&amp;nbsp;&amp;nbsp;
+                        <button type="object" class="btn-secondary"
+                                name="un_select_all_lines" icon="fa-times"
+                                style="padding-top:10px;" help="Un Select all records"/>
+                        <button style="margin-left:8px;" type="object" name="import_offer_action"
+                                class="oe_highlight" string="Import"/>
+                        <button type="object" class="oe_highlight"
+                                name="action_update_order_line"
+                                string="Update OrderLines" style="margin-left:10px;"/>
+                        <button type="object" class="btn-secondary"
+                                name="action_clear_option_lines"
+                                string="Clear Options" style="margin-left:10px;"/>
+                        <br/>
+                        <br/>
+                        <field name="offering_ids" widget="section_and_note_one2many">
+                            <tree string="Offers" editable="bottom">
+                                <field name="select"/>
+                                <field name="product_category_id"/>
+                                <field name="sub_category_id"/>
+                                <field name="product_id"/>
+                                <field name="name" string="Name"/>
+                                <field name="bids"/>
+                                <field name="product_group"/>
+                                <field name="material"/>
+                                <field name="batch"/>
+                                <field name="gauge"/>
+                                <field name="width_in"/>
+                                <field name="weight_lbs" widget="integer"/>
+                                <field name="ordered_grade" optional="hide"/>
+                                <field name="comment" optional="hide"/>
+                                <field name="notes" optional="hide"/>
+                                <field name="length_ft"/>
+                                <field name="inner_dia"/>
+                                <field name="outer_dia"/>
+                                <field name="heat_number"/>
+                                <!-- <button type="object" class="oe_highlight"
+                                        name="line_duplicate"
+                                        string="Duplicate" style="margin-left:10px;" attrs="{'invisible': [('parent.state', '=', 'purchase')]}"/> -->
+
+                                <field name="comp_c" optional="hide"/>
+                                <field name="comp_mn" optional="hide"/>
+                                <field name="comp_p" optional="hide"/>
+                                <field name="comp_s" optional="hide"/>
+                                <field name="comp_si" optional="hide"/>
+                                <field name="comp_al" optional="hide"/>
+                                <field name="comp_al_total" optional="hide"/>
+                                <field name="comp_nb" optional="hide"/>
+                                <field name="comp_ti" optional="hide"/>
+                                <field name="comp_b" optional="hide"/>
+                                <field name="comp_cu" optional="hide"/>
+
+                                <field name="comp_as" optional="hide"/>
+                                <field name="comp_cr" optional="hide"/>
+                                <field name="comp_co" optional="hide"/>
+
+                                <field name="comp_mo" optional="hide"/>
+                                <field name="comp_n" optional="hide"/>
+                                <field name="comp_ni" optional="hide"/>
+                                <field name="comp_v" optional="hide"/>
+                                <field name="comp_pb" optional="hide"/>
+                                <field name="comp_ca" optional="hide"/>
+
+                                <field name="purchase_ref_id" invisible="1"/>
+
+                            </tree>
+                            <form>
+                                <group>
+                                    <group>
+                                        <field name="name" string="Name"/>
+                                        <field name="product_category_id"/>
+                                        <field name="sub_category_id"/>
+                                        <field name="product_id"/>
+                                        <field name="bids"/>
+                                        <field name="product_group"/>
+                                        <field name="material"/>
+                                        <field name="batch"/>
+                                        <field name="gauge"/>
+                                        <field name="width_in"/>
+                                        <field name="weight_lbs" widget="integer"/>
+                                        <field name="ordered_grade"/>
+                                        <field name="comment"/>
+                                        <field name="notes"/>
+                                        <field name="length_ft"/>
+                                        <field name="inner_dia"/>
+                                        <field name="outer_dia"/>
+                                        <field name="heat_number"/>
+
+                                    </group>
+
+                                    <group>
+                                        <field name="comp_c"/>
+                                        <field name="comp_mn"/>
+                                        <field name="comp_p"/>
+                                        <field name="comp_s"/>
+                                        <field name="comp_si"/>
+                                        <field name="comp_al"/>
+                                        <field name="comp_al_total"/>
+                                        <field name="comp_nb"/>
+                                        <field name="comp_ti"/>
+                                        <field name="comp_b"/>
+                                        <field name="comp_cu"/>
+
+                                        <field name="comp_as"/>
+                                        <field name="comp_cr"/>
+                                        <field name="comp_co"/>
+
+                                        <field name="comp_mo"/>
+                                        <field name="comp_n"/>
+                                        <field name="comp_ni"/>
+                                        <field name="comp_v"/>
+                                        <field name="comp_pb"/>
+                                        <field name="comp_ca"/>
+                                    </group>
+
+                                </group>
+                            </form>
+                        </field>
+                    </page>
+                    <page string="Terms and Conditions">
+                        <group string="Terms and Conditions">
+                            <field name="terms_conditions"
+                                   nolabel="1"/>
+                        </group>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+        <menuitem action="purchase.purchase_rfq" id="menu_purchase_rfq"
+                  parent="purchase.menu_procurement_management"
+                  sequence="0"/>
+        <menuitem id="purchase.menu_procurement_management_supplier_name" name="Vendors"
+                  parent="purchase.menu_procurement_management"
+                  action="account.res_partner_action_supplier" sequence="15"/>
+    </data>
+</odoo>

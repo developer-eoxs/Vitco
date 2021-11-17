@@ -1,0 +1,201 @@
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="freight_management_tree_view">
+            <field name="name">freight.management.tree.view</field>
+            <field name="model">freight.management</field>
+            <field name="arch" type="xml">
+                <tree string="Freight">
+                    <field name="name"/>
+                    <field name="purchase_order_id"/>
+                    <field name="stock_picking_id" readonly="1"/>
+                    <field name="create_uid" readonly="1"/>
+                    <field name="create_date" readonly="1"/>
+                    <field name="state"/>
+
+                </tree>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="freight_management_search_view">
+            <field name="name">freight.management.search.view</field>
+            <field name="model">freight.management</field>
+            <field name="arch" type="xml">
+                <search>
+                    <group expand="1" string="Group By">
+                        <filter name="purchase_order" string="Purchase Order" domain="[]"
+                                context="{'group_by':'purchase_order_id'}"/>
+                        <filter name="picking" string="Pickings" domain="[]" context="{'group_by':'stock_picking_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="freight_management_form_view">
+            <field name="name">freight.management.form.view</field>
+            <field name="model">freight.management</field>
+            <field name="arch" type="xml">
+                <form string="Freight Management">
+                    <header>
+                        <button name="action_confirm" string="Confirm"
+                                type="object" class="btn-primary" attrs="{'invisible': [('state', '!=', 'draft')]}"/>
+                        <button name="action_done" string="Done"
+                                type="object" class="btn-primary" attrs="{'invisible': [('state', '!=', 'confirm')]}"/>
+
+
+                        <field name="state" widget="statusbar" statusbar_visible="draft,confirm,done"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                            <button type="object"
+                                    name="action_view_stock_pickings"
+                                    class="oe_stat_button"
+                                    icon="fa-truck" string="Pickings"
+                                    attrs="{'invisible': [('stock_picking_id','=', False)]}">
+                            </button>
+                            <button type="object"
+                                    name="action_view_purchase"
+                                    class="oe_stat_button"
+                                    icon="fa-shopping-cart" string="PO"
+                                    attrs="{'invisible': [('purchase_order_id','=', False)]}">
+                            </button>
+                            <button type="object" name="action_view_invoice"
+                                    class="oe_stat_button"
+                                    icon="fa-pencil-square-o" attrs="{'invisible':[('invoice_count', '=', 0)]}">
+                                <field name="invoice_count" widget="statinfo" string="Invoices"/>
+                            </button>
+                        </div>
+                        <div class="oe_title">
+                            <label for="name" class="oe_edit_only"/>
+                            <h1>
+                                <field name="name" placeholder="e.g. FRM/0001"/>
+                            </h1>
+                            <br/>
+                        </div>
+                        <group>
+                            <group string="Order Details">
+                                <field name="purchase_order_id" readonly="1"/>
+                                <field name="stock_picking_id" readonly="1"/>
+                                <field name="sale_order_id" readonly="1"/>
+                                <field name="job_order_id" readonly="1"/>
+                                <field name="create_uid" readonly="1"/>
+                                <field name="create_date" readonly="1"/>
+                                <field name="company_id" invisible="1"/>
+                                <field name="company_currency" invisible="1"/>
+                            </group>
+                            <group>
+                                <field name="assign_id" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Tracking">
+                                <button style="float:right;margin-right:3px;" type="object"
+                                        name="multipoint_frm_line" class="oe_highlight" string="Multipoint FRM"
+                                />
+                                <field name="frm_line_ids">
+                                    <tree editable="bottom">
+                                        <button type="object" name="send_email" string="Send Email"
+                                                class="btn-primary"/>
+                                        <field name="name" readonly="1"/>
+                                        <field name="source_location" domain="[('id','!=',dest_location)]"
+                                               attrs="{'readonly': [('parent.state', '!=', 'draft')]}"/>
+                                        <field name="dest_location" domain="[('id','!=',source_location)]"
+                                               attrs="{'readonly': [('parent.state', '!=', 'draft')]}"/>
+                                        <field name="transporter_id"
+                                               attrs="{'readonly': [('parent.state', '!=', 'draft')]}"/>
+                                        <field name="vehicle_ids" widget="many2many_tags" string="VEHICLE"
+                                               attrs="{'readonly': [('parent.state', '!=', 'draft')]}"/>
+                                        <field name="mode_id" attrs="{'readonly': [('parent.state', '!=', 'draft')]}"/>
+                                        <field name="transported_lot_ids" widget="many2many_tags" string="LOTS"
+                                               attrs="{'readonly': [('parent.state',  '!=', 'draft')]}"/>
+                                        <field name="expected_date"
+                                               attrs="{'readonly': [('parent.state',  '!=', 'draft')]}"/>
+                                        <field name="arrived_date"/>
+                                        <field name="total_weight" widget="integer"
+                                               attrs="{'readonly': [('parent.state',  '!=', 'draft')]}"/>
+                                        <field name="total_price"
+                                               attrs="{'readonly': [('parent.state',  '=', 'done')]}"/>
+                                        <field name="status" readonly="1"/>
+                                        <button style="float:right;margin-right:3px;" type="object"
+                                                name="update_status" class="oe_highlight" string="Update Status"
+                                                attrs="{'invisible': [('status', 'in', ['received','invoiced','paid'])]}"/>
+
+                                        <field name="is_multipoint_frm"/>
+                                        <button style="float:right;margin-right:3px;" type="object"
+                                                name="multipoint_frm_line" class="oe_highlight" string="Multipoint FRM"
+                                                invisible="1"/>
+
+                                        <field name="freight_id" invisible="1"/>
+                                        <field name="always_set_currency_id" invisible="1"/>
+                                        <button style="float:right;margin-right:3px;" type="object"
+                                                name="create_invoice" class="oe_highlight" string="Transporter Inv."
+                                                attrs="{'invisible': [('status', '!=', 'received')]}"/>
+                                    </tree>
+                                </field>
+                                <group>
+                                    <group></group>
+                                    <group>
+                                        <div class="o_row" name="total_freightage"
+                                             style="float:right;font-weight:bold;">
+                                            <label for="total_freight_price" string="Total Freightage"/>
+                                            <field name="total_freight_price"/>
+                                        </div>
+                                    </group>
+                                </group>
+
+
+                            </page>
+                            <page string="Cargo Details">
+                                <field name="cargo_lines" style="pointer-events:none;">
+                                    <tree create="false" delete="false">
+                                        <field name="freight_id" invisible="1"/>
+                                        <field name="sub_category_id" string="Sub Category"/>
+                                        <field name="product_id"/>
+                                        <field name="name" string="Description"/>
+                                        <field name="product_uom_qty" readonly="1" widget="integer" string="Demand"/>
+                                        <field name="lot_ids" readonly="1" widget="many2many_tags" string="Lots"/>
+                                    </tree>
+                                </field>
+                            </page>
+
+
+                            <page string="Comments">
+                                <group>
+                                    <field name="comments"/>
+                                </group>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers" groups="base.group_user"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_freight_management" model="ir.actions.act_window">
+            <field name="name">Freight</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">freight.management</field>
+            <field name="view_mode">tree,form,kanban,search</field>
+        </record>
+
+        <menuitem id="menu_odx_freight_management" name="Freight" sequence="29"
+                  web_icon="odx_freight_management,static/description/freight.png"/>
+
+
+        <menuitem id="menu_odx_freight_menu" name="Freights" parent="menu_odx_freight_management" sequence="3"
+                  action="action_freight_management"/>
+
+        <menuitem id="menu_odx_freight" name="Configuration" parent="menu_odx_freight_management" sequence="10"/>
+
+         <record id="odx_freight_management.menu_odx_freight_management" model="ir.ui.menu">
+            <field name="groups_id" eval="[(6,0, [ref('odx_freight_management.group_frm_view_access')])]"/>
+        </record>
+
+         <record id="odx_freight_management.menu_odx_freight" model="ir.ui.menu">
+            <field name="groups_id" eval="[(6,0, [ref('odx_freight_management.group_frm_view_access')])]"/>
+        </record>
+
+
+    </data>
+</odoo>

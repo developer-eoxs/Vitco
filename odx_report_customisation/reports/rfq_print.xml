@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="report_purchasequotation_document_inherit" inherit_id="purchase.report_purchasequotation_document"
+                  priority="100">
+            <xpath expr="//t[@t-call='web.external_layout']" position="replace">
+                <t t-call="web.internal_layout">
+                    <div class="page">
+                        <div class="oe_structure"/>
+
+                        <center>
+                            <h5>
+                                <u>
+                                    <strong>
+                                        <b>REQUEST FOR QUOTE</b>
+                                    </strong>
+                                </u>
+                            </h5>
+                        </center>
+                        <div class="col-12">
+                            <div class="col-6 pull-right"
+                                 style="padding-left:1px;padding-top:1%; padding-bottom:1%;margin-top:40px;margin-top:2px;">
+                                <table style="width:90%;font-size:15px;">
+                                    <tbody>
+                                        <tr>
+                                            <td class="text-left" style="width:30%;">
+                                                Ship to Party
+                                            </td>
+                                            <td>
+                                                <span>
+                                                    :
+                                                    <t t-if="o.picking_type_id"
+                                                       t-esc="o.picking_type_id.warehouse_id.company_id.name"/>
+<!--                                                    <span t-if="company.email" t-field="company.email"/>-->
+<!--                                                    <span t-if="company.phone" t-field="company.phone"/>-->
+<!--                                                    <t t-if="o.picking_type_id"-->
+<!--                                                       t-esc="o.picking_type_id.warehouse_id.name"/>-->
+                                                </span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+
+                                            </td>
+                                            <td>
+                                                <address t-field="o.partner_id"
+                                                         t-options="{&quot;widget&quot;: &quot;contact&quot;, &quot;fields&quot;: [&quot;address&quot;], &quot;no_marker&quot;: True}"/>
+
+                                            </td>
+
+                                        </tr>
+                                        <tr>
+                                            <td style="width:30%;">
+                                                Ship via
+                                            </td>
+                                            <td>
+                                                <span>
+                                                    :
+                                                    <t t-if="o.shipped_via" t-esc="o.shipped_via"/>
+                                                </span>
+                                            </td>
+                                        </tr>
+
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="col-6"
+                                 style="padding-left:1px;margin-left:-5px; padding-top:1%; padding-bottom:1%;">
+                                <table style="width:100%;font-size:15px;">
+                                    <tbody>
+                                        <tr>
+                                            <td class="text-left" style="width:50%">
+                                                RFQ Number
+                                            </td>
+                                            <td>
+                                                :
+                                                <span>
+                                                    <t t-esc="o.name"/>
+                                                </span>
+                                            </td>
+
+                                        </tr>
+                                        <tr>
+                                            <td class="text-left" style="width:50%">
+                                                Date
+                                            </td>
+                                            <td>
+                                                :
+                                                <span>
+                                                    <t t-esc="o.date_order"/>
+                                                </span>
+                                            </td>
+
+                                        </tr>
+                                        <tr>
+                                            <td class="text-left" style="width:50%">
+                                                Purchase Representative
+                                            </td>
+                                            <td>
+                                                :
+                                                <span>
+                                                    <t t-esc="o.user_id.name"/>
+                                                </span>
+                                            </td>
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <br/>
+                            <br/>
+                        </div>
+                        <hr style="border-top:1px dashed black;"/>
+                        <hr style="border-top:1px dashed black;margin-top:-13px;"/>
+                        <div class="row"></div>
+                        <table class="table table-sm" name="invoice_line_table_new">
+                            <thead>
+                                <tr>
+                                    <th style="border-top:1px solid white;">Sl No</th>
+                                    <th style="border-top:1px solid white;">Thk(in)</th>
+                                    <th style="border-top:1px solid white;">Wid(in)</th>
+                                    <th style="border-top:1px solid white;">Length(in)</th>
+                                    <th style="border-top:1px solid white;">Sub Category</th>
+                                    <th style="border-top:1px solid white;">Sub Product</th>
+                                    <th style="border-top:1px solid white;">Wt(lb)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-set="seq" t-value="1"/>
+                                <tr t-foreach="o.order_line" t-as="line">
+                                    <td class="text-center">
+                                        <span t-esc="seq"/>
+                                    </td>
+                                    <t t-set="seq" t-value="seq+1"/>
+                                    <td>
+                                        <span t-esc="'{0:,.4f}'.format(float(line.thickness_in))"/>
+                                    </td>
+                                    <td>
+                                        <span t-esc="'{0:,.4f}'.format(float(line.width_in))"/>
+                                    </td>
+                                    <td>
+                                        <span t-esc="'{0:,.4f}'.format(float(line.length_in))"/>
+                                    </td>
+                                    <td>
+                                        <span t-esc="line.sub_category_id.name"/>
+                                    </td>
+                                    <td>
+                                        <span t-esc="line.product_id.name"/>
+                                    </td>
+
+
+                                    <td>
+                                        <span t-esc="int(line.product_qty)"/>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <br/>
+                        <br/>
+
+                        <!-- <p>
+                            <b>Technical Delivery Conditions:</b>
+                            <br/>
+                            <span t-field="o.technical_delivery_cond"></span>
+                        </p> -->
+
+                        <div class="row">
+                            <br/>
+                            <br/>
+                        </div>
+
+                        <div class="row"></div>
+                        <div style="padding-top:100px">
+                            <hr style="border-top:1px dashed black;"/>
+                            <hr style="border-top:1px dashed black;margin-top:-13px;"/>
+
+                            <p>
+                                <b>Terms and Conditions:</b>
+                                <br/>
+                                <span t-field="o.terms_conditions"></span>
+                            </p>
+                            <div class="row">
+                                <br/>
+                            </div>
+                            <div class="clearfix">
+
+                            </div>
+                        </div>
+                    </div>
+                </t>
+            </xpath>
+        </template>
+    </data>
+</odoo>

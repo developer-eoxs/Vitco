@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <!-- Owl Template Extend -->
+    <t t-name="SearchPanel.Category">
+        <div class="o_search_panel">
+            <section class="o_search_panel_section o_search_panel_category">
+                <t t-call="SearchPanel.SectionHeader">
+                    <t t-set="section" t-value="category"/>
+                </t>
+                <ul class="list-group d-block o_search_panel_field" t-att-data-field-name="category.fieldName">
+                    <li class="o_search_panel_category_value border-0 list-group-item" t-att-data-category-id="category.id">
+                        <header t-att-class="'list-group-item-action' + (!category.activeValueId ? ' active' : '')">
+                            <label class="o_search_panel_label mb0 d-block">
+                                <span class="o_search_panel_label_title"><b>All</b></span>
+                            </label>
+                        </header>
+                    </li>
+                    <t t-call="SearchPanel.CategoryValues">
+                        <t t-set="values" t-value="category.rootIds"/>
+                    </t>
+                </ul>
+                <div t-if="category.limitAttained" class="alert alert-warning">
+                    <span>For performance reasons, only 200 values were fetched. Some values might be missing.</span>
+                    <span t-if="category.parentField">The values have not been hierarchized.</span>
+                </div>
+            </section>
+        </div>
+    </t>
+    <t t-name="ks_search_panel_back_botton">
+        <div class="ks-phone-category-filter">
+            <button class="ks_close_catgy-modal">
+                <svg width="20" height="17" viewBox="0 0 16 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M15 8.25H1" stroke="#616266" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M8 15.5L1 8.25L8 1" stroke="#616266" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </button>
+            <span>Filter</span>
+        </div>
+    </t>
+</templates>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data noupdate="1">
+        <record id="sequence_crd" model="ir.sequence">
+            <field name="name">CRD</field>
+            <field name="code">customer.relation</field>
+            <field name="active">TRUE</field>
+            <field name="prefix">CRD-</field>
+            <field name="padding">4</field>
+            <field name="number_next">1</field>
+            <field name="number_increment">1</field>
+        </record>
+    </data>
+</odoo>

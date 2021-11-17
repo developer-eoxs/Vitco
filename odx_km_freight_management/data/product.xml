@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <!-- Freight Expenses -->
+        <record model="product.template" id="data_product_freight_new">
+            <field name="name">Freight Expenses</field>
+            <field name="type">service</field>
+            <field name="freight">True</field>
+            <field name="uom_id" ref="uom.product_uom_unit"/>
+            <field name="uom_po_id" ref="uom.product_uom_unit"/>
+        </record>
+    </data>
+</odoo>

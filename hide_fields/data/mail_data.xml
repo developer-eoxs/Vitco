@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- Sale-related subtypes for messaging / Chatter -->
+        <record id="sale.mt_order_sent" model="mail.message.subtype">
+            <field name="name">Quote sent</field>
+            <field name="res_model">sale.order</field>
+            <field name="default" eval="True"/>
+            <field name="description">Quote sent</field>
+        </record>
+
+        <record id="sale.mt_order_confirmed" model="mail.message.subtype">
+            <field name="name">Sales Order Confirmed</field>
+            <field name="res_model">sale.order</field>
+            <field name="default" eval="True"/>
+            <field name="description">Quote confirmed</field>
+        </record>
+
+        <!-- Salesteam-related subtypes for messaging / Chatter -->
+        <record id="sale.mt_salesteam_order_sent" model="mail.message.subtype">
+            <field name="name">Quote sent</field>
+            <field name="sequence">20</field>
+            <field name="res_model">crm.team</field>
+            <field name="default" eval="True"/>
+            <field name="parent_id" eval="ref('sale.mt_order_sent')"/>
+            <field name="relation_field">team_id</field>
+        </record>
+
+    <!-- Template and notification section -->
+        <template id="sale.mail_notification_paynow_online" inherit_id="mail.mail_notification_paynow"
+                name="Mail: Pay Now mail notification template">
+            <xpath expr="//t[@t-set='access_name']" position="after">
+                <t t-if="record._name == 'sale.order'">
+                    <t t-if="record.has_to_be_signed(include_draft=True)">
+                        <t t-if="record.has_to_be_paid()" t-set="access_name">Sign &amp; Pay Quote</t>
+                        <t t-else="" t-set="access_name">Accept &amp; Sign Quote</t>
+                    </t>
+                    <t t-elif="record.has_to_be_paid(include_draft=True)">
+                        <t t-set="access_name">Accept &amp; Pay Quote</t>
+                    </t>
+                    <t t-elif="record.state in ('draft', 'sent')">
+                        <t t-set="access_name">View Quote</t>
+                    </t>
+                </t>
+            </xpath>
+        </template>
+
+        <record id="sale.email_template_edi_sale" model="mail.template">
+            <field name="name">Sales Order: Send by email</field>
+            <field name="model_id" ref="sale.model_sale_order"/>
+            <field name="subject">${object.company_id.name} ${object.state in ('draft', 'sent') and 'Quote' or 'Order'} (Ref ${object.name or 'n/a' })</field>
+            <field name="email_from">${(object.user_id.email_formatted or user.email_formatted) | safe}</field>
+            <field name="partner_to">${object.partner_id.id}</field>
+            <field name="body_html" type="html">
+<div style="margin: 0px; padding: 0px;">
+    <p style="margin: 0px; padding: 0px; font-size: 13px;">
+        % set doc_name = 'quotation' if object.state in ('draft', 'sent') else 'order'
+        Hello,
+        <br/><br/>
+        Your
+        % if ctx.get('proforma'):
+            Pro forma invoice for ${doc_name} <strong>${object.name}</strong>
+            % if object.origin:
+                (with reference: ${object.origin} )
+            % endif
+            amounting in <strong>${format_amount(object.amount_total, object.pricelist_id.currency_id)}</strong> is available.
+        % else:
+            ${doc_name} <strong>${object.name}</strong>
+            % if object.origin:
+                (with reference: ${object.origin} )
+            % endif
+            amounting in <strong>${format_amount(object.amount_total, object.pricelist_id.currency_id)}</strong> is ready for review.
+        % endif
+        <br/><br/>
+        Do not hesitate to contact us if you have any questions.
+        <br/>
+    </p>
+</div>
+            </field>
+            <field name="report_template" ref="sale.action_report_saleorder"/>
+            <field name="report_name">${(object.name or '').replace('/','_')}</field>
+            <field name="lang">${object.partner_id.lang}</field>
+            <field name="user_signature" eval="False"/>
+            <field name="auto_delete" eval="True"/>
+        </record>
+
+ 
+    </data>
+</odoo>

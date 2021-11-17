@@ -1,0 +1,106 @@
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="stock_picking_view_inherit">
+            <field name="name">stock.picking.view.inherit</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.view_picking_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//button[@name='button_validate']" position="before">
+                    <button name="button_validate_contexted" string="Validate" type="object" class="oe_highlight"
+                          attrs="{'invisible': ['|', ('state', 'in', ('waiting','confirmed')), ('show_validate', '=', False)]}" groups="stock.group_stock_user"/>
+                    <button name="button_validate_contexted" string="Validate" type="object"
+                          attrs="{'invisible': ['|', ('state', 'not in', ('waiting', 'confirmed')), ('show_validate', '=', False)]}" groups="stock.group_stock_user" class="o_btn_validate"/>
+                </xpath>
+                <xpath expr="//button[@name='button_validate']" position="attributes">
+                        <attribute name="invisible">1</attribute>
+                </xpath>
+
+                <xpath expr="//field[@name='move_ids_without_package']/tree//field[@name='product_uom']"
+                       position="after">
+                    <button name="get_serial_barcode" string="Barcode" type="object" class="oe_highlight"
+                            attrs="{'invisible': [('state', '!=', 'done')]}"/>
+                </xpath>
+                <xpath expr="//field[@name='move_ids_without_package']/tree//field[@name='product_id']"
+                       position="before">
+                    <field name="sub_category_id" string="Sub Category"/>
+
+                </xpath>
+                <xpath expr="//field[@name='move_ids_without_package']/tree//field[@name='product_id']"
+                       position="after">
+                    <field name="description" string="Description"/>
+                    <field name="offer_id" string="Offer" invisible="1"/>
+                    <field name="width_in" string="Width" invisible="1"/>
+                    <field name="thickness_in" string="Thickness" invisible="1"/>
+                    <field name="length_in" string="Length_in" invisible="1"/>
+                </xpath>
+
+                <xpath expr="//field[@name='move_ids_without_package']/tree//field[@name='product_uom_qty']"
+                       position="attributes">
+                    <attribute name="widget">integer</attribute>
+                </xpath>
+                <xpath expr="//field[@name='move_ids_without_package']/tree//field[@name='quantity_done']"
+                       position="attributes">
+                    <attribute name="widget">integer</attribute>
+                </xpath>
+                <xpath expr="//field[@name='move_ids_without_package']/tree//field[@name='reserved_availability']"
+                       position="attributes">
+                    <attribute name="widget">integer</attribute>
+                </xpath>
+
+
+                <xpath expr="//notebook" position="before">
+                    <group>
+                        <group name="supplier_info" string="Supplier Info">
+                            <field name="vendor_name" string="Vendor"/>
+                            <field name="vendor_serial_number" string="Vendor Serial Number" invisible="1"/>
+
+                            <field name="bill_of_lading" invisible="1"/>
+                            <field name="vendor_location_id" invisible="1"/>
+                            <field name="is_jo_picking" invisible="1"/>
+                        </group>
+
+                        <group name="receiving_details" string="Receiving Details " invisible="1">
+                            <field name="internet_serial" attrs="{
+                                    'readonly': [('state', 'in', ('done'))],
+                                }"/>
+                            <field name="date_received" attrs="{
+                                    'readonly': [('state', 'in', ('done'))],
+                                }"/>
+                            <field name="po_number" attrs="{
+                                    'readonly': [('state', 'in', ('done'))],
+                                }"/>
+                            <field name="loc_city" attrs="{
+                                    'readonly': [('state', 'in', ('done'))],
+                                }"/>
+                            <field name="loc_warehouse" attrs="{
+                                    'readonly': [('state', 'in', ('done'))],
+                                }"/>
+                        </group>
+                    </group>
+
+                    <group invisible="1">
+                        <group string="Quality Remarks" invisible="1">
+                            <field name="vendor" attrs="{
+                                    'readonly': [('state', 'in', ('done'))],
+                                }"/>
+                            <field name="category" attrs="{
+                                    'readonly': [('state', 'in', ('done'))],
+                                }"/>
+                            <field name="internal" attrs="{
+                                    'readonly': [('state', 'in', ('done'))],
+                                }"/>
+                        </group>
+                        <group string="Shipping Details" invisible="1">
+                            <field name="packing_slip_no" attrs="{
+                                    'readonly': [('state', 'in', ('done'))],
+                                }"/>
+                            <field name="date_removed" attrs="{
+                                    'readonly': [('state', 'in', ('done'))],
+                                }"/>
+                        </group>
+                    </group>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+        <!-- Crm Form View Inherited -->
+        <record id="crm_case_form_view_oppor_inherit" model="ir.ui.view">
+            <field name="name">crm.lead.oppor.inherit.crm</field>
+            <field name="model">crm.lead</field>
+            <field name="inherit_id" ref="sale_crm.crm_case_form_view_oppor"/>
+            <field name="arch" type="xml">
+                <xpath expr="//button[@name='action_sale_quotations_new']" position="attributes">
+                    <attribute name="string">New Quote</attribute>
+                </xpath>
+                <xpath expr="//field[@name='quotation_count']" position="attributes">
+                    <attribute name="string">Quote</attribute>
+                </xpath>
+            </field>
+        </record>
+        
+</odoo>

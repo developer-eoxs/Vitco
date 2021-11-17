@@ -1,0 +1,202 @@
+<odoo>
+    <data>
+        <record id="quick_create_opportunity_form_crm_inherited" model="ir.ui.view">
+            <field name="name">crm.lead.form.quick_create.inherited</field>
+            <field name="model">crm.lead</field>
+            <field name="inherit_id" ref="crm.quick_create_opportunity_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='name']" position="attributes">
+                    <attribute name="string">Description</attribute>
+
+                </xpath>
+            </field>
+        </record>
+
+
+        <record id="crm_lead_view_inherited" model="ir.ui.view">
+            <field name="name">crm.lead.view.inherited</field>
+            <field name="model">crm.lead</field>
+            <field name="inherit_id" ref="crm.crm_lead_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//notebook/page[1]" position="before">
+                    <page string="Estimation" invisible="1">
+                        <br/>
+                        <br/>
+                        <table style="width: 35%;margin-left:3%">
+                            <tr>
+                                <td width="10%"></td>
+                                <td width="15%"></td>
+                                <td width="10%"></td>
+                            </tr>
+                            <tr>
+                                <td width="10%">
+                                    <label for="material_type" string="Type"/>
+
+                                </td>
+                                <td colspan="2">
+                                    <field name="material_type"/>
+
+                                </td>
+                                <!--                                <td width="10%"></td>-->
+                            </tr>
+                            <tr>
+                                <td width="10%">
+                                    <label for="category_id" string="Master"/>
+
+                                </td>
+                                <td colspan="2">
+                                    <field name="category_id"/>
+
+                                </td>
+                                <!--                                 <td width="10%"></td>-->
+                            </tr>
+                            <tr>
+                                <td width="10%">
+                                    <label for="sub_category_id" string="Sub Category"/>
+
+                                </td>
+                                <td colspan="2">
+                                    <field name="sub_category_id"/>
+                                </td>
+                                <!--                                  <td width="10%"></td>-->
+                            </tr>
+                            <tr>
+                                <td width="10%">
+                                    <label for="product_id" string="Sub Product"/>
+                                </td>
+                                <td colspan="2">
+                                    <field name="product_id"/>
+                                </td>
+                                <!--                                  <td width="10%"></td>-->
+                            </tr>
+
+                            <tr>
+                                <td width="10%">
+                                    <label for="width_in" string="Width(in.)"/>
+                                    <br/>
+                                </td>
+                                <td colspan="2">
+                                    <field name="width_in"/>
+                                    <span>(in.)</span>
+                                    <br/>
+                                </td>
+                                <!--                                  <td width="10%"></td>-->
+                            </tr>
+                            <tr>
+                                <td width="10%">
+                                    <label for="thickness_in" string="Thickness Range(in.)"/>
+                                    <br/>
+                                </td>
+
+                                <td width="15%">
+                                    <field name="thickness_in"/>
+                                    <span>&amp;nbsp;(in.)&amp;nbsp;&amp;nbsp;&amp;nbsp;to &amp;nbsp;</span>
+                                    <br/>
+                                </td>
+                                <td width="10%">
+                                    <field name="thickness_ul"/>
+                                    <span>(in.)</span>
+                                    <br/>
+                                </td>
+                            </tr>
+                            <tr attrs="{'invisible': [('material_type', '=', 'coil')]}">
+                                <td width="10%">
+                                    <label for="length_in" string="Length(in.)"/>
+                                    <br/>
+                                </td>
+
+                                <!--                                <td width="15%">-->
+                                <td colspan="2">
+                                    <field name="length_in" attrs="{'readonly': [('material_type', '=', 'coil')]}"/>
+                                    <span>(in.)</span>
+                                    <br/>
+                                </td>
+                                <!--                                <td width="10%"></td>-->
+                            </tr>
+
+                            <tr attrs="{'invisible': [('material_type', '=', 'coil')]}">
+                                <td width="10%">
+                                    <label for="number_of_sheets" string="Sheets Required"/>
+                                    <br/>
+                                </td>
+
+                                <td colspan="2">
+                                    <field name="number_of_sheets"/>
+                                    <br/>
+                                </td>
+                                <!--                                 <td width="10%"></td>-->
+                            </tr>
+                            <tr>
+                                <td width="10%">
+                                    <label for="weight_lb" string="Weight"/>
+                                    <br/>
+
+                                </td>
+                                <td colspan="2">
+                                    <field name="weight_lb" attrs="{'readonly': [('material_type', '=', 'sheet')]}"
+                                           force_save="1" widget="integer"/>
+
+                                    <span>(lbs)</span>
+                                    <br/>
+                                </td>
+                                <td width="10%"></td>
+                            </tr>
+                            <tr>
+                                <td width="10%">
+                                    <label for="density" string="Density"/>
+                                    <br/>
+                                    <br/>
+                                </td>
+                                <td colspan="2">
+                                    <field name="density" readonly="1"/>
+                                    <span>(lbs/in³)</span>
+                                    <br/>
+                                    <br/>
+                                </td>
+                                <!--                                  <td width="10%"></td>-->
+                            </tr>
+                            <tr>
+                                <td width="10%"></td>
+                                <td width="15%"></td>
+                                <td width="10%"></td>
+                            </tr>
+
+                            <tr>
+                                <!--                                <td></td>-->
+                                <td colspan="3">
+                                    <button style="margin-left:45%" class="btn btn-primary" string="Estimate"
+                                            name="estimation_calculator" type="object"/>
+                                </td>
+                            </tr>
+                        </table>
+                        <br/>
+                        <br/>
+                        <field name="spec_ids" no_label="1">
+                            <tree create="false" editable="False" decoration-success="(less_wastage==True)">
+                                <!--                                <field name="select" string=""/>-->
+                                <field name="less_wastage" invisible="1"/>
+
+                                <field name="category_id" invisible="1"/>
+                                <field name="sub_category_id"/>
+                                <field name="product_id"/>
+                                <field name="lot_id" string="Lot Number"/>
+                                <field name="width_in"/>
+                                <field name="thickness_in"/>
+                                <field name="length_in"/>
+                                <field name="weight_lb" widget="integer"/>
+                                <field name="product_uom_id"/>
+                                <field name="number_of_sheets" string="No. of Sheets"
+                                       attrs="{'column_invisible': [('parent.material_type', '=', 'coil')]}"/>
+
+                                <field name="balance" string="Balance(lbs)"/>
+                                <field name="balance_percent"/>
+                                <field name="wastage" string="Residue(lbs)" optional="hide"/>
+                            </tree>
+                        </field>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+    </data>
+
+</odoo>

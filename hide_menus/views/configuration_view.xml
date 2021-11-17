@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+      <!--Assigned Configuration Menus Access to Administration/setting -->
+
+      <!-- Time Off configuration -->
+      <menuitem
+        id="hr_holidays.menu_hr_holidays_configuration"
+        name="Configuration"
+        parent="hr_holidays.menu_hr_holidays_root"
+        sequence="5"
+        groups="base.group_system"/>
+
+      <menuitem 
+        id="hr_expense.menu_hr_expense_configuration" 
+        name="Configuration" 
+        parent="hr_expense.menu_hr_expense_root"
+        sequence="100"
+        groups="base.group_system"/>
+
+    </data>
+</odoo>

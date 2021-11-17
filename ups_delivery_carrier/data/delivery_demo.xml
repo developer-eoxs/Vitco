@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data noupdate="1">
+        <!-- Copyright (c) 2017-Present Webkul Software Pvt. Ltd. (<https://webkul.com/>) -->
+        <!-- See LICENSE URL <https://store.webkul.com/license.html/> for full copyright and licensing details. -->
+
+        <record forcecreate= "True" id="product_product_delivery_ups" model="product.product">
+            <field name="name">Delivery by UPS</field>
+            <field name="default_code">Delivery</field>
+            <field name="type">service</field>
+            <!-- <field name="taxes_id">None</field> -->
+            <field name="standard_price">10.0</field>
+            <field name="list_price">10.0</field>
+        </record>
+
+        <record forcecreate= "True" id="ups_delivery_carrier" model="delivery.carrier">
+            <field name="name">UPS Delivery</field>
+            <field name="delivery_type">ups</field>
+            <field name="product_id" ref="product_product_delivery_ups"></field>
+            <field name="ups_service_type" ref="ups_service_GRD"/>
+            <field name="packaging_id" ref="ups_package_CP"/>
+            <field name="ups_pickup_type" ref="ups_pickup_cc"/>
+            <field name="extra_service_price">10</field>
+            <field name="void_shipment">True</field>
+            <field name="uom_id" ref='uom.product_uom_lb'/>
+            <field name='delivery_uom'>LB</field>
+            <field name="image" type="base64" file="ups_delivery_carrier/static/src/img/logo-ups.png"/>
+        </record>
+
+        <record forcecreate= "True" id="product_product_delivery_ups_express" model="product.product">
+            <field name="name">Delivery by UPS Express</field>
+            <field name="default_code">Delivery</field>
+            <!-- <field name="taxes_id">None</field> -->
+            <field name="type">service</field>
+            <field name="standard_price">10.0</field>
+            <field name="list_price">10.0</field>
+        </record>
+
+        <record forcecreate= "True" id="ups_express_delivery_carrier" model="delivery.carrier">
+            <field name="name">UPS Delivery Express</field>
+            <field name="delivery_type">ups</field>
+            <field name="product_id" ref="product_product_delivery_ups_express"></field>
+            <field name="ups_service_type" ref="ups_service_WWE"/>
+            <field name="packaging_id" ref="ups_package_UEB"/>
+            <field name="ups_pickup_type" ref="ups_pickup_cc"/>
+            <field name="extra_service_price">10</field>
+            <field name="void_shipment">True</field>
+            <field name="uom_id" ref='uom.product_uom_lb'/>
+            <field name='delivery_uom'>LB</field>
+            <field name="image" type="base64" file="ups_delivery_carrier/static/src/img/logo-ups.png"/>
+        </record>
+
+    </data>
+</openerp>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <template id="assets_frontend" inherit_id="website.assets_frontend" name="Website Saless Stock">
+        <xpath expr="." position="inside">
+            <link href="/odx_website_steel_cutprice/static/src/scss/main.scss"
+                      rel="stylesheet" type="text/scss"/>
+            <script type="text/javascript" src="/odx_website_steel_cutprice/static/src/js/variant_mixin.js" />
+            <script type="text/javascript" src="/odx_website_steel_cutprice/static/src/js/calculate_price.js" />
+        </xpath>
+    </template>
+
+
+    </data>
+</odoo>

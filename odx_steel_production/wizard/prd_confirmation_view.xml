@@ -1,0 +1,21 @@
+<odoo>
+    <data>
+        <record id="prd_production_confirm_form_view" model="ir.ui.view">
+            <field name="name">Production Confirmed</field>
+            <field name="model">production.confirm.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Production Confirmed">
+                    <group>
+                        <p><strong>Production Order is Generated</strong></p>
+                    </group>
+
+                    <footer>
+<!--                        <button string="Continue" name="cancel_job_order" type="object"/>-->
+                        <button string="Close" class="btn-default" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+    </data>
+</odoo>

@@ -1,0 +1,55 @@
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="crd_relation_lines_tree_view">
+            <field name="name">customer.relation.lines.tree.view</field>
+            <field name="model">customer.relation.lines</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="category_id"/>
+                    <field name="sub_category_id"/>
+                    <field name="product_id"/>
+                    <field name="width_lower_in"/>
+                    <field name="width_upper_in"/>
+                    <field name="thickness_lower_in"/>
+                    <field name="thickness_upper_in"/>
+                    <field name="company_id" optional="hide"/>
+                    <field name="crd_partner_id" optional="hide" force_save="1"/>
+                    <field name="crd_id" optional="hide" force_save="1"/>
+                    <field name="count"/>
+
+                    <button type="object"
+                            name="action_search_product_by_line"
+                            class="oe_highlight" string="Compare By Line"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="crd_relation_lines_search_view">
+            <field name="name">crd.relation.lines.search.view</field>
+            <field name="model">customer.relation.lines</field>
+            <field name="arch" type="xml">
+                <search>
+                    <group expand='0' string='Group by...'>
+                        <filter name="crd_partner_id" string='Partner' context="{'group_by' : 'crd_partner_id'}"/>
+                    </group>
+
+                </search>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_crd_relation_lines">
+            <field name="name">CRD Details</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">customer.relation.lines</field>
+            <field name="view_mode">tree,search</field>
+            <field name="context">{
+                'search_default_crd_partner_id': 1,}
+            </field>
+        </record>
+
+        <menuitem id="menu_crd_relation_lines" name="CRD details" parent="menu_crd"
+                  action="action_crd_relation_lines"
+                  sequence="2"/>
+
+    </data>
+</odoo>

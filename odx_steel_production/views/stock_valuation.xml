@@ -1,0 +1,17 @@
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="stock_valuation_layer_tree_inherited_view">
+            <field name="name">stock.valuation.layer.inherit</field>
+            <field name="model">stock.valuation.layer</field>
+            <field name="inherit_id" ref="stock_account.stock_valuation_layer_tree"/>
+            <field name="arch" type="xml">
+                <field name="company_id" position="after">
+                    <field name="lot_ids" widget="many2many_tags"/>
+                </field>
+
+            </field>
+        </record>
+    </data>
+
+
+</odoo>

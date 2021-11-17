@@ -1,0 +1,22 @@
+<odoo>
+    <data>
+        <record id="jo_cancel_form_view" model="ir.ui.view">
+            <field name="name">Cancel Job Order</field>
+            <field name="model">job.order.cancel.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Cancel Job Order">
+                    <group>
+                        <p><strong>You are about to cancel the Job Order. Do you want to continue?</strong></p>
+                    </group>
+
+                    <footer>
+                        <button string="Continue" name="cancel_job_order" type="object"/>
+                        <button string="Cancel" class="btn-default" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+    </data>
+</odoo>
+

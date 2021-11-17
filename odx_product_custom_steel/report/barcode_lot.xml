@@ -1,0 +1,290 @@
+<odoo>
+    <template id="report_serial_number_barcode_for_lot">
+        <t t-call="web.html_container">
+            <t t-call="web.basic_layout">
+                <t t-foreach="docs" t-as="o">
+                    <div class="page">
+                        <div name="barcode" style="margin:3px;">
+                            <table style="padding:0px;" width="100%" class="table table-bordered">
+                                <!--                                <t t-if="o.lot_id">-->
+                                <tr style="padding:0px;">
+                                    <td style="font-size:12px;padding:0px;" width="60%">
+                                        <b>MATERIAL DESCRIPTION:</b>
+                                        <br/>
+                                        <b>
+                                          <span style="font-size:12px" t-field="o.sub_category_id"/>&amp;nbsp;<span style="font-size:12px;" t-field="o.product_id"/>
+                                        </b>
+                                    </td>
+                                    <td style="font-size:12px;padding:0px;" width="25%">
+                                        <b>DATE RECEIVED</b>
+                                        <br/>
+                                        <span style="font-size:12px;text-align:center" t-field="o.date_received" t-options='{"format": "dd/MM/yyyy"}'/>
+                                    </td>
+                                    <td style="font-size:12px;padding:0px;" width="15%">
+                                        <b>LOCATION:</b>
+                                        <br/>
+                                        <span style="font-size:11px;text-align:center" t-field="o.loc_warehouse"/>
+                                    </td>
+                                </tr>
+
+                                <tr style="padding:0px;">
+                                    <td style="font-size:12px;padding:0px;" width="60%">
+                                        <b>SIZE:</b>
+                                        <br/>
+                                        (
+                                        <span style="font-size:12px;text-align:center;" t-field="o.thickness_in"/>
+
+                                        X
+                                        <span style="font-size:12px;text-align:center;" t-field="o.width_in"/>)
+
+                                        IN
+                                        <br/>
+                                        (
+                                        <span style="font-size:12px;text-align:center;" t-field="o.thickness_mm"/>
+
+                                        X
+                                        <span style="font-size:12px;text-align:center;" t-field="o.width_mm"/>)
+
+                                        MM
+                                    </td>
+                                    <td colspan="2" style="font-size:12px;padding:0px;" width="40%">
+                                        <b>WEIGHT:</b>
+                                        <br/>
+                                        <span style="font-size:12px;text-align:center;" t-field="o.product_qty" t-options='{"widget": "integer"}'/>
+                                        LB
+                                        <br/>
+                                        <span style="font-size:12px;text-align:center;" t-field="o.weight_kg" t-options='{"widget": "integer"}'/>
+                                        KG
+
+                                    </td>
+                                </tr>
+                                <tr style="padding:0px;">
+                                    <td colspan="3" style="font-size:12px;padding:0px;">
+                                        <b>QUALITY NOTES:</b>
+                                        <br/>
+                                        <span style="font-size:14px;text-align:left;" t-field="o.quality"/>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td colspan="3">
+                                        <center>
+                                            <h3>
+                                                <img t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s' % ('Code128', o.name, 600, 100)"
+                                                     style="width:350px;height:30px"/>
+                                            </h3>
+                                        </center>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3" style="font-size:24px;font-family:sans-serif">
+
+                                        <center>
+                                            <b>
+                                                <span t-field="o.name"/>
+                                                <span>&#160;</span>
+                                            </b>
+                                        </center>
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="padding:0px;">
+                                        <b>
+                                            <span style="font-size:12px;text-align:left;">R#</span>
+                                        </b>
+                                        <br/>
+
+                                        <span style="font-size:14px;text-align:right;"
+                                              t-field="o.internet_serial"/>
+                                    </td>
+                                    <td colspan="2" style="padding:0px;">
+                                        <b>
+                                            <span style="font-size:12px;text-align:left;">BILL OF LADING:</span>
+                                        </b>
+                                        <br/>
+                                        <span style="font-size:14px;text-align:right;"
+                                              t-field="o.bill_of_lading"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td  style="padding:0px;">
+                                        <b>
+                                            <span style="font-size:12px;text-align:left;">VENDOR</span>
+                                        </b>
+                                        <br/>
+
+                                        <span style="font-size:14px;text-align:right;"
+                                              t-field="o.vendor_id"/>
+                                    </td>
+                                    <td  style="padding:0px;">
+                                        <b>
+                                            <span style="font-size:12px;text-align:left;">PART#</span>
+                                        </b>
+                                        <br/>
+                                        <span style="font-size:14px;text-align:right;"
+                                              t-field="o.part_number"/>
+
+                                    </td>
+                                    <td  style="padding:0px;">
+                                        <b>
+                                            <span style="font-size:12px;text-align:left;">TAG#</span>
+                                        </b>
+                                        <br/>
+                                        <span style="font-size:14px;text-align:right;"
+                                              t-field="o.tag_number"/>
+                                    </td>
+
+                                </tr>
+
+                                <tr>
+                                    <td  style="padding:0px;">
+                                        <b>
+                                            <span style="font-size:12px;text-align:left;">MILL</span>
+                                        </b>
+                                        <br/>
+                                        <span style="font-size:14px;text-align:right;"
+                                              t-field="o.vendor_location_id"/>
+                                    </td>
+                                    <td  style="padding:0px;">
+                                        <b>
+                                            <span style="font-size:12px;text-align:left;">PO#</span>
+                                        </b>
+                                        <br/>
+
+                                        <span style="font-size:14px;text-align:right;"
+                                              t-field="o.po_number"/>
+                                    </td>
+                                    <td  style="padding:0px;">
+                                        <b>
+                                            <span style="font-size:12px;text-align:left;">SO#</span>
+                                        </b>
+                                        <br/>
+                                        <span style="font-size:14px;text-align:right;"
+                                              t-field="o.sale_order_id"/>
+                                    </td>
+
+                                </tr>
+
+                                <tr>
+                                    <td  style="padding:0px;">
+                                        <b>
+                                            <span style="font-size:12px;text-align:left;">LIFT NUMBER</span>
+                                        </b>
+                                        <br/>
+
+                                        <span style="font-size:14px;text-align:right;"
+                                              t-field="o.lift_number"/>
+                                    </td>
+                                    <td  style="padding:0px;">
+                                        <b>
+                                            <span style="font-size:12px;text-align:left;">MILL SERIAL</span>
+                                        </b>
+                                        <br/>
+                                        <span style="font-size:14px;text-align:right;"
+                                              t-field="o.vendor_serial_number"/>
+                                    </td>
+                                    <td  style="padding:0px;">
+                                        <b>
+                                            <span style="font-size:12px;text-align:left;">ROCKWELL</span>
+                                        </b>
+                                        <br/>
+
+                                        <span style="font-size:14px;text-align:right;"
+                                              t-field="o.rockwell"/>
+
+                                    </td>
+
+                                </tr>
+                                <tr>
+                                    <td  style="padding:0px;">
+                                        <b>
+                                            <span style="font-size:12px;text-align:left;">HEAT NUMBER</span>
+                                        </b>
+                                        <br/>
+                                        <span style="font-size:14px;text-align:right;"
+                                              t-field="o.heat_number"/>
+                                    </td>
+                                    <td  style="padding:0px;">
+                                        <b>
+                                            <span style="font-size:12px;text-align:left;">TENSILE</span>
+                                        </b>
+                                        <br/>
+                                        <span style="font-size:14px;text-align:right;"
+                                              t-field="o.tensile_mpa"/>
+                                    </td>
+                                    <td  style="padding:0px;">
+                                        <b>
+                                            <span style="font-size:12px;text-align:left;">YIELD</span>
+                                        </b>
+                                        <br/>
+
+                                        <span style="font-size:14px;text-align:right;"
+                                              t-field="o.yield_mpa"/>
+                                    </td>
+
+                                </tr>
+
+                                <!--                                </t>-->
+                            </table>
+                            <hr/>
+                            <table width="100%">
+                                <tr>
+                                    <td width="35%">
+
+                                        <span style="width:50px;height:40px;">
+                                            <img t-if="o.company_id.logo"
+                                                 t-att-src="image_data_uri(o.company_id.logo)"
+                                                 style="max-height:45pt;max-width:90%" alt="Company Logo"/>
+                                        </span>
+                                    </td>
+                                    <td width="65%">
+                                        <b>
+                                            <span style="font-size:14px;text-align:center;"
+                                                  t-field="o.company_id.name"/>
+                                        </b>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <!--                                         <span style="font-size:14px;text-align:center;"-->
+                                        <!--                                                  t-field="o.lot_id.company_id.address"/>-->
+                                    </td>
+                                </tr>
+                            </table>
+                            <br/>
+
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+
+
+    <record id="eg_paperformat_serial_for_lot" model="report.paperformat">
+        <field name="name">Lot and Barcode</field>
+        <field name="default" eval="True"/>
+        <field name="format">custom</field>
+        <field name="page_height">103</field>
+        <field name="page_width">145</field>
+        <field name="orientation">Landscape</field>
+        <field name="margin_top">3</field>
+        <field name="margin_bottom">0</field>
+        <field name="margin_left">0</field>
+        <field name="margin_right">0</field>
+        <field name="dpi">90</field>
+    </record>
+
+    <report
+            string="Lot/Barcode"
+            id="action_serial_barcode_generator_lot"
+            model="stock.production.lot"
+            report_type="qweb-pdf"
+            name="odx_product_custom_steel.report_serial_number_barcode_for_lot"
+            file="odx_product_custom_steel.report_serial_number_barcode_for_lot"
+            paperformat="odx_product_custom_steel.eg_paperformat_serial_for_lot"
+            menu="True"
+    />
+
+</odoo>

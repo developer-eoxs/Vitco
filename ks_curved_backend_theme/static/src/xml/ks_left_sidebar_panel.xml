@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    <t t-name="ks_curved_backend_theme.side_appbar">
+		<div class="ks_favt_apps">
+			<button type="button" aria-label="Menu" title="Menu"
+                    class="fa fa-chevron-right left_sidebar_arrow btn btn-secondary"/>
+			<ul t-if="widget.fav_bar_menu()" class="ks_app_sidebar_menu">
+				<t t-foreach="widget.getApps()" t-as="app">
+					<t t-if="app.ks_fav_app">
+						<li class="nav-item ks_menu_list">
+							<a t-attf-href="#menu_id=#{app.menuID}&amp;action_id=#{app.actionID}"
+							   t-att-data-menu-id="app.menuID"
+							   t-att-data-menu-xmlid="app.xmlID"
+							   t-att-data-action-id="app.actionID"
+							   class="nav-link ks_app" role="menuitem">
+								<img t-if="app.web_icon_data"
+									 t-att-alt="app.name"
+									 t-att-title="app.name"
+									 class="ks_app_icon" t-attf-src="data:image/png;base64,#{app.web_icon_data}"/>
+								<div t-elif="menu.web_icon" class="o_app_icon o_app_icon_has_pictogram">-->
+									<i t-attf-class="#{menu.web_icon.split(',')[0]} fa-lg fa-fw"
+									   t-attf-style="color: #{menu.web_icon.split(',')[1]};"
+									   t-att-title="app.name"/>
+								</div>
+								<img t-else=""
+									 t-attf-src="/ks_curved_backend_theme/static/description/icon.png"
+									 t-att-alt="app.name" class="ks_app_sidebar_menuitem"
+									 t-att-title="app.name"/>
+								<span class="ks_app_name">
+									<t t-esc="app.name"/>
+								</span>
+							</a>
+						</li>
+					</t>
+				</t>
+			</ul>
+		</div>
+    </t>
+
+    <t t-extend="UserMenu">
+         <t t-jquery=".dropdown-menu-right" t-operation="prepend">
+             <div class="ks-user-info-inside-dropdown border-bottom pb-2 px-3">
+                 <span class="oe_topbar_name"/>
+             </div>
+         </t>
+	</t>
+
+    <t t-extend="UserMenu.Actions">
+		<t t-jquery="a[data-menu='documentation']" t-operation='prepend'>
+			<img class="ks-profile-icon mr-2" src="/ks_curved_backend_theme/static/src/images/icons/document-icon.svg"
+                 alt=""/>
+		</t>
+        <t t-jquery="a[data-menu='support']" t-operation='prepend'>
+			<img class="ks-profile-icon mr-2" src="/ks_curved_backend_theme/static/src/images/icons/support-icon.svg"
+                 alt=""/>
+		</t>
+        <t t-jquery="a[data-menu='shortcuts']" t-operation='prepend'>
+			<img class="ks-profile-icon mr-2" src="/ks_curved_backend_theme/static/src/images/icons/shortcut-icon.svg"
+                 alt=""/>
+		</t>
+        <t t-jquery="a[data-menu='settings']" t-operation='prepend'>
+			<img class="ks-profile-icon mr-2" src="/ks_curved_backend_theme/static/src/images/icons/profile-icon.svg"
+                 alt=""/>
+		</t>
+        <t t-jquery="a[data-menu='account']" t-operation='prepend'>
+			<img class="ks-profile-icon mr-2" src="/ks_curved_backend_theme/static/src/images/icons/account-icon.svg"
+                 alt=""/>
+		</t>
+        <t t-jquery="a[data-menu='logout']" t-operation='prepend'>
+			<img class="ks-profile-icon mr-2" src="/ks_curved_backend_theme/static/src/images/icons/logout-icon.svg"
+                 alt=""/>
+		</t>
+	</t>
+
+</templates>

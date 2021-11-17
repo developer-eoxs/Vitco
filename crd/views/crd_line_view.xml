@@ -1,0 +1,63 @@
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="crd_lot_lines_tree_view">
+            <field name="name">crd.lot.lines.tree.view</field>
+            <field name="model">crd.lot.lines</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="select"/>
+                    <field name="category_id"/>
+                    <field name="sub_category_id"/>
+                    <field name="product_id"/>
+                    <field name="lot_id"/>
+                    <field name="width_in"/>
+                    <field name="thickness_in"/>
+                    <field name="product_qty"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="crd_lot_lines_form_view">
+            <field name="name">crd.lot.lines.form.view</field>
+            <field name="model">crd.lot.lines</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group>
+                        <field name="select"/>
+                        <field name="category_id"/>
+                        <field name="sub_category_id"/>
+                        <field name="product_id"/>
+                        <field name="lot_id"/>
+                        <field name="width_in"/>
+                        <field name="thickness_in"/>
+                        <field name="product_qty"/>
+                    </group>
+
+                </form>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="crd_lot_lines_search_view">
+            <field name="name">crd.lot.lines.search.view</field>
+            <field name="model">crd.lot.lines</field>
+            <field name="arch" type="xml">
+                <search>
+                    <group expand='0' string='Group by...'>
+                        <filter name="sub_category_id_new" string='Sub Category' context="{'group_by' : 'sub_category_id'}"/>
+                    </group>
+
+                </search>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="crd_lot_lines_action">
+            <field name="name">CRD Lot Lines</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">crd.lot.lines</field>
+            <field name="view_mode">tree,search</field>
+            <field name="context">{
+                'search_default_group_by_sub_category_id_new': 1,}
+            </field>
+        </record>
+
+    </data>
+</odoo>

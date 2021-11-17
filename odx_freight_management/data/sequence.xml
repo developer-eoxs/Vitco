@@ -1,0 +1,25 @@
+<odoo>
+    <data>
+        <record id="odx_freight_custom_sequence" model="ir.sequence">
+            <field name="name">Freight Sequence</field>
+            <field name="code">custom.freight.sequence</field>
+            <field name="prefix">FRM/</field>
+            <field name="padding">4</field>
+            <field name="company_id" eval="False"/>
+        </record>
+        <record id="odx_freight_line_custom__sequence" model="ir.sequence">
+            <field name="name">Freight Line Sequence</field>
+            <field name="code">freight.line</field>
+            <field name="prefix">INT/</field>
+            <field name="padding">4</field>
+            <field name="company_id" eval="False"/>
+        </record>
+        <record id="odx_freight_location__sequence" model="ir.sequence">
+            <field name="name">Freight location Sequence</field>
+            <field name="code">frm.location</field>
+            <field name="prefix">LOC/</field>
+            <field name="padding">4</field>
+            <field name="company_id" eval="False"/>
+        </record>
+    </data>
+</odoo>

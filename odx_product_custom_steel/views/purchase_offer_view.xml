@@ -1,0 +1,120 @@
+<odoo>
+    <data>
+        <record id="purchase_offer_tree_view" model="ir.ui.view">
+            <field name="name">purchase.offer.tree.view</field>
+            <field name="model">purchase.offer</field>
+            <field name="arch" type="xml">
+                <tree string="Offers">
+                    <field name="select"/>
+                    <field name="name" string="Name"/>
+                    <field name="product_category_id"/>
+                    <field name="sub_category_id"/>
+                    <field name="product_id"/>
+                    <field name="bids"/>
+                    <field name="product_group"/>
+                    <field name="material"/>
+                    <field name="batch"/>
+                    <field name="gauge"/>
+                    <field name="width_in"/>
+                    <field name="weight_lbs"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="purchase_offer_form_view" model="ir.ui.view">
+            <field name="name">purchase.offer.form.view</field>
+            <field name="model">purchase.offer</field>
+            <field name="arch" type="xml">
+                <form string="Offers">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="purchase_ref_id" invisible="1"/>
+
+                                <field name="name" string="Name"/>
+                                <field name="product_category_id"/>
+                                <field name="sub_category_id"/>
+                                <field name="product_id"/>
+                                <field name="bids"/>
+                                <field name="product_group"/>
+                                <field name="material"/>
+                                <field name="batch"/>
+                                <field name="gauge"/>
+                                <field name="width_in"/>
+                                <field name="weight_lbs" widget="integer"/>
+                                <field name="ordered_grade"/>
+                                <field name="comment"/>
+                                <field name="notes"/>
+                                <field name="length_ft"/>
+                                <field name="inner_dia"/>
+                                <field name="outer_dia"/>
+                                <field name="heat_number"/>
+
+                            </group>
+
+                            <group string="Chemical Properties">
+                                <group>
+                                    <field name="comp_c"/>
+                                    <field name="comp_mn"/>
+                                    <field name="comp_p"/>
+                                    <field name="comp_s"/>
+                                    <field name="comp_si"/>
+                                    <field name="comp_al"/>
+                                    <field name="comp_al_total"/>
+
+                                    <field name="comp_nb"/>
+                                    <field name="comp_ti"/>
+                                    <field name="comp_b"/>
+                                </group>
+                                <group>
+                                    <field name="comp_cu"/>
+                                    <field name="comp_as"/>
+                                    <field name="comp_cr"/>
+                                    <field name="comp_co"/>
+
+                                    <field name="comp_mo"/>
+                                    <field name="comp_n"/>
+                                    <field name="comp_ni"/>
+                                    <field name="comp_v"/>
+                                    <field name="comp_pb"/>
+                                    <field name="comp_ca"/>
+                                </group>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="purchase_offer_search_view">
+            <field name="name">purchase.offer.search.view</field>
+            <field name="model">purchase.offer</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="purchase_ref_id"/>
+
+                    <group expand="1" string="Group By">
+                        <filter name="purchase_ref_id" string="Purchase Order" domain="[]"
+                                context="{'group_by':'purchase_ref_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record id="action_overall_offers" model="ir.actions.act_window">
+            <field name="name">Overall Offers</field>
+            <field name="res_model">purchase.offer</field>
+            <field name="view_mode">tree,form,search</field>
+            <field name="search_view_id" ref="purchase_offer_search_view"/>
+            <field name="context">{'search_default_group_by_purchase_ref_id': 1}</field>
+        </record>
+
+
+        <menuitem action="action_overall_offers"
+                  id="overall_offers_imported"
+                  parent="purchase.menu_procurement_management"
+                  sequence="102"
+                  name="Overall Offers"/>
+
+    </data>
+</odoo>

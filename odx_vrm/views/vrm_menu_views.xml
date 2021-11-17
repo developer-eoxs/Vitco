@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<odoo>
+        <menuitem
+            id="vrm_menu_sales"
+            name="Purchase"
+            parent="vrm_menu_root"
+            sequence="1"/>
+
+        <menuitem id="sales_team_menu_team_pipeline"
+            name="Team Pipelines"
+            parent="vrm_menu_sales"
+            action="sales_team.crm_team_salesteams_pipelines_act"
+            sequence="4"/>
+
+        <menuitem id="res_partner_menu_customer_vrm"
+            name="Customers"
+            parent="vrm_menu_sales"
+            action="base.action_partner_form"
+            sequence="5"/>
+
+        <menuitem id="vrm_menu_leads"
+            name="Leads"
+            parent="vrm_menu_root"
+            groups="crm.group_use_lead"
+            sequence="5"/>
+</odoo>

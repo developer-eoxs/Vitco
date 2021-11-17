@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="bill_layout_header">
+        <t t-foreach="docs" t-as="o">
+            <div class="header">
+                <div class="row">
+                    <div class="col-xs-3">
+                        <h1 style="padding-top:30px;padding-left:100px;font-weight:bold">
+                            <span t-field="o.company_id.name"/>
+                        </h1>
+                    </div>
+                    <div style="text-align:left;padding-left:550px;">
+                        <h4>
+                            <strong>Bill Of Lading</strong>
+
+                        </h4>
+                        <table style="width:50%" class="table table-bordered">
+                            <tr>
+                                <th width="30%">Date</th>
+                                <th width="70%">BOL Number</th>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <span t-field="o.date_done" t-options='{"format": "dd/MM/yyyy"}'/>
+                                </td>
+                                <td><span t-field="o.name"/></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
+
+    <template id="bill_of_lading">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="web.basic_layout">
+                    <t t-call="odx_product_custom_steel.bill_layout_header"></t>
+                    <div class="page">
+                        <div class="row ">
+                            <div style="width:500px;">
+                                <table style="width:70%" class="table table-bordered">
+                                    <tr>
+                                        <th>Shipping To</th>
+                                        <tr>
+                                            <td>
+                                                <address t-field="o.partner_id"
+                                                         t-options='{"widget": "contact", "fields": ["address", "name"], "no_marker": True}'/>
+                                            </td>
+                                        </tr>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div style="width:630px;padding-left:300px">
+                                <table style="width:100%" class="table table-bordered">
+                                    <tr>
+                                        <th>Invoice To</th>
+                                        <tr>
+                                            <td>
+                                                <address t-field="o.partner_id"
+                                                         t-options='{"widget": "contact", "fields": ["address", "name"], "no_marker": True}'/>
+                                            </td>
+                                        </tr>
+                                    </tr>
+
+                                </table>
+
+                            </div>
+                        </div>
+                        <br/>
+                        <div style="padding-left:420px">
+                            <table class="table table-bordered"
+                                   style="text-align: center; vertical-align: middle;width:700px">
+                                <thead>
+                                    <th t-if="o.picking_type_id.code == 'incoming'">PO Number</th>
+                                    <th t-if="o.picking_type_id.code == 'outgoing'">SO Number</th>
+                                    <th>Terms</th>
+                                    <th>Due Date</th>
+                                    <th>Rep</th>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td t-if="o.picking_type_id.code == 'incoming'">
+                                            <span t-esc="o.origin"/>
+                                        </td>
+                                         <td t-if="o.picking_type_id.code == 'outgoing'">
+                                            <span t-esc="o.origin"/>
+                                        </td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div>
+                            <table class="table table-bordered">
+
+                                <thead>
+                                    <th style="text-align: center; vertical-align: middle;">S/No</th>
+                                    <th style="text-align: center; vertical-align: middle;">Item</th>
+                                    <th style="text-align: center; vertical-align: middle;">Description</th>
+                                    <th style="text-align: center; vertical-align: middle;">Qty</th>
+                                    <th style="text-align: center; vertical-align: middle;">Unit</th>
+                                    <th></th>
+                                </thead>
+                                <t t-set="sl_no" t-value="1"/>
+                                <t t-set="weight_sum" t-value="0"/>
+                                <t t-foreach="o.move_line_ids_without_package" t-as="line">
+                                    <tr>
+                                        <td class="text-center">
+                                            <span t-esc="sl_no"/>
+                                        </td>
+                                        <td>
+                                            <span t-field="line.product_id"/>
+                                        </td>
+                                        <td>
+                                            <span t-field="line.product_id.categ_id"/>
+                                            <span>/</span>
+                                            <span t-field="line.product_id"/>
+                                             <span>(</span><span t-field="line.lot_id"/><span>)</span>
+                                        </td>
+                                        <td>
+                                            <span t-field="line.qty_done"/>
+                                        </td>
+                                        <td>
+                                            <span t-field="line.product_uom_id"/>
+                                        </td>
+                                        <td width="10%">
+                                        </td>
+
+                                    </tr>
+                                    <t t-set="sl_no" t-value="sl_no+1"/>
+                                    <t t-set="weight_sum" t-value="weight_sum+line.qty_done"/>
+                                </t>
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td style="text-align: center; vertical-align: middle;">Total Weight</td>
+                                    <td>
+                                        <span t-esc="weight_sum"/>
+                                    </td>
+                                    <td>Total Skids/Coils</td>
+                                    <td>
+                                        <span t-esc="sl_no-1"/>
+                                    </td>
+
+                                </tr>
+                                <tr>
+                                    <td colspan="6">All shipment are to be inspected by you upon delivery.No goods are
+                                        to be returned back without our written consent.
+                                        Liability on all claims for any and all defective material is limited to the
+                                        invoice value of the material shipped
+                                        unless otherwise specifically agreed to.Any claim must be made within 5 days of
+                                        receipt of goods.Orders reported on our books are subject to prices in effect.Right is reserved to make corrections in prices
+                                        due to stenographic or clerical errors.
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="footer">
+                            <div class="row">
+                                <div style="padding-left:600px">
+                                    <p>Received By:</p>
+                                </div>
+                                <br/>
+                                <br/>
+
+                            </div>
+
+                            <div>
+                                <center>
+                                    <span>*</span><span>&amp;nbsp;</span><span t-if="o.company_id.name" t-esc="o.company_id.name"/><span>&amp;nbsp;</span><span>*</span>
+                                   <span>Email:</span> <span>&amp;nbsp;</span>
+                                    <span t-if="o.company_id.email" t-esc="o.company_id.email"/> <span>&amp;nbsp;</span><span>*</span>
+                                    <span>Phone:</span> <span>&amp;nbsp;</span><span t-if="o.company_id.phone" t-esc="o.company_id.phone"/> <span>&amp;nbsp;</span><span>*</span>
+                                </center>
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

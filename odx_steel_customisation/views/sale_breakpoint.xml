@@ -1,0 +1,87 @@
+<odoo>
+     <data>
+
+     <!-- <Pricing Breakdown Tree> -->
+          <record model="ir.ui.view" id="frm_breakdown_tree">
+               <field name="name">Pricing Breakdown</field>
+               <field name="model">odx.break.point</field>
+               <field name="arch" type="xml">
+                    <tree>
+                         <field name="name"/>
+                         <field name="product_id"/>
+                         <field name="total_cost"/>
+                         <field name="total_markup"/>
+                         <field name="total_price"/>
+                    </tree>
+               </field>
+          </record>
+     <!-- <Pricing Breakdown Form> -->
+          <record model="ir.ui.view" id="frm_breakdown_form">
+          <field name="name">Pricing Breakdown</field>
+          <field name="model">odx.break.point</field>
+          <field name="arch" type="xml">
+            <form>
+               <header>
+                    <button name="update_markup" string="Update Markup" type="object" class="btn-primary"/>
+                    <button name="update_unit_price" string="Update Price" type="object" class="btn-primary"/>
+               </header>
+              <sheet>
+                    <group>
+                         <group>
+                              <field name="name"/>
+                              <field name="product_id" readonly="1"/>
+                         </group>
+                         <group>
+                              <field name="sale_line_id" invisible="1"/>
+                              <field name="total_cost" readonly="1"/>
+                              <field name="total_markup" readonly="1"/>
+                              <field name="total_price" readonly="1"/>
+                         </group>
+                    </group>
+                    <notebook>
+                         <page string="Details">
+                         <field name="line_ids">
+                          <tree editable="bottom">
+                              <field name="break_id" invisible="1"/>
+                              <field name="name"/>
+                              <field name="cost"/>
+                              <field name="markup"/>
+                              <field name="price"/>
+                          </tree>
+                          <form>
+                              <sheet>
+                                   <group>
+                                        <group>
+                                             <field name="break_id" invisible="1"/>
+                                             <field name="name"/>
+                                        </group>
+                                        <group>
+                                             <field name="cost"/>
+                                             <field name="markup"/>
+                                             <field name="price"/>
+                                        </group>
+                                   </group>
+                              </sheet>
+                         </form>
+                         </field>
+                         </page>
+                    </notebook>
+                </sheet>
+            </form>
+          </field>
+          </record>
+     <!-- <Pricing Breakdown action> -->
+
+        <record model="ir.actions.act_window" id="frm_breakdown_action">
+            <field name="name">Pricing Breakdown</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">odx.break.point</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">Create the first Pricing Breakdown
+                </p>
+            </field>
+
+        </record>
+   </data>
+</odoo>

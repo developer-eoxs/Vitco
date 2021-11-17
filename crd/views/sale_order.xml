@@ -1,0 +1,15 @@
+<odoo>
+    <data>
+        <record id="sale_order_form_inherited_crd" model="ir.ui.view">
+            <field name="name">sale.order.form.inherited.crd</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='require_payment']" position="after">
+                    <field name="crd_id" invisible="1"/>'
+
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

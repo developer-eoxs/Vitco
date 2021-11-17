@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <!-- Freight Expenses -->
+        <record model="frm.location" id="frm_location_1">
+          <field name="name">Alpine Slitting</field>
+          <field name="adress">9301 Central St Detroit Mich</field>
+          <field name="email">atrupiano@alpineslitting.com</field>
+          <field name="phone">313-491-4521</field>
+          <field name="country_id">233</field>
+        </record>
+
+        <record model="frm.location" id="frm_location_2">
+          <field name="name">A.R. Metals</field>
+          <field name="adress">3225 W Old Lincoln Way Wooster Ohio</field>
+          <field name="email">alonso@armetalinc.com</field>
+          <field name="phone">330-264-3299</field>
+          <field name="country_id">233</field>
+        </record>
+
+        <record model="frm.location" id="frm_location_3">
+          <field name="name">Andes Slitting </field>
+          <field name="adress">201 Mississippi St Gary Ind 46404</field>
+          <field name="email">rick.blair@andescoil.com</field>
+          <field name="phone">219-886-0281</field>
+          <field name="country_id">233</field>
+        </record>
+
+        <record model="frm.location" id="frm_location_4">
+          <field name="name">Coil Steel Processor</field>
+          <field name="adress">1604 Prosperity Rd Toledo Ohio 43612</field>
+          <field name="email">receiving@coilsteelprocessing.com</field>
+          <field name="phone">419-269-9700</field>
+          <field name="country_id">233</field>
+        </record>
+
+        <record model="frm.location" id="frm_location_5">
+          <field name="name">Chicago Steel Processing</field>
+          <field name="adress">700 Chase St Gary Ind </field>
+          <field name="email">nrivera@chisteel.com</field>
+          <field name="phone">800-367-8110</field>
+          <field name="country_id">233</field>
+        </record>
+
+        <record model="frm.location" id="frm_location_6">
+          <field name="name">Metal Processing Corp</field>
+          <field name="adress">201 Mississippi St Gary Ind 46404</field>
+          <field name="email">cscifres@metalprocessingcorp.com, favila@metalprocessingcorp.com</field>
+          <field name="phone">219-883-5722</field>
+          <field name="country_id">233</field>
+        </record>
+
+        <record model="frm.location" id="frm_location_7">
+          <field name="name">Ohio Slitting</field>
+          <field name="adress">7000 N Main St Camden ohio 45311</field>
+          <field name="phone">937-452-1108</field>
+          <field name="country_id">233</field>
+        </record>
+
+
+        <record model="frm.location" id="frm_location_8">
+          <field name="name">Precision Slitting</field>
+          <field name="adress">28975 Smith Rd Romulus Mich 48174</field>
+          <field name="email">atrupiano@alpineslitting.com</field>
+          <field name="phone">734-641-0000</field>
+          <field name="country_id">233</field>
+        </record>
+
+        <record model="frm.location" id="frm_location_9">
+          <field name="name">Shelby Steel Processing</field>
+          <field name="adress">40 Haltiner St River Rouge Mich 48218</field>
+          <field name="email">linda@shelbysteel.com </field>
+          <field name="phone">313-842-1711</field>
+          <field name="country_id">233</field>
+        </record>
+
+        <record model="frm.location" id="frm_location_10">
+          <field name="name">Sun Steel Express</field>
+          <field name="adress">317 Tech Dr Chesteton Indiana 46304</field>
+          <field name="email">jasmina@sunsteelexpress.com</field>
+          <field name="phone">219-763-0710</field>
+          <field name="country_id">233</field>
+        </record>
+
+         <record model="frm.location" id="frm_location_11">
+          <field name="name">The Material Works</field>
+          <field name="adress">101 S Main St Red Budd Il 62278</field>
+          <field name="email">craig.eubanks@thematerialworks.com</field>
+          <field name="phone">618-282-4200</field>
+          <field name="country_id">233</field>
+        </record>
+
+         <record model="frm.location" id="frm_location_12">
+          <field name="name">Hycal Corp</field>
+          <field name="adress">27800 W Jefferson Ave Gibralter Mich 48173</field>
+          <field name="email">lhowey@hycalcorp.com </field>
+          <field name="phone">734-561-2000</field>
+          <field name="country_id">233</field>
+        </record>
+
+         <record model="frm.location" id="frm_location_13">
+          <field name="name">TriCor Metals</field>
+          <field name="adress">3225 W old Lincon Way Wooster Ohio 44691</field>
+          <field name="phone"> 330-264-3299</field>
+          <field name="country_id">233</field>
+        </record>
+        <record model="frm.location" id="frm_location_14">
+          <field name="name">Tandem Metals Inc</field>
+          <field name="adress">1149 Central Ave , University Parl Il 60484</field>
+          <field name="email">elijah@tandemmetals.com</field>
+          <field name="phone">708-235-8912</field>
+          <field name="country_id">233</field>
+        </record>
+    </data>
+</odoo>

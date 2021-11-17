@@ -1,0 +1,106 @@
+.o_controller_with_searchpanel{
+    background: var(--background);
+    .o_search_panel_section{
+        @extend .p-0;
+
+        .o_search_panel_section_header{
+            padding: 8px 1.5rem;
+            .o_search_panel_section_icon{
+              color: var(--primary);
+            }
+        }
+
+        .o_search_panel_field{
+            .list-group-item{
+                background-color: var(--background);
+                &.o_search_panel_filter_value{
+                  padding-left: 18px;
+                }
+                 header{
+                    padding: 6px 6px 6px 0px;
+                    border-left: 3px solid transparent;
+                    color: var(--color);
+                    &.active{
+                        background-color: var(--drk-border);
+                        color: var(--primary);
+                        border-left-color: var(--primary);
+                    }
+                    &:hover{
+                      background-color: var(--drk-border);
+                    }
+                 }
+            }
+        }
+    }
+    .o_lunch_kanban{
+      .o_lunch_kanban_banner{
+        border-bottom-color: var(--ks-border);
+        background-color: var(--background);
+        .o_lunch_widget_info{
+          &.card{
+            .card-body{
+              .card-title{
+                color: var(--color);
+                .badge-pill{
+                  background-color: var(--primary);
+                }
+              }
+            }
+            .btn-link.o_lunch_open_wizard{
+              color: var(--color);
+            }
+          }
+        }
+      }
+    }
+}
+
+.o_kanban_view{
+   .o_kanban_record{
+        border: 1px solid var(--kanban-bordercolor);
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.05);
+        border-radius: var(--theme-style-radius-10);
+        transition: all ease-in-out 0.2s;
+        margin-bottom: 10px;
+        background-color: var(--background);
+        background: var(--background);
+        &:hover{
+            box-shadow: 0px 5px 12px rgba(0, 0, 0, 0.06);
+        }
+   }
+}
+
+.o_controller_with_searchpanel {
+  .o_renderer_with_searchpanel{
+    border-radius: var(--theme-style-radius);
+    margin: 0 10px;
+    height: calc(100% - 20px);
+    max-height: calc(100% - 20px);
+  }
+}
+
+.o_search_panel {
+  .list-group{
+    padding-left: 16px;
+  }
+}
+
+.ks_search_panel {
+    .o_search_panel{
+        background: var(--background);
+    }
+}
+
+// Lunch App Product grid
+.o_lunch_kanban {
+  .o_kanban_view{
+    .oe_kanban_global_click{
+      .oe_kanban_details{
+        padding-left: 10px;
+        .o_lunch_new_product{
+          background-color: var(--primary);
+        }
+      }
+    }
+  }
+}

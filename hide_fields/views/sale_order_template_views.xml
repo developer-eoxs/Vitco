@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+      <!-- Sale order Form template view Inherited -->
+      <record id="sale_order_template_view_form_inherit" model="ir.ui.view">
+            <field name="name">sale.order.template.inherit</field>
+            <field name="model">sale.order.template</field>
+            <field name="inherit_id" ref="sale_management.sale_order_template_view_form"/>
+            <field name="arch" type="xml">
+              <xpath expr="//field[@name='name']" position="attributes">
+                <attribute name="placeholder">Quote Template</attribute>
+              </xpath>
+              <label for="number_of_days" position="replace">
+                <label for="number_of_days" string="Quote expires after"/>
+              </label>
+          </field>
+      </record>
+
+    </data>
+</odoo>

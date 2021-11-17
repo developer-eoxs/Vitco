@@ -1,0 +1,567 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="report_invoice_inherit" inherit_id="account.report_invoice_document" priority="100">
+            <xpath expr="//t[@t-call='web.external_layout']" position="replace">
+                <t t-call="web.internal_layout">
+                    <t t-set="o" t-value="o.with_context(lang=lang)"/>
+                    <t t-set="address" style="display:none">
+                        <address t-field="o.partner_id"
+                                 t-options="{&quot;widget&quot;: &quot;contact&quot;, &quot;fields&quot;: [&quot;address&quot;, &quot;name&quot;], &quot;no_marker&quot;: True}"/>
+                        <div t-if="o.partner_id.vat" class="mt16">
+                            <t t-if="o.company_id.country_id.vat_label" t-esc="o.company_id.country_id.vat_label"
+                               id="inv_tax_id_label"/>
+                            <t t-else="">Tax ID</t>:
+                            <span t-field="o.partner_id.vat"/>
+                        </div>
+                    </t>
+                    <div class="page">
+                        <br/>
+                        <!-- <t t-if="docs.print_count==1"><div class="col-12 text-right">Original</div></t>
+                        <t t-if="docs.print_count==2">
+                            <t t-if="o.type == 'out_invoice'"><div class="col-12 text-right">Customer copy</div></t>
+                            <t t-if="o.type == 'in_invoice'"><div class="col-12 text-right">Supplier copy</div></t>
+                        </t> -->
+                        <t t-if="docs.print_count>=3"><div class="col-12 text-right">Duplicate</div></t>
+                        <h4>
+                            <strong>
+                                <center>
+                                    <u>
+                                        <span t-if="o.type == 'out_invoice' and o.state == 'posted'">Commercial
+                                            Invoice
+                                        </span>
+                                        <span t-if="o.type == 'out_invoice' and o.state == 'draft'">Draft Invoice</span>
+                                        <span t-if="o.type == 'out_invoice' and o.state == 'cancel'">Cancelled Invoice
+                                        </span>
+                                        <span t-if="o.type == 'out_refund'">Credit Note</span>
+                                        <span t-if="o.type == 'in_refund'">Vendor Credit Note</span>
+                                        <span t-if="o.type == 'in_invoice'">Vendor Bill</span>
+                                    </u>
+                                    <!-- <span t-if="o.name != '/'" t-field="o.name"/> -->
+                                </center>
+                            </strong>
+                        </h4>
+                        <div id="informations" class="row mt32 mb32" style="display:none">
+                            <div class="col-auto mw-100 mb-2" t-if="o.invoice_date" name="invoice_date">
+                                <strong>Invoice Date:</strong>
+                                <p class="m-0" t-field="o.invoice_date"/>
+                            </div>
+                            <div class="col-auto mw-100 mb-2"
+                                 t-if="o.invoice_date_due and o.type == 'out_invoice' and o.state == 'posted'"
+                                 name="due_date">
+                                <strong>Due Date:</strong>
+                                <p class="m-0" t-field="o.invoice_date_due"/>
+                            </div>
+                            <div class="col-auto mw-100 mb-2" t-if="o.invoice_origin" name="origin">
+                                <strong>Source:</strong>
+                                <p class="m-0" t-field="o.invoice_origin"/>
+                            </div>
+                            <div class="col-auto mw-100 mb-2" t-if="o.partner_id.ref" name="customer_code">
+                                <strong>Customer Code:</strong>
+                                <p class="m-0" t-field="o.partner_id.ref"/>
+                            </div>
+                            <div class="col-auto mw-100 mb-2" t-if="o.ref" name="reference">
+                                <strong>Reference:</strong>
+                                <p class="m-0" t-field="o.ref"/>
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            <div class="col-6 pull-right"
+                                 style="padding-left:1px;padding-top:1%; padding-bottom:1%;margin-top:40px;margin-top:2px;">
+                                <table style="width:90%;font-size:15px;">
+                                    <tbody>
+                                        <tr>
+                                            <td class="text-left" style="width:30%;">
+                                                Bill to Party :
+                                            </td>
+                                            <td>
+                                                <span>
+                                                    <t t-if="o.partner_id" t-esc="o.partner_id.name"/>
+                                                </span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="width:30%;">
+                                                Address :
+                                            </td>
+                                            <td>
+                                                <address t-field="o.partner_id"
+                                                         t-options="{&quot;widget&quot;: &quot;contact&quot;, &quot;fields&quot;: [&quot;address&quot;], &quot;no_marker&quot;: True}"/>
+                                                <div t-if="o.partner_id.vat" class="mt16">
+                                                    <t t-if="o.company_id.country_id.vat_label"
+                                                       t-esc="o.company_id.country_id.vat_label" id="inv_tax_id_label"/>
+                                                    <t t-else="">ZIP</t>:
+                                                    <span t-field="o.partner_id.vat"/>
+                                                </div>
+                                            </td>
+                                        </tr>
+
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="col-6"
+                                 style="padding-left:1px;margin-left:-5px; padding-top:1%; padding-bottom:1%;">
+                                <table style="width:100%;font-size:15px;">
+                                    <tbody>
+                                        <tr>
+                                            <td class="text-left" style="width:38%">
+                                                Invoice Number
+                                            </td>
+                                            <td>
+                                                :
+                                                <span>
+                                                    <t t-esc="o.name"/>
+                                                </span>
+                                            </td>
+
+                                        </tr>
+                                        <tr>
+                                            <td class="text-left" style="width:38%">
+                                                Date
+                                            </td>
+                                            <td>
+                                                :
+                                                <span>
+                                                    <t t-esc="o.invoice_date"/>
+                                                </span>
+                                            </td>
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="row"></div>
+                        <hr style="border-top:1px dashed black;"/>
+                        <div class="col-12">
+                            <div class="col-6 pull-right"
+                                 style="padding-left:1px;padding-top:1%; padding-bottom:1%;margin-top:40px;margin-top:2px;">
+                                <table style="width:100%;font-size:15px;">
+                                    <tbody>
+                                        <tr>
+                                            <td class="text-left" style="width:30%;">
+                                                Ship to Party :
+                                            </td>
+                                            <td>
+                                                <span>
+                                                    <t t-if="o.partner_shipping_id" t-esc="o.partner_shipping_id.name"/>
+                                                </span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-left" style="width:30%;">
+                                                Address :
+                                            </td>
+                                            <td>
+                                                <address t-field="o.partner_shipping_id"
+                                                         t-options="{&quot;widget&quot;: &quot;contact&quot;, &quot;fields&quot;: [&quot;address&quot;], &quot;no_marker&quot;: True}"/>
+                                                <div t-if="o.partner_shipping_id.vat" class="mt16">
+                                                    <t t-if="o.company_id.country_id.vat_label"
+                                                       t-esc="o.company_id.country_id.vat_label" id="inv_tax_id_label"/>
+                                                    <t t-else="">ZIP</t>:
+                                                    <span t-field="o.partner_shipping_id.vat"/>
+                                                </div>
+                                            </td>
+                                        </tr>
+
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <div class="col-6 pull-left"
+                                 style="padding-left:1px;margin-left:-5px; padding-top:1%; padding-bottom:1%;">
+
+
+                                <table style="width:90%;font-size:15px;">
+                                    <tbody>
+                                        <tr>
+                                            <td class="text-left">
+                                                Order Ref No
+                                            </td>
+                                            <td>
+                                                :
+                                                <span>
+                                                    <t t-if="o.invoice_origin" t-esc="o.invoice_origin"/>
+                                                </span>
+                                            </td>
+                                            <td class="text-left">
+                                                Order Date
+                                            </td>
+                                            <td>
+                                                :
+                                                <span>
+                                                    <t t-if="o.invoice_date" t-esc="o.invoice_date"/>
+                                                </span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-left">
+                                                Shipped via
+                                            </td>
+                                            <td>
+                                                :
+                                                <span>
+                                                    <t t-if="o.shipped_via" t-esc="o.shipped_via"/>
+                                                </span>
+                                            </td>
+                                            <td class="text-left">
+                                                Truck No
+                                            </td>
+                                            <td>
+                                                :
+                                                <span>
+                                                    <t t-if="o.truck_no" t-esc="o.truck_no"/>
+                                                </span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-left">
+                                                F.O.B. Point
+                                            </td>
+                                            <td colspan="3">
+                                                :
+                                                <span>
+                                                    <t t-if="o.fob_point" t-esc="o.fob_point"/>
+                                                </span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-left">
+                                                Payment Terms
+                                            </td>
+                                            <td colspan="3">
+                                                :
+                                                <span>
+                                                    <!--                                                    <t t-if="o.invoice_date_due" t-esc="o.invoice_date_due"/>-->
+                                                    <!--                                                    <t t-if="o.invoice_payment_term_id.name"-->
+                                                    <!--                                                       t-esc="o.invoice_payment_term_id.name"/>-->
+                                                    <span t-if="o.invoice_payment_term_id.name"
+                                                          t-esc="o.invoice_payment_term_id.name"/>
+                                                    <span t-else="" t-esc="o.invoice_date_due"/>
+                                                </span>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="row"></div>
+                        <hr style="border-top:1px dashed black;"/>
+                        <hr style="border-top:1px dashed black;margin-top:-13px;"/>
+                        <div class="row"></div>
+                        <t t-set="display_discount" t-value="any([l.discount for l in o.invoice_line_ids])"/>
+                        <table class="table table-sm o_main_table" name="invoice_line_table_new">
+                            <thead>
+                                <tr>
+                                    <th style="border-top:1px solid white;">Thk(in)</th>
+                                    <th style="border-top:1px solid white;">Wid(in)</th>
+                                    <th style="border-top:1px solid white;">Length(in)</th>
+                                    <th style="border-top:1px solid white;">Mat.Type</th>
+                                    <!--                                    <th style="border-top:1px solid white;">Sub Product</th>-->
+                                    <th style="border-top:1px solid white;">Type</th>
+                                    <th style="border-top:1px solid white;width:10%;">Lot No</th>
+                                    <th style="border-top:1px solid white;">Wt(lb)</th>
+                                    <th style="border-top:1px solid white;">Rate($/lb)</th>
+                                    <th style="border-top:1px solid white;">Total($)</th>
+                                </tr>
+                            </thead>
+                            <tbody class="invoice_tbody">
+                                <t t-set="total_qty" t-value="0"/>
+                                <t t-set="lines"
+                                   t-value="o.invoice_line_ids.sorted(key=lambda l: (-l.sequence, l.date, l.move_name, -l.id), reverse=True)"/>
+                                <t t-foreach="lines" t-as="line">
+                                    <t t-if="not line.lot_id">
+                                        <tr t-foreach="line.produced_lot_ids" t-as="p_lot">
+                                            <td>
+                                                <span t-esc="'{0:,.4f}'.format(float(line.thickness_in))"/>
+                                            </td>
+                                            <td>
+                                                <span t-esc="'{0:,.4f}'.format(float(line.width_in))"/>
+                                            </td>
+                                            <td>
+                                                <span t-esc="'{0:,.4f}'.format(float(line.length_in))"/>
+                                            </td>
+                                            <td>
+                                                <t t-if="line.material_type=='coil'">
+                                                    <span>Coil</span>
+                                                </t>
+                                                <t t-else="">
+                                                    <span>Sheets</span>
+                                                </t>
+                                                <!--                                            <span t-esc="line.material_type"/>-->
+                                            </td>
+                                            <!--                                        <td>-->
+                                            <!--                                            <span t-esc="line.product_id.name"/>-->
+                                            <!--                                        </td>-->
+                                            <td>
+                                                <span t-esc="line.sub_category_id.name"/>
+                                            </td>
+                                            <td>
+                                                <span t-esc="p_lot.name"/>
+                                            </td>
+                                            <td>
+                                                <span t-esc="int(line.quantity)"/>
+                                                <t t-set="total_qty" t-value="total_qty+line.quantity"/>
+                                            </td>
+                                            <td>
+                                                <span t-esc="'{0:,.2f}'.format(float(line.price_unit))"/>
+                                            </td>
+                                            <td class="text-right">
+                                                <span t-esc="'{0:,.2f}'.format(float(line.price_subtotal))"/>
+                                            </td>
+                                        </tr>
+                                    </t>
+                                    <t t-if="line.lot_id">
+                                        <tr>
+                                            <td>
+                                                <span t-esc="'{0:,.4f}'.format(float(line.thickness_in))"/>
+                                            </td>
+                                            <td>
+                                                <span t-esc="'{0:,.4f}'.format(float(line.width_in))"/>
+                                            </td>
+                                            <td>
+                                                <span t-esc="'{0:,.4f}'.format(float(line.length_in))"/>
+                                            </td>
+                                            <td>
+                                                <t t-if="line.material_type=='coil'">
+                                                    <span>Coil</span>
+                                                </t>
+                                                <t t-else="">
+                                                    <span>Sheets</span>
+                                                </t>
+                                                <!--                                            <span t-esc="line.material_type"/>-->
+                                            </td>
+                                            <!--                                        <td>-->
+                                            <!--                                            <span t-esc="line.product_id.name"/>-->
+                                            <!--                                        </td>-->
+                                            <td>
+                                                <span t-esc="line.sub_category_id.name"/>
+                                            </td>
+                                            <td>
+                                                <span t-if="line.lot_id" t-esc="line.lot_id.name"/>         
+                                            </td>
+                                            <td>
+                                                <span t-esc="int(line.quantity)"/>
+                                                <t t-set="total_qty" t-value="total_qty+line.quantity"/>
+                                            </td>
+                                            <td>
+                                                <span t-esc="'{0:,.2f}'.format(float(line.price_unit))"/>
+                                            </td>
+                                            <td class="text-right">
+                                                <span t-esc="'{0:,.2f}'.format(float(line.price_subtotal))"/>
+                                            </td>
+                                        </tr>
+                                    </t>
+                                    <t t-if="not line.lot_id and not line.produced_lot_ids">
+                                        <tr>
+                                            <td>
+                                                <span t-esc="'{0:,.4f}'.format(float(line.thickness_in))"/>
+                                            </td>
+                                            <td>
+                                                <span t-esc="'{0:,.4f}'.format(float(line.width_in))"/>
+                                            </td>
+                                            <td>
+                                                <span t-esc="'{0:,.4f}'.format(float(line.length_in))"/>
+                                            </td>
+                                            <td>
+                                                <t t-if="line.material_type=='coil'">
+                                                    <span>Coil</span>
+                                                </t>
+                                                <t t-else="">
+                                                    <span>Sheets</span>
+                                                </t>
+                                                <!--                                            <span t-esc="line.material_type"/>-->
+                                            </td>
+                                            <!--                                        <td>-->
+                                            <!--                                            <span t-esc="line.product_id.name"/>-->
+                                            <!--                                        </td>-->
+                                            <td>
+                                                <span t-esc="line.sub_category_id.name"/>
+                                            </td>
+                                            <td>
+                                                <span t-if="line.lot_id" t-esc="line.lot_id.name"/>         
+                                            </td>
+                                            <td>
+                                                <span t-esc="int(line.quantity)"/>
+                                                <t t-set="total_qty" t-value="total_qty+line.quantity"/>
+                                            </td>
+                                            <td>
+                                                <span t-esc="'{0:,.2f}'.format(float(line.price_unit))"/>
+                                            </td>
+                                            <td class="text-right">
+                                                <span t-esc="'{0:,.2f}'.format(float(line.price_subtotal))"/>
+                                            </td>
+                                        </tr>
+                                    </t>
+                                </t>
+                                <tr>
+                                    <td colspan="6" class="text-right">
+                                        Total
+                                    </td>
+                                    <td>
+                                        <span t-esc="int(total_qty)"/>
+                                    </td>
+                                    <td/>
+                                    <td class="text-right">
+                                        <span t-esc="'{0:,.2f}'.format(float(o.amount_untaxed))"/>
+                                    </td>
+                                </tr>
+                                <t t-foreach="o.amount_by_group" t-as="amount_by_group">
+                                    <tr style="">
+                                        <t t-if="len(o.line_ids.filtered(lambda line: line.tax_line_id)) in [0, 1] and o.amount_untaxed == amount_by_group[2]">
+                                            <td colspan="7" class="text-right">
+                                                <strong>
+                                                    <span class="text-nowrap" t-esc="amount_by_group[0]"/>
+                                                </strong>
+                                            </td>
+                                            <td colspan="2" class="text-right o_price_total">
+                                                <span class="text-nowrap" t-esc="amount_by_group[3]"/>
+                                            </td>
+                                        </t>
+                                        <t t-else="">
+                                            <td colspan="8" class="text-right">
+                                                <strong>
+                                                    <span t-esc="amount_by_group[0]"/>
+                                                    <span class="text-nowrap">on
+                                                        <t t-esc="amount_by_group[4]"/>
+                                                    </span>
+                                                </strong>
+                                            </td>
+                                            <td colspan="2" class="text-right o_price_total">
+                                                <span class="text-nowrap" t-esc="amount_by_group[3]"/>
+                                            </td>
+                                        </t>
+                                    </tr>
+                                </t>
+                                <tr>
+                                    <td colspan="7" class="text-right">
+                                        <strong>GRAND TOTAL</strong>
+                                    </td>
+                                    <td colspan="2" class="text-right">
+                                        <span t-esc="'{0:,.2f}'.format(float(o.amount_total))"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="7" class="text-right">
+                                        <t t-if="o.amount_residual == 0">
+                                            <strong>Payment Status</strong>
+                                        </t>
+                                        <t t-if="not o.amount_residual == 0">
+                                            <strong> Amount Due </strong>
+                                        </t>
+                                    </td>
+                                    <td colspan="2" class="text-right">
+                                        <t t-if="o.amount_residual == 0">
+                                            <strong>Fully Paid</strong>
+                                            
+                                        </t>
+                                        <t t-if="not o.amount_residual == 0">
+                                            <strong> <span t-esc="'{0:,.2f}'.format(float(o.amount_residual))"/> </strong>
+                                        </t>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <div class="clearfix" style="display:none">
+                            <div id="total" class="row">
+                                <div t-attf-class="#{'col-6' if report_type != 'html' else 'col-sm-7 col-md-6'} ml-auto">
+                                    <table class="table table-sm" style="page-break-inside: avoid;">
+                                        <tr class="border-black o_subtotal" style="">
+                                            <td>
+                                                <strong>Subtotal</strong>
+                                            </td>
+                                            <td class="text-right">
+                                                <span t-field="o.amount_untaxed"/>
+                                            </td>
+                                        </tr>
+                                        <t t-foreach="o.amount_by_group" t-as="amount_by_group">
+                                            <tr style="">
+                                                <t t-if="len(o.line_ids.filtered(lambda line: line.tax_line_id)) in [0, 1] and o.amount_untaxed == amount_by_group[2]">
+                                                    <td>
+                                                        <span class="text-nowrap" t-esc="amount_by_group[0]"/>
+                                                    </td>
+                                                    <td class="text-right o_price_total">
+                                                        <span class="text-nowrap" t-esc="amount_by_group[3]"/>
+                                                    </td>
+                                                </t>
+                                                <t t-else="">
+                                                    <td>
+                                                        <span t-esc="amount_by_group[0]"/>
+                                                        <span class="text-nowrap">on
+                                                            <t t-esc="amount_by_group[4]"/>
+                                                        </span>
+                                                    </td>
+                                                    <td class="text-right o_price_total">
+                                                        <span class="text-nowrap" t-esc="amount_by_group[3]"/>
+                                                    </td>
+                                                </t>
+                                            </tr>
+                                        </t>
+                                        <tr class="border-black o_total">
+                                            <td>
+                                                <strong>Total</strong>
+                                            </td>
+                                            <td class="text-right">
+                                                <span class="text-nowrap" t-field="o.amount_total"/>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <br/>
+                            <br/>
+                        </div>
+
+
+                        <div style="padding-top:50px">
+                            <hr style="border-top:1px dashed black;"/>
+                            <hr style="border-top:1px dashed black;margin-top:-13px;"/>
+                            <p>
+                                <b>Terms and Conditions:</b>
+                                <br/>
+                                <span t-field="o.terms_conditions"></span>
+                            </p>
+
+                            <!--                         <div class="clearfix">-->
+                            <!--                            <div id="author" class="row">-->
+                            <!--                                <div t-attf-class="#{'col-6' if report_type != 'html' else 'col-sm-7 col-md-6'} ml-auto">-->
+                            <!--                                    <table style="page-break-inside: avoid;">-->
+                            <!--                                        <tr>-->
+                            <!--                                            <td>CERTIFIED TRUE AND CORRECT</td>-->
+                            <!--                                            <td >-->
+                            <!--                                            </td>-->
+                            <!--                                        </tr>-->
+                            <!--                                        <tr>-->
+                            <!--                                            <td><span t-esc="o.company_id.name"/></td>-->
+                            <!--                                            <td >-->
+                            <!--                                            </td>-->
+                            <!--                                        </tr>-->
+                            <!--                                        <tr>-->
+                            <!--                                            <td><strong>Authorized By</strong></td>-->
+                            <!--                                            <td >:<span t-esc="user.name"/>-->
+                            <!--                                            </td>-->
+                            <!--                                        </tr>-->
+                            <!--                                        <tr>-->
+                            <!--                                            <td> <strong>Date </strong></td>-->
+                            <!--                                            <td >:<span t-esc="context_timestamp(datetime.datetime.now()).strftime('%Y-%m-%d %H:%M')"/>-->
+                            <!--                                           </td>-->
+                            <!--                                           </tr>-->
+                            <!--                                    </table>-->
+                            <!--                        </div>-->
+
+                            <!--                                </div>-->
+                            <!--                            </div>-->
+                        </div>
+
+                    </div>
+                </t>
+            </xpath>
+        </template>
+    </data>
+</odoo>
+                                

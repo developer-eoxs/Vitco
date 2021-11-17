@@ -1,0 +1,22 @@
+<odoo>
+    <data>
+        <record id="res_partner_inherited_view" model="ir.ui.view">
+            <field name="name">purchase.inherit.view</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//notebook" position="before">
+                    <group string="Supplier Info">
+                        <group>
+                            <field name="vendor_serial_number"/>
+<!--                            <field name="heat_number"/>-->
+<!--                            <field name="lift_number"/>-->
+<!--                            <field name="part_number"/>-->
+<!--                            <field name="tag_number"/>-->
+                        </group>
+                    </group>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,23 @@
+<odoo>
+
+    <report
+            id="bill_of_lading_report"
+            model="stock.picking"
+            string="Bill of lading"
+            report_type="qweb-pdf"
+            name="odx_product_custom_steel.bill_of_lading"
+            file="odx_product_custom_steel.bill_of_lading"
+            print_report_name="(object.name)"  />
+<!--            paperformat="invoice_custom_format_report"-->
+    <report
+            id="sale_status_report_xlsx"
+            model="odx.sale.status.report"
+            string="Sale Status Report"
+            report_type="xlsx"
+            name="sale_status_mt_report_xlsx.report_xlsx"
+            file="Sale Status Report"
+            attachment_use="False"
+            menu="False"
+        />
+<!--model="odx.sale.status.report"-->
+</odoo>

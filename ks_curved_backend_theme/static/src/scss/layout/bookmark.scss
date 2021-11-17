@@ -1,0 +1,344 @@
+$boookmark-width: 18px;
+$btn-height : 55px;
+
+//////Bookmark Dropdown /////
+.ks-bookmark-dropdown {
+  background-color: var(--background);
+  @extend %shadow-sm;
+  @include rounded(5px);
+  display: none;
+  padding: 0.5rem 0;
+  @include position(absolute, $top: 0px, $left: 0px);
+  z-index: 99;
+  min-width: 132px;
+
+  .ks-bookmark-option {
+      @extend %pointer;
+      padding: 0.4rem 1.4rem;
+      &:hover{
+        background-color: var(--list-background);
+      }
+  }
+}
+
+.o_rtl{
+  .ks-bookmark-dropdown{
+    right: 40px !important;
+    left: auto;
+  }
+}
+
+//// END ////
+
+
+// ks-rename-bookmark-dropdown
+    .ks-rename-bookmark-dropdown{
+         position: absolute;
+         display: none;
+         max-width: 250px;
+         background: var(--background);
+         @extend %shadow-sm;
+         @include rounded(5px);
+         z-index:99;
+         left: auto !important;
+         right: 4px;
+         padding: 0.5rem 0;
+
+         .ks-rename-bookmark-header{
+            font-size: $base-font;
+            font-weight: 400;
+            font-size: 1.1rem;
+         }
+         .ks-rename-bookmark-body{
+           .form-control{
+              color: var(--color);
+              background-color: transparent;
+              border-color: var(--ks-border);
+              border-radius: var(--theme-style-radius-25);
+              &:focus{
+                box-shadow: none;
+              }
+           }
+         }
+         .ks-rename-bookmark-footer{
+             @extend .d-flex;
+             justify-content: space-between;
+             .btn{
+              width: 47%;
+             }
+            .ks-rename-cancel{
+              color: var(--color);
+              border-color: var(--ks-border);
+              &:hover{
+                opacity: 0.7;
+              }
+            }
+         }
+    }
+
+// END //
+
+.ks_right_sidebar_panel{
+    max-width: $boookmark-width;
+    flex: 0 0 $boookmark-width;
+    width: $boookmark-width;
+    @include position(absolute, $top: 46px, $right: 0%, $bottom: 0%);
+    z-index: 99;
+    transition: all ease-in-out 0.3s;
+
+    .right-sidebar-inner{
+       display: flex;
+       flex-direction: column;
+       // zoom section / start
+           .ks-zoom-view{
+               @extend %relative;
+               height: $btn-height;
+
+               .ks-btn-zoom{
+                    @include square(2.5rem, $radius: 3rem);
+                    border-radius: 3rem 0 0 3rem;
+                    background: var(--side-btn-bg);
+                    color: var(--color);
+                    text-align: center;
+                    @include position(absolute, $left: -1rem, $top: 8px, $right: 0%);
+                    margin: auto;
+                    transition: all ease-in-out 0.3s;
+               }
+               .zoom-panel{
+                    @include position(absolute, $top: 45px, $right: 13px);
+                    padding: 3px 7px;
+                    background: var(--background);
+                    border: 1px solid var(--ks-border);
+                    @include rounded(3rem);
+                    @extend %shadow-sm;
+                    z-index: 99;
+                    .ks-zoom-per{
+                        font-weight: 600;
+                        color: var(--color);
+                    }
+
+                    .ks-zoom-inn-dec{
+                        border: 1px solid var(--bg-light-block);
+                        border-radius: 20px;
+                        padding: 2px;
+                        .btn{
+                            @include square(1.8rem, $radius: 3rem);
+                            //color: #616266;
+                            color: var(--color);
+                            line-height: 6px;
+                            font-size: 18px;
+                            text-align: center;
+                            padding: 0;
+                            font-weight: 600;
+                            &:hover{
+                                background: var(--hover-nav-bg);
+                            }
+                        }
+                    }
+               }
+           }
+          .o_cp_bottom_corner{
+
+          }
+        // zoom section / end
+        .ks-bookmark-auto{
+            height: calc(100% - 110px);
+        }
+        .ks-bookmark-body{
+            @extend %d_none;
+            border-top: 1px solid var(--list-bordercolor);
+
+            .ks-bookmark-panel{
+                overflow: auto;
+                max-height: 100%;
+            }
+            .ks_add_bookmark_dropdown{
+                border-top: 1px solid var(--list-bordercolor);
+            }
+            .ks-add-bookmark{
+                @include square(3rem, $radius: 4rem);
+                display: block;
+                border: 1px solid transparent;
+                margin: auto;
+                font-size: 22px;
+                line-height: 2rem;
+                color: var(--color);
+                &:hover{
+                    background-color: rgba($primary, 0.15);
+                    border-color: rgba($primary, 0.25)
+                }
+            }
+
+            .ks-add-bookmark-dropdown{
+                @include position(absolute, $right: 25px);
+                border: 1px solid rgba($ks_border, 0.6);
+                @extend %shadow-sm;
+                width: max-content;
+                background: $white;
+                max-width: 250px;
+                .ks-add-bookmark-header{
+                    //border-bottom: 1px solid rgba($ks_border, 0.6);
+                    h4{
+                      font-weight: 400;
+                      font-size: 1.1rem;
+                      margin: 0;
+                    }
+                }
+                .ks-add-bookmark-body{
+                    .form-control{
+                      border-radius: var(--theme-style-radius-25);
+                        &:focus{
+                            border-color: $ks_border;
+                        }
+                    }
+                }
+                .ks-add-bookmark-footer{
+                    @extend .d-flex;
+                    justify-content: space-between;
+                    //border-top: 1px solid $ks_border;
+                    .btn{
+                      width: 47%;
+                      &.btn-default{
+                        border-color: var(--ks-border);
+                      }
+                    }
+                }
+            }
+        }
+        .ks-bookmark-panel{
+            overflow: auto;
+
+            .bookmark-list{
+                @extend %listreset;
+
+                .bookmark-item{
+
+                    .bookmark-link{
+                        @include square(3rem, $radius: 4rem);
+                        line-height: 3rem;
+                        @extend .d-block;
+                        @extend %pointer;
+                        text-transform: uppercase;
+                    }
+                    // bookmark-link / end
+
+                     // book mark alternat color
+                    $colors: #28C397, #CB5656, #9A77FE, #9C981D, #607d8b;
+                    @for $i from 1 through length($colors) {
+                         &:nth-child(#{length($colors)}n+#{$i}) {
+                            .bookmark-link{
+                                color: lighten(nth($colors, $i), 0%);
+                                background: rgba(lighten(nth($colors, $i), 0%), 0.1);
+                                border: 1px solid rgba(lighten(nth($colors, $i), 0%), 0.12);
+                            }
+                        }
+                    }
+                    // book mark alternat color
+                }
+            }
+            // bookmark-item / end
+        }
+        // bookmark-panel / end
+
+        .bookmarks-toggle{
+            position: relative;
+            width: 100%;
+            height : $btn-height;
+
+            .ks-bookmarks-menu-toggle{
+                @include square(2.5rem, $radius: 3rem);
+                border-radius: 3rem 0 0 3rem;
+                background: var(--primary);
+                color: #FFFFFF;
+                text-align: center;
+                @include position(absolute, $left: -1rem, $right: 0%);
+                margin: auto;
+                transition: all ease-in-out 0.3s;
+
+                &.fa{
+                    &:before{
+                        transform: rotate(180deg);
+                        display: inline-block;
+                        transition: transform ease-in-out 0.3s;
+                    }
+                }
+            }
+        }
+        // bookmarks-toggle / end
+    }
+    // right-sidebar-inner / end
+}
+// ks_right_sidebar_panel / end
+
+body.o_web_client{
+    .o_action_manager{
+        margin-right: $boookmark-width;
+    }
+}
+
+body.ks_show_bookmark{
+  .o_action_manager{
+    margin-right: $right-sidebar-width;
+  }
+
+  .ks_right_sidebar_panel{
+    max-width: $right-sidebar-width;
+    flex: 0 0 $right-sidebar-width;
+    width: 100%;
+
+    .right-sidebar-inner{
+        //border-left: 1px solid $ks_border;
+         .ks-bookmark-body{
+            @extend %d_block;
+         }
+        .ks-zoom-view{
+           .ks-btn-zoom{
+                 border-radius: 3rem;
+                 left: 0;
+           }
+        }
+        .bookmarks-toggle{
+            .ks-bookmarks-menu-toggle{
+                 border-radius: 3rem;
+                 left: 0;
+                 &.fa{
+                    &:before{
+                        transform: rotate(0deg);
+                    }
+                }
+            }
+            // ks-bookmarks-menu-toggle / end
+        }
+        // bookmarks-toggle / end
+
+    }
+    // right-sidebar-inner / end
+  }
+  //ks_right_sidebar_panel / end
+}
+
+
+// Right To Left
+.o_rtl {
+  .ks_right_sidebar_panel {
+    .right-sidebar-inner {
+      .ks-zoom-view {
+        .ks-btn-zoom {
+          right: 0;
+          left: auto;
+          padding: 0.375rem 0.5rem;
+        }
+      }
+      .bookmarks-toggle {
+        .ks-bookmarks-menu-toggle {
+          right: 0;
+          left: auto;
+          border-radius: 0rem 3rem 3rem 0rem;
+        }
+      }
+    }
+  }
+  .ks-rename-bookmark-dropdown{
+     right: 4px !important;
+  }
+}

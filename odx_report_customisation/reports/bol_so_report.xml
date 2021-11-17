@@ -1,0 +1,277 @@
+<odoo>
+
+
+    <template id="report_bill_of_lading_so">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                    <t t-call="web.internal_layout">
+
+                    <div class="page">
+                         <div class="row" ><br/><br/></div>
+                        <h4 style="text-align:center"><u style="padding:1px">BILL OF LADING</u></h4>
+                         <div class="col-12 text-right">Transporter copy</div>
+                        <div>
+                            <table width="100%">
+                                <tr>
+                                    <td width="14%">BOL Number:</td>
+                                    <td style="text-align:left">
+                                        <span t-field="o.name"/>
+                                    </td>
+                                      <td width="30%"> </td>
+                                    <td class="text-left">Bill to Party :</td>
+                                    <td>
+                                         <span t-field="o.partner_id.name"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Date:</td>
+                                    <td style="text-align:left">
+                                        <span t-field="o.scheduled_date"/>
+                                    </td>
+                                    <td width="30%"> </td>
+                                    <td class="text-left">Address:</td>
+                                    <td style="max-width=10px">
+                                        <address t-field="o.partner_id"
+                                                 t-options="{&quot;widget&quot;: &quot;contact&quot;, &quot;fields&quot;: [&quot;address&quot;], &quot;no_marker&quot;: True}"/>
+
+                                    </td>
+                                </tr>
+                             </table>
+                        </div>
+                                <table width="50%">
+                                     <tr>
+                                    <td>SO No:-</td>
+                                    <td>
+                                        <span t-field="o.origin"/>
+                                    </td>
+                                    <td>SO Date:-</td>
+                                    <td>
+                                        <span t-field="o.sale_id.date_order"/>
+                                    </td>
+                                </tr>
+
+                                </table>
+
+
+
+
+                        <div class="row">
+                         <div class="col-12">
+                            <div class="col-6 pull-right"
+                                 style="padding-left:1px;padding-top:1%; padding-bottom:1%;margin-top:40px;margin-top:2px;">
+                                 <table style="width:100%;font-size:15px;border-top:1px solid black;">
+                                    <tbody>
+                                        <tr>
+                                            <td class="text-left" style="width:30%;">
+                                                    Ship to Party :
+                                            </td>
+                                            <td>
+                                                 <span>
+<!--                                                    <t t-if="o.partner_shipping_id" t-esc="o.partner_shipping_id.name"/>-->
+                                                </span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-left" style="width:30%;">
+                                                    Address :
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                 </table>
+                            </div>
+
+                          <div class="col-6 pull-left"
+                                 style="padding-left:1px;margin-left:-5px; padding-top:1%; padding-bottom:1%;">
+
+
+                                <table style="width:90%;font-size:15px;border-top:1px solid black;">
+                                    <tbody>
+                                        <tr>
+                                            <td class="text-left">
+                                                    Order Ref No
+                                            </td>
+                                            <td>
+<!--                                                : <span>-->
+<!--&lt;!&ndash;                                                    <t t-if="o.invoice_origin" t-esc="o.invoice_origin"/>&ndash;&gt;-->
+<!--                                                </span>-->
+                                            </td>
+                                            <td class="text-left">
+                                                    Order Date
+                                            </td>
+                                            <td>
+<!--                                                : <span>-->
+<!--                                                    <t t-if="o.invoice_date" t-esc="o.invoice_date"/>-->
+<!--                                                </span>-->
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-left">
+                                                Shipped via
+                                            </td>
+                                            <td>
+<!--                                                : <span>-->
+<!--                                                    <t t-if="o.shipped_via" t-esc="o.shipped_via"/>-->
+<!--                                                </span>-->
+                                            </td>
+                                            <td class="text-left">
+                                                Truck No
+                                            </td>
+                                            <td>
+<!--                                                : <span>-->
+<!--                                                  <t t-if="o.truck_no" t-esc="o.truck_no"/>-->
+<!--                                                </span>-->
+                                            </td>
+                                        </tr>
+                                         <tr>
+                                            <td class="text-left">
+                                                F.O.B. Point
+                                            </td>
+                                            <td colspan="3">
+<!--                                                : <span>-->
+<!--                                                    <t t-if="o.fob_point" t-esc="o.fob_point"/>-->
+<!--                                                </span>-->
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        </div>
+<!--                         <div class="row" ><br/><br/></div>-->
+                        <div>
+
+                          <hr style="border-top:1px dashed black;"/>
+                        <hr style="border-top:1px dashed black;margin-top:-13px;"/>
+                        </div>
+
+                        <table border="1" class="table table-bordered table-sm o_main_table" style="text-align: center; vertical-align: middle;width:100%;border:1px">
+                            <thead style="font-size:15px;vertical-align: middle;">
+                                <tr>
+                                    <th >Thickness<br/>(inches)</th>
+                                    <th >Width<br/>(inches)</th>
+                                    <th >Cut Length<br/>(inches)</th>
+                                    <th >Type</th>
+                                    <th >Sub Product</th>
+                                    <th >Sub Categ</th>
+                                    <th >Lot No</th>
+                                    <th >Wt(lb)</th>
+
+                                </tr>
+                            </thead>
+                              <tbody>
+
+                                <t t-set="lines" t-value="o.sale_id.order_line"/>
+                                <t t-foreach="lines" t-as="line">
+                                    <tr>
+                                        <td>
+                                           <span  t-esc="line.thickness_in"/>
+                                        </td>
+                                         <td>
+                                           <span  t-esc="line.width_in"/>
+                                        </td>
+                                           <td>
+                                           <span  t-esc="line.length_in"/>
+                                        </td>
+                                           <td>
+                                           <span  t-esc="line.material_type"/>
+                                        </td>
+                                          <td>
+                                           <span  t-esc="line.product_id.name"/>
+                                        </td>
+                                          <td>
+                                           <span  t-esc="line.sub_category_id.name"/>
+                                        </td>
+                                          <td>
+                                           <span  t-esc="line.lot_id.name"/>
+                                        </td>
+                                         <td>
+                                           <span  t-esc="line.product_uom_qty"/>
+                                        </td>
+
+                                    </tr>
+                                </t>
+                                  <tr>
+                                      <td colspan="7" style="text-align:right">Total</td>
+
+                                   <td>
+                                           <span  t-esc="o.sale_id.amount_total"/>
+                                        </td>
+                                   </tr>
+
+                              </tbody>
+
+                        </table>
+                             </div>
+
+                          <div class="row"><br/><br/></div>
+
+
+                        <div style="padding-top:30px">
+                            <hr style="border-top:1px dashed black;"/>
+                        <hr style="border-top:1px dashed black;margin-top:-13px;"/>
+                            <div style="border:1px dashed black;padding:10px">
+                              <p>
+                                  <b>Terms and Conditions:</b>
+                                  <br/>
+
+                                  1. For any issues with order please call <br/>
+                                  2. Please send a receipt copy of your BOL (Supplier Copy)<br/>
+                                  3. Unless otherwise stated, Seller agrees that the material is in good condition<br/>
+                                  without any known defects.<br/>
+                                  4. All shipments are to be inspected by you upon delivery. No goods are to be returned
+                                  back without our written<br/>
+                                  consent.<br/>
+                                  5. Liability on all claims for any and/or all defective material is limited to the
+                                  invoice value of the material shipped unless<br/>
+                                  otherwise specifically agreed to.<br/>
+                                  6. Any claim must be made within 5 days of receipt of goods.<br/>
+                                  7. Orders reported on our books are subject to prices in effect.<br/>
+                                  8. Right is reserved to make corrections in prices due to stenographic or clerical errors.<br/>
+                        </p>
+<!--                                <div class="clearfix">-->
+<!--                            <div id="author" class="row">-->
+<!--                                <div t-attf-class="#{'col-6' if report_type != 'html' else 'col-sm-7 col-md-6'} ml-auto">-->
+<!--                                    <table style="page-break-inside: avoid;">-->
+<!--                                        <tr>-->
+<!--                                            <td>CERTIFIED TRUE AND CORRECT</td>-->
+<!--                                            <td >-->
+<!--                                            </td>-->
+<!--                                        </tr>-->
+<!--                                        <tr>-->
+<!--                                            <td><span t-esc="o.company_id.name"/></td>-->
+<!--                                            <td >-->
+<!--                                            </td>-->
+<!--                                        </tr>-->
+<!--                                        <tr>-->
+<!--                                            <td><strong>Authorized By</strong></td>-->
+<!--                                            <td >:<span t-esc="user.name"/>-->
+<!--                                            </td>-->
+<!--                                        </tr>-->
+<!--                                        <tr>-->
+<!--                                            <td> <strong>Date </strong></td>-->
+<!--                                            <td >:<span t-esc="context_timestamp(datetime.datetime.now()).strftime('%Y-%m-%d %H:%M')"/>-->
+<!--                                           </td>-->
+<!--                                           </tr>-->
+<!--                                    </table>-->
+<!--                                </div>-->
+<!--                        </div>-->
+
+<!--                                </div>-->
+                            </div>
+                        </div>
+
+
+
+                    </t>
+
+            </t>
+        </t>
+
+    </template>
+
+
+
+
+
+
+</odoo>

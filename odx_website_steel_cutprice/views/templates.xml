@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="product_variants_custom" inherit_id="website_sale.product" customize_show="True"
+              name="Pop up for Variants">
+        <xpath expr="//t[@t-placeholder='select']" position="after">
+
+            <div class="modal fade" id="modalaccept">
+                <div class="modal-dialog modal-lg">
+                    <form class="js_website_submit_form js_accept_json modal-content"
+                          t-if="product._is_add_to_cart_possible()" action="/shop/cart/update" method="POST">
+                        <!-- Modal content-->
+                        <input type="hidden" class="product_template_id" name="product_template_id"
+                               t-att-value="product.id" id="product_template_id"/>
+                        <div class="modal-content">
+                            <header class="modal-header" style="background-color: #DC143C !important;">
+                                <h5 class="modal-title" style="color:#FFD700;">Custom Cut: &#32;<span
+                                        style="color:#fff !important;" t-field="product.name"/>
+                                </h5>
+
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">&amp;times;
+                                </button>
+                            </header>
+                            <div class="modal-body">
+                                <table class="table table-striped" cellpadding="0" cellspacing="0">
+                                    <tr width="100%">
+                                        <td width="5%">
+                                            <span style="font-weight:20px;"></span>
+                                        </td>
+                                        <td width="25%" colspan="2">
+                                            <span class="font-weight-bold"
+                                                  style=" text-align: center ;vertical-align: middle!important;">
+                                                Quantity
+                                            </span>
+                                        </td>
+                                        <td width="42%" colspan="6" style="text-align:center;">
+                                            <span class="font-weight-bold"
+                                                  style=" text-align: center;vertical-align: middle!important;">Length
+                                                in Feet,Inches and Fraction of Inch
+                                            </span>
+                                        </td>
+                                        <td width="28%" style="text-align:center;">
+                                            <span class="font-weight-bold"
+                                                  style=" text-align: center ;vertical-align: middle!important;">Price
+                                            </span>
+                                        </td>
+
+                                    </tr>
+                                    <tr width="100%">
+                                        <td width="5%" align="center">
+                                            <img src="/odx_website_steel_cutprice/static/src/img/delete.ico"
+                                                 height="15px" alt="" style="margin-top: 11px;"/>
+                                        </td>
+                                        <td width="1%" style="padding: 0.8rem 0rem;">
+                                            <input style="width:91px;height:37px;text-align: center;" type="text"
+                                                   id="custom_qty" name="quantity" placeholder="QTY"/>
+                                        </td>
+                                        <td width="15%" style="padding:1.2rem 0.3rem;">PCS</td>
+                                        <td width="12%" style="padding: 0.8rem 0rem; ">
+                                            <input style="width:91px;height:37px; text-align: center;"
+                                                   id="custom_length" type="text" name="feet" placeholder="Feet"/>
+                                        </td>
+                                        <td width="2%" style="padding:1.2rem 0rem;">
+                                            <span>ft.</span>
+                                        </td>
+                                        <td width="12%">
+                                            <input style="height:37px;width:91px;text-align: center;" type="text"
+                                                   name="inches" id="custom_width"
+                                                   placeholder="Inches"/>
+                                        </td>
+                                        <td width="2%" style="padding:1.2rem 0rem;">
+                                            <span>and</span>
+                                        </td>
+                                        <td width="12%">
+                                            <select style="width:91px;height:37px;" name="in">
+                                                <option id="custom_thickness" value="0.125">1/8</option>
+                                                <option id="custom_thickness2" value="0.25">1/4</option>
+<!--                                                <option id="custom_thickness" value="0.375">3/8</option>-->
+<!--                                                <option id="custom_thickness" value="0.50">1/2</option>-->
+<!--                                                <option id="custom_thickness" value="0.625">5/8</option>-->
+<!--                                                <option id="custom_thickness" value="0.750">3/4</option>-->
+<!--                                                <option id="custom_thickness" value="0.875">7/8</option>-->
+                                            </select>
+                                        </td>
+                                        <td width="2%" style="padding:1.2rem 0rem;">in</td>
+
+                                        <td width="28%" style="text-align:center;">
+                                            <button type="submit" class="calculate_price btn btn-lg" name="calculate_price" style="border:none;">
+                                                <span id="display_size">Enter a Size</span>
+                                                <span id="computed_price"></span>
+                                            </button>
+                                        </td>
+<!--                                        <td width="14%" style="text-align:center;">-->
+<!--                                             <input type="text" class="form-control" name="total_price" id="total_price" value=""/>-->
+<!--                                        </td>-->
+
+                                    </tr>
+<!--                                    <tr width="100%">-->
+<!--                                        <td width="5%">-->
+<!--                                            <img src="/odx_website_steel_cutprice/static/src/img/delete.ico"-->
+<!--                                                 height="15px" alt="" style="margin-top: 11px;"/>-->
+<!--                                        </td>-->
+<!--                                        <td width="1%" style="padding: 0.8rem 0rem;">-->
+<!--                                            <input style="width:91px;height:37px;text-align: center;" type="text"-->
+<!--                                                   name="quantity" placeholder="QTY"/>-->
+<!--                                        </td>-->
+<!--                                        <td width="15%" style="padding:1.2rem 0.3rem;">PCS</td>-->
+<!--                                        <td width="12%" style="padding: 0.8rem 0rem; ">-->
+<!--                                            <input style="width:91px;height:37px; text-align: center;"-->
+<!--                                                   type="text" name="feet" placeholder="Feet"/>-->
+<!--                                        </td>-->
+<!--                                        <td width="2%" style="padding:1.2rem 0rem;">-->
+<!--                                            <span>ft.</span>-->
+<!--                                        </td>-->
+<!--                                        <td width="12%">-->
+<!--                                            <input style="height:37px;width:91px;text-align: center;" type="text"-->
+<!--                                                   name="inches"-->
+<!--                                                   placeholder="Inches"/>-->
+<!--                                        </td>-->
+<!--                                        <td width="2%" style="padding:1.2rem 0rem;">-->
+<!--                                            <span>and</span>-->
+<!--                                        </td>-->
+<!--                                        <td width="12%">-->
+<!--                                            <select style="width:91px;height:37px;" name="in">-->
+<!--                                                <option value="1/18">1/18</option>-->
+<!--                                                <option value="1/16">1/16</option>-->
+<!--                                            </select>-->
+<!--                                        </td>-->
+<!--                                        <td width="2%" style="padding:1.2rem 0rem;">in</td>-->
+<!--                                        <td width="28%" style="text-align:center;">Enter a Size</td>-->
+
+
+<!--                                    </tr>-->
+<!--                                    <tr width="100%">-->
+<!--                                        <td width="5%">-->
+<!--                                            <img src="/odx_website_steel_cutprice/static/src/img/delete.ico"-->
+<!--                                                 height="15px" alt="" style="margin-top: 11px;"/>-->
+<!--                                        </td>-->
+<!--                                        <td width="1%" style="padding: 0.8rem 0rem;">-->
+<!--                                            <input style="width:91px;height:37px;text-align: center;" type="text"-->
+<!--                                                   name="quantity" placeholder="QTY"/>-->
+<!--                                        </td>-->
+<!--                                        <td width="15%" style="padding:1.2rem 0.3rem;">PCS</td>-->
+<!--                                        <td width="12%" style="padding: 0.8rem 0rem; ">-->
+<!--                                            <input style="width:91px;height:37px; text-align: center;"-->
+<!--                                                   type="text" name="feet" placeholder="Feet"/>-->
+<!--                                        </td>-->
+<!--                                        <td width="2%" style="padding:1.2rem 0rem;">-->
+<!--                                            <span>ft.</span>-->
+<!--                                        </td>-->
+<!--                                        <td width="12%">-->
+<!--                                            <input style="height:37px;width:91px;text-align: center;" type="text"-->
+<!--                                                   name="inches"-->
+<!--                                                   placeholder="Inches"/>-->
+<!--                                        </td>-->
+<!--                                        <td width="2%" style="padding:1.2rem 0rem;">-->
+<!--                                            <span>and</span>-->
+<!--                                        </td>-->
+<!--                                        <td width="12%">-->
+<!--                                            <select style="width:91px;height:37px;" name="in">-->
+<!--                                                <option value="1/18">1/18</option>-->
+<!--                                                <option value="1/16">1/16</option>-->
+<!--                                            </select>-->
+<!--                                        </td>-->
+<!--                                        <td width="2%" style="padding:1.2rem 0rem;">in</td>-->
+<!--                                        <td width="28%" style="text-align:center;">Enter a Size</td>-->
+<!--                                    </tr>-->
+
+
+                                </table>
+                                <a role="button" id="add_line"
+                                   class="btn"
+                                   href="#" style="color:#FFFFFF; background-color:green;border-color: green;">
+                                    <i class="fa fa-plus"/>
+                                    Add Line
+                                </a>
+                                <br/>
+                                <br/>
+                                <span class="font-weight-bold">Custom cut tolerances = plus/minus 1\16 in</span>
+                                <br></br>
+                                <span class="text-muted" style="font-size:10px;">Call us for Mitering and Large
+                                    Quantities
+                                </span>
+                                <br></br>
+                                <br></br>
+                                <span>
+                                    <span class="font-weight-bold" style="font-weight:10px;colour:black;">Notice:</span>
+                                    <span>Custom Cut Material is non-returnable and not cancellable once processing
+                                        begins.
+                                        Custom cutting may require additional processing time.
+                                    </span>
+                                </span>
+
+
+                            </div>
+                            <div class="modal-footer">
+                                <a role="button" id="add_to_cart"
+                                   class="btn js_check_product a-submit d-block d-sm-inline-block"
+                                   href="#" style="color:#FFFFFF; background-color:red;border-color: red;">
+                                    <i class="fa fa-shopping-cart"/>
+                                    Add to Cart
+                                </a>
+
+                                <button type="button" class="btn btn-default" data-dismiss="modal"
+                                        style="border:0.1px solid #d2cbcb;">Close
+                                </button>
+
+                            </div>
+                        </div>
+                    </form>
+
+
+                </div>
+            </div>
+
+
+        </xpath>
+    </template>
+
+</odoo>

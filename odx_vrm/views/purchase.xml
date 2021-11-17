@@ -1,0 +1,30 @@
+<odoo>
+    <data>
+        <record id="purchase_order_inherited_tree_view" model="ir.ui.view">
+            <field name="name">purchase.inherit.tree.view</field>
+            <field name="model">purchase.order</field>
+            <field name="inherit_id" ref="purchase.purchase_order_view_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='invoice_status']" position="after">
+                    <button name="action_rfq_send" string="Send by Email" type="object" context="{'send_rfq':True}"
+                            attrs="{'invisible':['|',('vrm_id', '=', False),('state','!=','draft')]}"
+                            class="oe_highlight"/>
+                    <field name="vrm_id" invisible="1"/>
+
+                </xpath>
+            </field>
+        </record>
+
+        <record id="purchase_order_form_inherited_view" model="ir.ui.view">
+            <field name="name">purchase.form.inherit.view</field>
+            <field name="model">purchase.order</field>
+            <field name="inherit_id" ref="purchase.purchase_order_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='partner_id']" position="after">
+                    <field name="vrm_id" invisible="1"/>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>

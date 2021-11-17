@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="_assets_primary_variables" inherit_id="web._assets_primary_variables">
+        <xpath expr="//link[last()]" position="after">
+            <link rel="stylesheet" type="text/scss"
+                  href="/ks_curved_backend_theme/static/src/scss/abstracts/odoo_primary_variables.scss"/>
+
+        </xpath>
+    </template>
+    <template id="ks_assets_backend_curved" inherit_id="web.assets_backend" name="Curved backend assets">
+        <xpath expr="link[last()]" position="after">
+            <link rel="stylesheet" type="text/scss" href="/ks_curved_backend_theme/static/src/scss/abstracts/variables.scss"/>
+            <link rel="stylesheet" type="text/scss" href="/ks_curved_backend_theme/static/src/scss/base/fonts.scss"/>
+            <link rel="stylesheet" type="text/scss" href="/ks_curved_backend_theme/static/src/scss/base/default.scss"/>
+            <link rel="stylesheet" type="text/scss" href="/ks_curved_backend_theme/static/src/scss/base/animation.scss"/>
+            <link rel="stylesheet" type="text/scss" href="/ks_curved_backend_theme/static/src/scss/base/forms.scss"/>
+            <link rel="stylesheet" type="text/scss" href="/ks_curved_backend_theme/static/src/scss/base/fields.scss"/>
+            <link rel="stylesheet" type="text/scss" href="/ks_curved_backend_theme/static/src/scss/abstracts/mixins.scss"/>
+            <link rel="stylesheet" type="text/scss" href="/ks_curved_backend_theme/static/src/scss/abstracts/placeholder.scss"/>
+            <link rel="stylesheet" type="text/scss" href="/ks_curved_backend_theme/static/src/scss/components/buttons.scss"/>
+            <link rel="stylesheet" type="text/scss" href="/ks_curved_backend_theme/static/src/scss/components/color_theme.scss"/>
+            <link rel="stylesheet" type="text/scss" href="/ks_curved_backend_theme/static/src/scss/components/tabs.scss"/>
+            <link rel="stylesheet" type="text/scss" href="/ks_curved_backend_theme/static/src/scss/components/table.scss"/>
+            <link rel="stylesheet" type="text/scss" href="/ks_curved_backend_theme/static/src/scss/components/form-control.scss"/>
+            <link rel="stylesheet" type="text/scss" href="/ks_curved_backend_theme/static/src/scss/components/checkbox.scss"/>
+            <link rel="stylesheet" type="text/scss" href="/ks_curved_backend_theme/static/src/scss/layout/header.scss"/>
+            <link rel="stylesheet" type="text/scss" href="/ks_curved_backend_theme/static/src/scss/layout/apps-drawer.scss"/>
+            <link rel="stylesheet" type="text/scss" href="/ks_curved_backend_theme/static/src/scss/layout/ks_quick_settings.scss"/>
+            <link rel="stylesheet" type="text/scss" href="/ks_curved_backend_theme/static/src/scss/layout/sidebar.scss"/>
+            <link rel="stylesheet" type="text/scss" href="/ks_curved_backend_theme/static/src/scss/layout/bookmark.scss"/>
+            <link rel="stylesheet" type="text/scss" href="/ks_curved_backend_theme/static/src/scss/layout/ks_control_panel.scss"/>
+            <link rel="stylesheet" type="text/scss" href="/ks_curved_backend_theme/static/src/scss/layout/ks_view.scss"/>
+            <link rel="stylesheet" type="text/scss" href="/ks_curved_backend_theme/static/src/scss/layout/ks_vertical_menus.scss"/>
+            <link rel="stylesheet" type="text/scss" href="/ks_curved_backend_theme/static/src/scss/responsive/ipad_responsive.scss"/>
+            <link rel="stylesheet" type="text/scss" href="/ks_curved_backend_theme/static/src/scss/responsive/phone_responsive.scss"/>
+
+            <!-- pages -->
+            <link rel="stylesheet" type="text/scss" href="/ks_curved_backend_theme/static/src/scss/pages/discuss.scss"/>
+            <link rel="stylesheet" type="text/scss" href="/ks_curved_backend_theme/static/src/scss/pages/calendar.scss"/>
+            <link rel="stylesheet" type="text/scss" href="/ks_curved_backend_theme/static/src/scss/pages/all_apps.scss"/>
+            <link rel="stylesheet" type="text/scss" href="/ks_curved_backend_theme/static/src/lib/owl.carousel.min.css"/>
+
+        </xpath>
+        <xpath expr="script[last()]" position="after">
+            <script type="text/javascript" src="/ks_curved_backend_theme/static/src/js/ks_app_sidebar.js"/>
+            <script type="text/javascript" src="/ks_curved_backend_theme/static/src/js/ks_left_sidebar_panel.js"/>
+            <script type="text/javascript" src="/ks_curved_backend_theme/static/src/js/ks_switch_language.js"/>
+            <script type="text/javascript" src="/ks_curved_backend_theme/static/src/js/ks_bookmarks_menu.js"/>
+            <script type="text/javascript" src="/ks_curved_backend_theme/static/src/js/ks_quick_settings_widget.js"/>
+            <script type="text/javascript" src="/ks_curved_backend_theme/static/src/js/ks_appsmenu.js"/>
+            <script type="text/javascript" src="/ks_curved_backend_theme/static/src/js/ks_fullscreen.js"/>
+            <script type="text/javascript" src="/ks_curved_backend_theme/static/src/js/ks_control_pannel.js"/>
+            <script type="text/javascript" src="/ks_curved_backend_theme/static/src/js/ks_search_panel.js"/>
+            <script type="text/javascript" src="/ks_curved_backend_theme/static/src/js/ks_list_renderer.js"/>
+            <script type="text/javascript" src="/ks_curved_backend_theme/static/src/js/ks_form_render.js"/>
+            <script type="text/javascript" src="/ks_curved_backend_theme/static/src/js/ks_global_config_widget.js"/>
+            <script type="text/javascript" src="/ks_curved_backend_theme/static/src/js/ks_company_config_widget.js"/>
+            <script type="text/javascript" src="/ks_curved_backend_theme/static/src/js/ks_appdrawer_edit.js"/>
+            <script type="text/javascript" src="/ks_curved_backend_theme/static/src/js/ks_click_to_edit.js"/>
+            <script type="text/javascript" src="/ks_curved_backend_theme/static/src/js/ks_abstract_web_client.js"/>
+            <script type="text/javascript" src="/ks_curved_backend_theme/static/src/js/ks_data_manager.js"/>
+            <script type="text/javascript" src="/ks_curved_backend_theme/static/src/js/ks_zoom_btn_visibility.js"/>
+            <script type="text/javascript" src="/ks_curved_backend_theme/static/src/js/ks_calendar_view.js"/>
+            <script type="text/javascript" src="/ks_curved_backend_theme/static/src/js/ks_relation_fields.js"/>
+            <script type="text/javascript" src="/ks_curved_backend_theme/static/src/lib/owl.carousel.min.js"/>
+        </xpath>
+    </template>
+</odoo>

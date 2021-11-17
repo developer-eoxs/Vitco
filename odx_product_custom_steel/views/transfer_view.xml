@@ -1,0 +1,23 @@
+<odoo>
+    <data>
+
+        <record id="action_lot_internal_transfers" model="ir.actions.act_window">
+            <field name="name">Stock Internal Transfer</field>
+            <field name="res_model">stock.picking</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_mode">tree,kanban,form,calendar</field>
+            <field name="domain">[('picking_type_id.code', '=', 'internal')]</field>
+            <field name="context">{'contact_display': 'partner_address', 'search_default_available': 1,
+                'show_operations': True,'is_internal_only': True,'default_immediate_transfer': True,
+                'force_detailed_view': True}</field>
+            <field name="search_view_id" ref="stock.view_picking_internal_search"/>
+        </record>
+<!--        'default_picking_type_id':5-->
+
+
+        <menuitem action="action_lot_internal_transfers" id="internal_transfer_custom_menu" name="Internal Transfers"
+                  parent="stock.menu_stock_warehouse_mgmt" sequence="1"/>
+
+
+    </data>
+</odoo>

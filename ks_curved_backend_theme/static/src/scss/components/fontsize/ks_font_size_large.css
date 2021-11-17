@@ -1,0 +1,23 @@
+:root{
+  font-size: 14px;
+}
+
+.ks_right_sidebar_panel .right-sidebar-inner .ks-zoom-view .ks-btn-zoom
+{
+  left: -1.25rem;
+}
+.ks_right_sidebar_panel .right-sidebar-inner .bookmarks-toggle .ks-bookmarks-menu-toggle{
+  left: -1.25rem;
+}
+body.o_web_client.ks_favtbar_bottom {
+    padding-bottom: 71px;
+}
+body.o_web_client.ks_favtbar_bottom .ks_left_sidebar_panel{
+  height: 71px;
+}
+
+@media screen and (max-width: 1024px){
+  :root{
+    font-size: 12px;
+  }
+}

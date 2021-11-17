@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    <t t-name="ks_appdrawer_edit">
+        <li class="ks_customize_icon" role="menuitem">
+            <a id="ks_customize_appdrawer" role="button" href="#" class="customize_icon" title="Configure Favorite Apps">
+<!--                <span class="fa fa-wrench"/>-->
+            </a>
+        </li>
+    </t>
+</templates>

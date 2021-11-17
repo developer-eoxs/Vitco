@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="web_external_layout_inherit_quotation" inherit_id="web.internal_layout">
+            <xpath expr="//div[@class='header']" position="replace">
+                <div class="header">
+                    <div class="row mb8">
+                        <div class="col-3 pull-right" style="padding-left:0cm;">
+                            <img t-if="company.logo" t-att-src="image_data_uri(company.logo)" alt="Logo"
+                                 style="max-height: 80px;"/>
+                        </div>
+                        <div class="col-9">
+                            <div class="row">
+                                <div class="col-9 text-center" name="company_address">
+                                    <h4>
+                                        <strong>
+                                            <span t-esc="company.name"/>
+                                        </strong>
+                                    </h4>
+                                    <div style="font-size:17px;margin-top:-7px;" t-field="company.partner_id"
+                                         t-options="{&quot;widget&quot;: &quot;contact&quot;, &quot;fields&quot;: [&quot;address&quot;], &quot;no_marker&quot;: true}"/>
+                                    <div style="font-size:17px;margin-top:-3px;">
+                                        <span t-if="company.email" t-field="company.email"/>
+                                        <span t-if="company.phone" t-field="company.phone"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" style="border-top:1.5px solid black"></div>
+                </div>
+                <!--                <div class="footer">-->
+
+
+                <!--                    <div class="text-left col-2">-->
+                <!--                        <img class="img" src="/odx_report_customisation/static/description/footer.jpeg"-->
+                <!--                             style="height: 30px;width:100px"/>-->
+                <!--                        <br/>-->
+                <!--                        <span style="font-size:10px;">www.eoxs.com</span>-->
+                <!--&lt;!&ndash;                        t-field="company.website"/>&ndash;&gt;-->
+                <!--                    </div>-->
+                <div class="footer">
+
+                    <div class="row">
+
+
+                        <div class="text-left col-2">
+                            <!--                        <div class="row" ><br/><br/></div>-->
+                            <img class="img" src="/odx_report_customisation/static/description/footer.jpeg"
+                                 style="height: 22px;width:65px;margin-top:10px"/>
+                            <br/>
+                            <span style="font-size:10px;">www.eoxs.com</span>
+                        </div>
+                        <div style="padding-left:450px">
+                            <table style="page-break-inside: avoid;">
+
+
+                                <tr>
+                                    <td>
+                                        <span t-esc="company.name"/>
+                                    </td>
+                                    <td>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <strong>Authorized By</strong>
+                                    </td>
+                                    <td>:
+                                        <span t-esc="user.name"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <strong>Date</strong>
+                                    </td>
+                                    <td>:
+                                        <span t-esc="context_timestamp(datetime.datetime.now()).strftime('%Y-%m-%d %H:%M')"/>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+
+
+                    </div>
+                    <!--                    </div>-->
+
+
+                </div>
+            </xpath>
+        </template>
+        <record id="paperformat_invoice" model="report.paperformat">
+            <field name="name">European A4 Invoice</field>
+            <field name="default" eval="True"/>
+            <field name="format">A4</field>
+            <field name="page_height">0</field>
+            <field name="page_width">0</field>
+            <field name="orientation">Portrait</field>
+            <field name="margin_top">30</field>
+            <field name="margin_bottom">18</field>
+            <field name="margin_left">7</field>
+            <field name="margin_right">7</field>
+            <field name="header_line" eval="False"/>
+            <field name="header_spacing">25</field>
+            <field name="dpi">90</field>
+        </record>
+        <report
+                id="account.account_invoices"
+                model="account.move"
+                string="Invoices"
+                report_type="qweb-pdf"
+                name="account.report_invoice_with_payments"
+                file="account.report_invoice_with_payments"
+                attachment="(object.state == 'posted') and ((object.name or 'INV').replace('/','_')+'.pdf')"
+                print_report_name="(object._get_report_base_filename())"
+                groups="account.group_account_invoice"
+                paperformat="paperformat_invoice"
+        />
+        <record id="paperformat_barcode_for_lot" model="report.paperformat">
+            <field name="name">Barcode</field>
+            <field name="default" eval="True"/>
+            <field name="format">custom</field>
+            <field name="page_height">103</field>
+            <field name="page_width">145</field>
+            <field name="orientation">Landscape</field>
+            <field name="margin_top">15</field>
+            <field name="margin_bottom">15</field>
+            <field name="margin_left">0</field>
+            <field name="margin_right">0</field>
+            <field name="header_spacing">10</field>
+            <field name="dpi">90</field>
+        </record>
+
+    </data>
+
+    <report
+            id="bill_of_lading"
+            model="stock.picking"
+            string="Bill of lading"
+            report_type="qweb-pdf"
+            name="odx_report_customisation.report_bill_of_lading_so"
+            file="odx_report_customisation.report_bill_of_lading_so"
+            paperformat="paperformat_invoice"/>
+
+    <report
+            id="job_order_report"
+            model="job.order"
+            string="Job Order"
+            report_type="qweb-pdf"
+            name="odx_report_customisation.report_job_order"
+            file="odx_report_customisation.report_job_order"
+            paperformat="paperformat_invoice"/>
+    <report
+            id="production_order_report"
+            model="steel.production"
+            string="Production Order"
+            report_type="qweb-pdf"
+            name="odx_report_customisation.report_production_order"
+            file="odx_report_customisation.report_production_order"
+            paperformat="paperformat_invoice"/>        
+    <report
+            string="Barcode for Lots"
+            id="report_barcode_serial"
+            model="stock.move"
+            report_type="qweb-pdf"
+            name="odx_report_customisation.barcode_serial"
+            file="odx_report_customisation.barcode_serial"
+            paperformat="paperformat_barcode_for_lot"
+    />
+
+</odoo>

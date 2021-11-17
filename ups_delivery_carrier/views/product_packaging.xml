@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Copyright (c) 2017-Present Webkul Software Pvt. Ltd. (<https://webkul.com/>) -->
+    <!-- See LICENSE URL <https://store.webkul.com/license.html/> for full copyright and licensing details. -->
+    
+    <record id="choose_delivery_package_view_form" model="ir.ui.view">
+        <field name="name">choose.delivery.package.form</field>
+        <field name="model">choose.delivery.package</field>
+        <field name="inherit_id" ref="odoo_shipping_service_apps.choose_delivery_package_view_form"/>
+        <field name="arch" type="xml">
+            <field name="length" position="after">
+                <field name="ups_delivery_confirmation" string='UPS Confirmation'
+                invisible="context.get('current_package_carrier_type')!='ups'" />
+            </field>
+        </field>
+    </record>
+
+    <record id="view_quant_package_form" model="ir.ui.view">
+        <field name="name">stock.quant.package.form</field>
+        <field name="model">stock.quant.package</field>
+            <field name="inherit_id" ref="odoo_shipping_service_apps.view_quant_package_form"/>
+            <field name="arch" type="xml">
+                <field name="cover_amount" position="after">
+                <field name="ups_delivery_confirmation" string='UPS Confirmation'
+                    attrs="{'invisible': [('package_carrier_type', 'not in', ['ups'])]}"
+                />
+                </field>
+        </field>
+    </record>
+
+    <record id="view_picking_withlabel_form_view" model="ir.ui.view">
+        <field name="name">delivery.stock.picking_withlabel.form.view</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="odoo_shipping_service_apps.view_picking_withlabel_form_view"/>
+        <field name="arch" type="xml">
+        <xpath expr="//field[@name='partner_id']" position="after">
+            <field name="wk_shipment_description" attrs="{'invisible':[('delivery_type', '!=', 'ups')], 'readonly': [('label_genrated', '=', True)]}"/>
+        </xpath>
+        <xpath expr="//label[@for='carrier_tracking_ref']" position="before">
+             <field
+                name="ups_shipment_number" string='UPS SIN' help='UPS Shipment Identification Number'
+                attrs="{'invisible':[('delivery_type', '!=', 'ups')]}"/>
+             <field
+                name="ups_return_service" string='UPS Return Service Type'
+                attrs="{'invisible':['|',('delivery_type', '!=', 'ups') , ('picking_type_code','=','outgoing')] , 'required':[('delivery_type', '==', 'ups'),('picking_type_code','=','incoming')]}"/>
+             <!-- <field
+                name="code" string='Code'
+                invisible = '1'/> -->
+         </xpath>
+         </field>
+     </record>
+
+    <record id="view_ups_shipping_search" model="ir.ui.view">
+        <field name="name">stock.picking.ups.shipping.search</field>
+        <field name="model">stock.picking</field>
+         <field name="inherit_id" ref="odoo_shipping_service_apps.view_picking_shipping_search"/>
+        <field name="arch" type="xml">
+            <filter  name="draft"  position='after'>
+                <filter
+                    icon="terp-check"
+                    name="ups"
+                    string="UPS"
+                    domain="[('delivery_type','=','ups')]"
+                    help="UPS Picking for which ups carrier is assigned "/>
+            </filter>
+          </field>
+    </record>
+
+</odoo>

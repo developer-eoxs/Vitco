@@ -1,0 +1,32 @@
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="view_stock_production_lot_pivot">
+            <field name="name">stock.production.lot.pivot</field>
+            <field name="model">stock.production.lot</field>
+            <field name="arch" type="xml">
+                <pivot string="Lot/Serial Number">
+                    <field name="category_id" type="row"/>
+                    <field name="product_template_id" type="row"/>
+                </pivot>
+            </field>
+        </record>
+
+        <record id="stock.action_production_lot_form" model="ir.actions.act_window">
+            <field name="view_mode">tree,form,pivot</field>
+            <field name="context">{'display_complete': True, 'default_company_id':
+                allowed_company_ids[0]}
+            </field>
+        </record>
+
+        <record id="action_stock_production_lot_pivot" model="ir.actions.act_window">
+            <field name="name">Lot/Serial Number</field>
+            <field name="res_model">stock.production.lot</field>
+            <field name="view_mode">pivot</field>
+            <field name="view_id" ref="view_stock_production_lot_pivot"/>
+        </record>
+
+
+    </data>
+
+</odoo>
+

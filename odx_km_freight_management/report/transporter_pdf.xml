@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="transporter_report" >
+        <t t-call="web.html_container">
+            <t t-call="web.internal_layout">
+                <t t-foreach="docs" t-as="o">
+                <div class="page">
+                    <div class="col-12">
+                        <br/>
+                        <br/>
+                        <h4><center><b>Transporting Deatils</b></center></h4>
+                    </div>
+                    <div class="col-12">
+                        <div class="col-6 pull-right text-right" style="padding-right:2cm;">
+                           <b> Date : <span t-esc="context_timestamp(datetime.datetime.now()).strftime('%d-%m-%Y')"/></b><br/>
+                        </div>
+                        <div class="col-6">
+                           <b> Transporter Name : <span t-field="o.name"/></b><br/>
+                        </div>
+                    </div>
+                        <table class="table table-sm o_main_table" style="width:100%;border:2px solid grey;">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        Tracking No
+                                    </th>
+                                    <th>
+                                        Source Location
+                                    </th>
+                                    <th>
+                                        Dest Location
+                                    </th>
+                                    <th>
+                                        Weight
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr t-foreach="transporting_details(o.id)" t-as="line">
+                                    <td>
+                                        <span t-esc="line['name']"/>
+                                    </td>
+                                    <td>
+                                        <span t-esc="line['source_location']"/>
+                                    </td>
+                                    <td>
+                                        <span t-esc="line['dest_location']"/>
+                                    </td>
+                                    <td>
+                                        <span t-esc="line['total_weight']"/>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

@@ -1,0 +1,9 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_ks_bookmark,access_ks_bookmark,model_ks_bookmark,,1,1,1,1
+access_ks_frequency_counter,access_ks_frequency_counter,model_ks_frequency_counter,base.group_user,1,1,1,1
+access_ks_global_config,access_ks_global_config,model_ks_global_config,base.group_user,1,1,0,0
+access_ks_fav_menu,access_ks_fav_menu,model_ks_fav_menu,base.group_user,1,1,1,1
+access_ks_body_background,access_ks_body_background,model_ks_body_background,base.group_user,1,1,1,1
+access_ks_drawer_background,access_ks_drawer_background,model_ks_drawer_background,base.group_user,1,1,1,1
+access_ks_drawer_colors,access_ks_drawer_colors,model_ks_drawer_colors,base.group_user,1,1,1,1
+access_ks_color_theme,access_ks_color_theme,model_ks_color_theme,base.group_user,1,1,1,1

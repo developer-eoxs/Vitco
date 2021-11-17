@@ -1,0 +1,37 @@
+<odoo>
+    <data>
+        <record id="second_run_wizard_view" model="ir.ui.view">
+            <field name="name">second.run.wizard.form</field>
+            <field name="model">second.run.wizard</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <field name="multi_stage_id" invisible="1"/>
+                            <field name="production_id" invisible="1"/>
+                            <field name="source_lot_id" invisible="1"/>
+                            <field name="line_order_ids" nolabel="1" >
+                                <tree editable="bottom" create="0">
+                                    <field name="lot_id" readonly="1" force_save="1"/>
+                                    <field name="category_id" readonly="1" force_save="1" optional="hide"/>
+                                    <field name="sub_category_id" readonly="1" force_save="1"/>
+                                    <field name="product_id" readonly="1" force_save="1"/>
+                                    <field name="thickness_in" readonly="1" force_save="1"/>
+                                    <field name="width_in"/>
+                                    <field name="slits"/>
+                                    <field name="product_qty"/>
+                                    <field name="product_uom_id" optional="hide"/>
+                                    <!--                                <field name="material_type"/>-->
+                                </tree>
+                            </field>
+                        </group>
+                    </sheet>
+                    <footer>
+                        <button string="Create Second Run" name="action_create_second_run" type="object"/>
+                        <button string="Cancel" class="btn-default" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+    </data>
+</odoo>

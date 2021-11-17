@@ -1,0 +1,654 @@
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="stock_lot_tree_view_inherit">
+            <field name="name">stock.production.lot.tree.view.inherit</field>
+            <field name="model">stock.production.lot</field>
+            <field name="inherit_id" ref="stock.view_production_lot_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='ref']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='create_date']" position="attributes">
+                    <attribute name="optional">hide</attribute>
+                </xpath>
+                <xpath expr="//field[@name='company_id']" position="attributes">
+                    <attribute name="optional">hide</attribute>
+                </xpath>
+                <xpath expr="//field[@name='company_id']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+
+                <xpath expr="//field[@name='product_id']" position="before">
+                    <!--                    <field name="category_id"/>-->
+                    <field name="sub_category_id"/>
+
+                </xpath>
+                <xpath expr="//field[@name='product_id']" position="after">
+                    <field name="stock_status"/>
+                    <field name="material_type"/>
+
+                    <field name="vendor_name"/>
+                    <field name="vendor_location_id"/>
+                    <field name="bill_of_lading" optional="hide"/>
+                    <field name="loc_city" optional="hide"/>
+                    <field name="loc_warehouse" optional="hide"/>
+                    <field name="heat_number" optional="hide"/>
+                    <field name="lift_number" optional="hide"/>
+                    <field name="part_number" optional="hide"/>
+                    <field name="tag_number" optional="hide"/>
+                    <field name="location" string="Location" optional="hide"/>
+                    <field name="vendor_id" string="Vendor id"/>
+                    <field name="vendor" optional="hide"/>
+                    <field name="category" optional="hide"/>
+                    <field name="internal" optional="hide"/>
+
+                    <field name="packing_slip_no" invisible="1"/>
+                    <field name="date_removed" optional="hide"/>
+                    <field name="internet_serial" optional="hide"/>
+                    <field name="date_received" optional="hide"/>
+                    <field name="po_number" optional="hide"/>
+
+                    <field name="surface_finish_id" invisible="1"/>
+                    <field name="thickness_in" string="Thickness(IN)"/>
+                    <field name="width_in" string="Width(IN)"/>
+                    <field name="length_in" string="Length(IN)" optional="hide"/>
+                    <field name="product_qty" string="Weight(LB)" widget="integer"/>
+
+
+                    <field name="thickness_mm" string="Thickness(MM)"/>
+                    <field name="width_mm" string="Width(MM)"/>
+                    <field name="length_mm" string="Length(MM)"/>
+                    <field name="weight_kg" string="Weight(Kg)"/>
+                    <field name="thickness_spec" string="Thickness Spec" optional="hide"/>
+                    <field name="piw" string="PIW" optional="hide"/>
+
+                    <field name="grade" string="Grade" optional="hide"/>
+                    <field name="rockwell" string="Rockwell" optional="hide"/>
+                    <field name="elongation" string="Elongation" optional="hide"/>
+
+                    <field name="yield_mpa" string="Yield(mpa)" optional="hide"/>
+                    <field name="yield_psi" string="Yield(psi)" optional="hide"/>
+                    <field name="yield_ksi" string="Yield(ksi)" optional="hide"/>
+                    <field name="tensile_mpa" string="Tensile(mpa)" optional="hide"/>
+                    <field name="tensile_psi" string="Tensile(psi)" optional="hide"/>
+                    <field name="tensile_ksi" string="Tensile(ksi)" optional="hide"/>
+                    <field name="quality" string="Quality" optional="hide"/>
+
+                    <!--                    <field name="coil_number" string="Coil Number"/>-->
+                </xpath>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="search_product_lot_filter_inherited_view">
+            <field name="name">Production Lots Filter Inherited</field>
+            <field name="model">stock.production.lot</field>
+            <field name="inherit_id" ref="stock.search_product_lot_filter"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='name']" position="after">
+                    <field name="tag_number" string="Tag Number"
+                           filter_domain="['|','|','|','|',('tag_number', 'ilike', self),('tag_number_pr1', 'ilike', self),('tag_number_pr2', 'ilike', self),('tag_number_pr3', 'ilike', self),('tag_number_pr4', 'ilike', self)]"/>
+                    <field name="thickness_in" string="Thickness"
+                           filter_domain="[('thickness_in', 'ilike', self)]"/>
+                </xpath>
+            </field>
+        </record>
+
+
+        <record model="ir.ui.view" id="stock_lot_view_inherit">
+            <field name="name">stock.production.lot.view.inherit</field>
+            <field name="model">stock.production.lot</field>
+            <field name="inherit_id" ref="stock.view_production_lot_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//div[@class='oe_title']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='product_qty']" position="replace">
+
+                </xpath>
+                <xpath expr="//field[@name='product_uom_id']" position="replace">
+
+                </xpath>
+                <xpath expr="//label[@for='product_qty']" position="attributes">
+
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='product_id']" position="replace">
+                </xpath>
+                <!--                <xpath expr="//field[@name='category_id']" position="after">-->
+                <!--                     <td><label for="product_id"/></td>-->
+                <!--                        <td> <field name="product_id"/></td>-->
+                <!--                </xpath>-->
+                <xpath expr="//div[@name='button_box']" position="after">
+                    <group>
+                        <group>
+                            <field name="image_1920" widget="image" nolabel="1"/>
+                        </group>
+                        <group>
+                            <table>
+                                <tr>
+                                    <td>
+                                        <label for="name" class="oe_edit_only"/>
+                                        <h1>
+                                            <field name="name" placeholder="e.g. LOT/0001/20121"/>
+                                        </h1>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <label for="category_id"/>
+                                    </td>
+                                    <td>
+                                        <field name="category_id" attrs="{'readonly': [('state', '=', 'confirm')]}"/>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td>
+                                        <label for="sub_category_id"/>
+                                    </td>
+                                    <td>
+                                        <field name="sub_category_id"
+                                               attrs="{'readonly': [('state', '=', 'confirm')]}"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <label for="product_id"/>
+                                    </td>
+                                    <td>
+                                        <field name="product_id"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <label for="stock_status"/>
+                                    </td>
+                                    <td>
+                                        <field name="stock_status" attrs="{'readonly': [('state', '=', 'confirm')]}"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <label for="is_annealed"/>
+                                    </td>
+                                    <td>
+                                        <field name="is_annealed" attrs="{'readonly': [('state', '=', 'confirm')]}"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <label for="material_type"/>
+                                    </td>
+                                    <td>
+                                        <field name="material_type" attrs="{'readonly': [('state', '=', 'confirm')]}"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <label for="thickness_in" string="Thickness Range(in)"/>
+                                    </td>
+                                    <td>
+                                        <field name="thickness_in" string="Thickness(IN)"
+                                               t-options='{"widget": "float", "decimal_precision": "Product Unit of Measure"}'
+                                               attrs="{'readonly': [('state', '=', 'confirm')]}"/>
+                                        <field name="thickness_in" string="Thickness(IN)" invisible="1"/>
+                                    </td>
+                                    <td width="5%"><span>to</span></td>
+                                    <td colspan="2">
+                                         <field name="thickness_in_ul" string="Thickness(IN)"
+                                               t-options='{"widget": "float", "decimal_precision": "Product Unit of Measure"}'
+                                               attrs="{'readonly': [('state', '=', 'confirm')]}"/>
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <label for="thickness_mm"/>
+                                    </td>
+                                    <td>
+                                        <field name="thickness_mm" string="Thickness(MM)" readonly="1" force_save="1"/>
+                                        <field name="thickness_mm" string="Thickness(MM)" invisible="1"/>
+                                    </td>
+                                    <td width="5%"></td>
+                                    <td>
+
+                                    </td>
+                                    <td></td>
+                                </tr>
+
+                                <tr>
+                                    <td>
+                                        <label for="width_in"/>
+                                    </td>
+                                    <td>
+                                        <field name="width_in" string="Width(IN)"
+                                               attrs="{'readonly': [('state', '=', 'confirm')]}"/>
+                                        <field name="width_in" string="Width(IN)" invisible="1"/>
+                                    </td>
+                                    <td width="5%"></td>
+                                    <td>
+                                        <label for="width_mm"/>
+                                    </td>
+                                    <td>
+                                        <field name="width_mm" string="Width(MM)" readonly="1" force_save="1"/>
+
+                                        <field name="width_mm" string="Width(MM)" invisible="1"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <label for="length_in" attrs="{'invisible': [('material_type', '=', 'coil')]}"/>
+                                    </td>
+                                    <td>
+                                        <field name="length_in" string="Length(IN)"
+                                               attrs="{'readonly': [('state', '=', 'confirm')],'invisible': [('material_type', '=', 'coil')]}"/>
+                                    </td>
+                                    <td width="5%"></td>
+                                    <td>
+                                        <label for="length_mm" attrs="{'invisible': [('material_type', '=', 'coil')]}"/>
+                                    </td>
+                                    <td>
+                                        <field name="length_mm" string="Length(MM)" readonly="1" force_save="1"
+                                               attrs="{'invisible': [('material_type', '=', 'coil')]}"/>
+
+                                    </td>
+                                </tr>
+
+                                <!--##############################-->
+                                <tr attrs="{'invisible': [('material_type', '=', 'coil')]}">
+                                    <td>
+                                        <label for="number_of_sheets"
+                                               attrs="{'invisible': [('material_type', '=', 'coil')]}"/>
+                                    </td>
+                                    <td>
+                                        <field name="number_of_sheets"
+                                               attrs="{'readonly': [('state', '=', 'confirm')],'invisible':[('material_type', '=', 'coil')]}"/>
+                                    </td>
+                                    <td width="5%"></td>
+                                    <td>
+
+                                    </td>
+                                    <td>
+
+                                    </td>
+                                </tr>
+
+                                <!--##############################-->
+
+
+                                <tr>
+                                    <td>
+                                        <label for="piw"/>
+                                    </td>
+                                    <td>
+                                        <field name="piw" string="PIW" force_save="1"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <label for="thickness_spec"/>
+                                    </td>
+                                    <td>
+                                        <field name="thickness_spec" string="Thickness Spec"
+                                               attrs="{'readonly': [('state', '=', 'confirm')]}"/>
+                                        <field name="thickness_spec" string="Thickness Spec" invisible="1"/>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td>
+                                        <label for="gauge_id" string="Gauge"/>
+                                    </td>
+                                    <td>
+                                        <field name="gauge_id" attrs="{'readonly': [('state', '=', 'confirm')]}"/>
+
+                                    </td>
+                                </tr>
+                                 <tr>
+                                    <td>
+                                        <label for="reserved_partner_id" string="Reserve Lot For"/>
+                                    </td>
+                                    <td>
+                                        <field name="reserved_partner_id" attrs="{'readonly': [('state', '=', 'confirm')]}"/>
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                         <label for="no_of_pieces" string="No. of Pieces"/>
+                                    </td>
+                                    <td>
+                                        <field name="no_of_pieces" attrs="{'readonly': [('state', '=', 'confirm')]}"/>
+                                    </td>
+                                </tr>
+<!--                                <tr>-->
+<!--                                    <td>-->
+<!--                                        <label for="thickness_range_id" string="Thk Range(in)"/>-->
+<!--                                    </td>-->
+<!--                                    <td>-->
+<!--                                        <field name="thickness_range_id" attrs="{'readonly': [('state', '=', 'confirm')]}"/>-->
+
+<!--                                    </td>-->
+<!--                                </tr>-->
+                            </table>
+                        </group>
+                    </group>
+                    <group>
+                        <group></group>
+                        <group>
+                            <table width="100%">
+                                <tr>
+                                    <td width="15%">
+                                        <label for="product_qty" string="Weight(lbs)" style="font-weight:bold"/>
+                                    </td>
+                                    <td width="20%">
+                                        <field name="product_qty" widget="integer" nolabel="1"/>
+                                    </td>
+                                    <td width="12%">
+                                        <field name="product_uom_id" attrs="{'readonly': [('state', '=', 'confirm')]}"
+                                               widget="selection"
+                                               no_label="1"/>
+                                    </td>
+
+                                    <td width="15%">
+                                        <label for="weight_kg" string="Weight(Kg)" style="font-weight:bold"/>
+                                    </td>
+                                    <td width="20%">
+                                        <field name="weight_kg" widget="integer" nolabel="1"/>
+                                    </td>
+                                    <td width="12%"></td>
+                                </tr>
+                            </table>
+
+                        </group>
+                    </group>
+                </xpath>
+                <xpath expr="//page[@name='description']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//page[@name='description']" position="before">
+                    <page string="Surface Finish" name="surface_finish">
+                        <group>
+                            <group>
+                                <field name="process_done" attrs="{'readonly': [('state', '=', 'confirm')]}"/>
+                                <field name="pass_oil" attrs="{'readonly': [('state', '=', 'confirm')]}"/>
+                                <field name="pass_oil" invisible="1"/>
+                                <field name="finish" attrs="{'readonly': [('state', '=', 'confirm')]}"/>
+                                <field name="finish" invisible="1"/>
+                                <field name="temper" attrs="{'readonly': [('state', '=', 'confirm')]}"/>
+                                <field name="temper" invisible="1"/>
+                                <field name="coating" attrs="{'readonly': [('state', '=', 'confirm')]}"/>
+                                <field name="coating" invisible="1"/>
+                            </group>
+                        </group>
+
+                    </page>
+                    <page name="quality_remarks" string="Quality Remarks">
+                        <group>
+                            <group string="Quality Remarks">
+                                <field name="quality" string="Quality"
+                                       attrs="{'readonly': [('state', '=', 'confirm')]}"/>
+                                <field name="quality" string="Quality" invisible="1"/>
+                                <field name="vendor" attrs="{'readonly': [('state', '=', 'confirm')]}"/>
+                                <field name="vendor" invisible="1"/>
+                                <field name="category" attrs="{'readonly': [('state', '=', 'confirm')]}"/>
+                                <field name="category" invisible="1"/>
+                                <field name="internal" attrs="{'readonly': [('state', '=', 'confirm')]}"/>
+                                <field name="internal" invisible="1"/>
+                            </group>
+
+                        </group>
+
+                    </page>
+                    <page string="Physical Properties">
+                        <group>
+                            <group>
+
+                                <field name="grade" string="Grade"
+                                       attrs="{'readonly': [('state', '=', 'confirm')]}"/>
+                                <field name="grade" string="Grade" invisible="1"/>
+                                <field name="rockwell" string="Rockwell"
+                                       attrs="{'readonly': [('state', '=', 'confirm')]}"/>
+                                <field name="rockwell" string="Rockwell" invisible="1"/>
+                                <field name="elongation" string="Elongation"
+                                       attrs="{'readonly': [('state', '=', 'confirm')]}" widget="integer"/>
+                                <field name="elongation" string="Elongation" invisible="1" widget="integer"/>
+
+                                <field name="yield_mpa" string="Yield(mpa)" widget="integer"
+                                       attrs="{'readonly': [('state', '=', 'confirm')]}"/>
+                                <field name="yield_mpa" string="Yield(mpa)" invisible="1" widget="integer"/>
+                                <field name="yield_psi" string="Yield(psi)"
+                                       attrs="{'readonly': [('state', '=', 'confirm')]}" widget="integer"/>
+                                <!--                                       attrs="{'readonly': [('state', '=', 'confirm')]}"/>-->
+                                <field name="yield_psi" string="Yield(psi)" invisible="1" widget="integer"/>
+                                <field name="yield_ksi" string="Yield(ksi)" widget="integer"
+                                       attrs="{'readonly': [('state', '=', 'confirm')]}"/>
+                                <field name="yield_ksi" string="Yield(ksi)" invisible="1" widget="integer"/>
+
+                                <field name="tensile_mpa" string="Tensile(mpa)" widget="integer"
+                                       attrs="{'readonly': [('state', '=', 'confirm')]}"/>
+                                <field name="tensile_mpa" string="Tensile(mpa)" invisible="1" widget="integer"/>
+                                <field name="tensile_psi" string="Tensile(psi)"
+                                       attrs="{'readonly': [('state', '=', 'confirm')]}" widget="integer"/>
+                                <!--                                       attrs="{'readonly': [('state', '=', 'confirm')]}"/>-->
+                                <field name="tensile_psi" string="Tensile(psi)" invisible="1" widget="integer"/>
+                                <field name="tensile_ksi" string="Tensile(ksi)" widget="integer"
+                                       attrs="{'readonly': [('state', '=', 'confirm')]}"/>
+                                <field name="tensile_ksi" string="Tensile(ksi)" invisible="1" widget="integer"/>
+                            </group>
+                        </group>
+                    </page>
+                    <page string="Chemical Properties" name="chemical_properties">
+                        <group>
+                            <group>
+
+                                <field name="comp_c"/>
+                                <field name="comp_mn"/>
+                                <field name="comp_p"/>
+                                <field name="comp_s"/>
+
+
+                                <field name="comp_si"/>
+                                <field name="comp_al"/>
+                                <field name="comp_cr"/>
+                                <field name="comp_nb"/>
+
+                                <field name="comp_ti"/>
+                                <field name="comp_ca"/>
+                                <field name="comp_n"/>
+                                <field name="comp_ni"/>
+
+                                <field name="comp_cu"/>
+                                <field name="comp_v"/>
+                                <field name="comp_b"/>
+                                <field name="comp_co"/>
+                                <field name="comp_mo"/>
+                                <field name="comp_sn"/>
+                            </group>
+                            <group></group>
+                        </group>
+                        <!--                        </group>-->
+
+                        <!--                        <field name="component_ids" no_label="1" attrs="{'readonly': [('state', '=', 'confirm')]}">-->
+                        <!--                            <tree editable="bottom">-->
+                        <!--                                <field name="name" string="Component" force_save="1"/>-->
+                        <!--                                <field name="value" string="Values" force_save="1"/>-->
+                        <!--                            </tree>-->
+                        <!--                        </field>-->
+                    </page>
+                    <page name="coil_details" string="Coil Details">
+                        <group>
+                            <group>
+                                <field name="heat_number" attrs="{'readonly': [('state', '=', 'confirm')]}"/>
+                                <field name="heat_number" invisible="1"/>
+                                <field name="lift_number" attrs="{'readonly': [('state', '=', 'confirm')]}"/>
+                                <field name="lift_number" invisible="1"/>
+                                <field name="part_number" attrs="{'readonly': [('state', '=', 'confirm')]}"/>
+                                <field name="part_number" invisible="1"/>
+                                <field name="tag_number" attrs="{'readonly': [('state', '=', 'confirm')]}"/>
+                                <field name="tag_number" invisible="1"/>
+                                <field name="company_id" string="Company"/>
+                            </group>
+
+                        </group>
+
+                    </page>
+                    <page name="first_processor" string="Processor Details">
+                        <!--                         attrs="{'invisible': [('job_order_lot', '=', False)]}"-->
+                        <group>
+                            <group>
+                                <field name="job_order_lot" invisible="1"/>
+                                <field name="heat_number_pr1" attrs="{'readonly': [('state', '=', 'confirm')]}"/>
+                                <field name="heat_number_pr1" invisible="1"/>
+                                <field name="lift_number_pr1" attrs="{'readonly': [('state', '=', 'confirm')]}"/>
+                                <field name="lift_number_pr1" invisible="1"/>
+                                <field name="part_number_pr1" attrs="{'readonly': [('state', '=', 'confirm')]}"/>
+                                <field name="part_number_pr1" invisible="1"/>
+                                <field name="tag_number_pr1" attrs="{'readonly': [('state', '=', 'confirm')]}"/>
+                                <field name="tag_number_pr1" invisible="1"/>
+                                <field name="tag_number_pr2" attrs="{'readonly': [('state', '=', 'confirm')]}"/>
+                                <field name="tag_number_pr2" invisible="1"/>
+                                <field name="tag_number_pr3" attrs="{'readonly': [('state', '=', 'confirm')]}"/>
+                                <field name="tag_number_pr3" invisible="1"/>
+                                <field name="tag_number_pr4" attrs="{'readonly': [('state', '=', 'confirm')]}"/>
+                                <field name="tag_number_pr4" invisible="1"/>
+
+                                <!--                                <field name="company_id" string="Company"/>-->
+                            </group>
+
+                        </group>
+
+                    </page>
+                    <page name="receiving_details" string="Receiving Details">
+                        <group>
+                            <group>
+
+                                <field name="internet_serial" attrs="{'readonly': [('state', '=', 'confirm')]}"/>
+                                <field name="internet_serial" invisible="1"/>
+                                <field name="date_received" attrs="{'readonly': [('state', '=', 'confirm')]}"/>
+                                <field name="date_received" invisible="1"/>
+                                <field name="po_number" attrs="{'readonly': [('state', '=', 'confirm')]}"/>
+                                <field name="po_number" invisible="1"/>
+                                <field name="loc_warehouse" attrs="{'readonly': [('state', '=', 'confirm')]}"/>
+                                <field name="loc_warehouse" invisible="1"/>
+                                <field name="loc_city" attrs="{'readonly': [('state', '=', 'confirm')]}"/>
+                                <field name="loc_city" invisible="1"/>
+                                <!--                            <field name="sale_order_id" attrs="{'readonly': [('state', '=', 'confirm')]}"/>-->
+                                <field name="sale_order_id" invisible="1"/>
+                                <field name="sale_ref_ids" readonly="1" force_save="1" widget="many2many_tags"/>
+
+                                <field name="vendor_id" attrs="{'readonly': [('state', '=', 'confirm')]}"/>
+                                <field name="vendor_serial_number" attrs="{'readonly': [('state', '=', 'confirm')]}"/>
+                                <field name="vendor_name" invisible="1"/>
+                                <field name="vendor_location_id" attrs="{'readonly': [('state', '=', 'confirm')]}"/>
+                                <field name="vendor_location_id" invisible="1"/>
+                                <field name="bill_of_lading" attrs="{'readonly': [('state', '=', 'confirm')]}"/>
+                                <field name="bill_of_lading" invisible="1"/>
+
+                            </group>
+
+                        </group>
+
+                    </page>
+
+                    <page name="purchase_details" string="Purchase Details">
+                        <group>
+                            <group>
+                                <field name="purchase_cost" invisible="1"/>
+                                <field name="landed_cost" invisible="1"/>
+                                <field name="total_purcahse_cost"/>
+                                <field name="total_landed_cost"/>
+                            </group>
+                        </group>
+
+                    </page>
+
+                    <page string="Shipping Details">
+
+
+                        <group string="Shipping Details" invisible="1">
+                            <field name="weight_lb" widget="integer" class="oe_inline" invisible="1"/>
+
+                            <field name="packing_slip_no" invisible="1"/>
+                            <field name="date_removed" attrs="{'readonly': [('state', '=', 'confirm')]}"/>
+                            <field name="date_removed" invisible="1"/>
+                        </group>
+                        <group invisible="1">
+                            <field name="location" string="Location"
+                                   attrs="{'readonly': [('state', '=', 'confirm')]}"/>
+                            <field name="location" string="Location" invisible="1"/>
+                            <field name="vendor_id" string="Vendor id"
+                                   attrs="{'readonly': [('state', '=', 'confirm')]}"/>
+                            <field name="vendor_id" string="Vendor id" invisible="1"/>
+                        </group>
+
+
+                    </page>
+                </xpath>
+                <xpath expr="//sheet" position="before">
+                    <header>
+                        <field name="state" widget="statusbar"/>
+                        <button type="object" class="btn-primary"
+                                name="set_to_draft" attrs="{'invisible': [('state', '=', 'draft')]}"
+                                string="Reset to Draft"/>
+                        <button type="object" class="btn-primary"
+                                name="set_to_confirm" attrs="{'invisible': [('state', '=', 'confirm')]}"
+                                string="Confirm"/>
+                    </header>
+                </xpath>
+
+                <!--                ##############-->
+                <xpath expr="//div[@name='button_box']" position="inside">
+                    <button type="object" class="btn-primary"
+                            name="action_view_lot_history" icon="fa-file"
+                            string="History"/>
+                </xpath>
+                <xpath expr="//field[@name='name']" position="before">
+                    <!--                    <field name="image_1920" widget="image" class="oe_avatar"/>-->
+                    <field name="image_512" widget="image" class="oe_avatar" invisible="1"/>
+                    <field name="image_256" widget="image" class="oe_avatar" invisible="1"/>
+                    <field name="image_128" widget="image" class="oe_avatar" invisible="1"/>
+                    <!--                    options="{'preview_image': 'image_128'}"-->
+                </xpath>
+                <xpath expr="//field[@name='ref']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='product_id']" position="attributes">
+                    <attribute name="attrs">{'readonly': [('state', '=', 'confirm')]}</attribute>
+                </xpath>
+                <xpath expr="//field[@name='company_id']" position="attributes">
+                    <attribute name="attrs">{'readonly': [('state', '=', 'confirm')]}</attribute>
+                </xpath>
+                <xpath expr="//field[@name='company_id']" position="replace">
+
+                </xpath>
+                <!--                <xpath expr="//group/group/field[@name='product_id']"  position="replace">-->
+
+
+                <xpath expr="//field[@name='name']" position="attributes">
+                    <attribute name="readonly">1</attribute>
+                </xpath>
+                <!--                <xpath expr="//field[@name='product_uom_id']" position="replace">-->
+
+                <!--                </xpath>-->
+
+
+                <xpath expr="//field[@name='product_id']" position="before">
+                    <field name="product_template_id" invisible="1"/>
+                </xpath>
+                <xpath expr="//field[@name='product_id']" position="after">
+
+                    <field name="stock_status" invisible="1"/>
+
+                    <field name="material_type" invisible="1"/>
+                    <field name="is_child_coil" invisible="1"/>
+
+                    <field name="parent_coil_id" invisible="1"
+                           attrs="{'readonly': True}"/>
+                    <!--                           attrs="{'readonly': True,'invisible':[('is_child_coil', '=', False)]}"/>-->
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>

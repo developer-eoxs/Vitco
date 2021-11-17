@@ -1,0 +1,22 @@
+<odoo>
+    <data>
+        <record id="production_cancel_form_view" model="ir.ui.view">
+            <field name="name">Cancel Production</field>
+            <field name="model">production.cancel.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Cancel Production">
+                    <group>
+                        <p><strong>You are about to cancel the production. Do you want to continue?</strong></p>
+                    </group>
+
+                    <footer>
+                        <button string="Continue" name="cancel_production" type="object"/>
+                        <button string="Cancel" class="btn-default" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+    </data>
+</odoo>
+

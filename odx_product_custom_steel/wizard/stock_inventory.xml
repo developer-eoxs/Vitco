@@ -1,0 +1,48 @@
+<odoo>
+    <data>
+        <record id="import_stock_view" model="ir.ui.view">
+            <field name="name">Import Stock Order</field>
+            <field name="model">gen.stock.order</field>
+            <field name="arch" type="xml">
+                <form string="Import Stock Order">
+                    <group>
+                        <field name="import_option" widget="selection"/>
+                        <field name="file_to_upload"/>
+                    </group>
+                    <group>
+                        <span>
+                            <a href="/odx_product_custom_steel/static/sample_files/inventory_sample_template.xlsx"
+                               style="text-align:left">Download
+                                the Sample Xls template
+                            </a>
+                        </span>
+                        <span>
+                            <a href="/odx_product_custom_steel/static/sample_files/inventory_sample_template.csv"
+                               style="text-align:left">Download
+                                the Sample CSV template
+                            </a>
+                        </span>
+                    </group>
+                    <footer>
+                        <button string="Import" name="import_sale_order" type="object"/>
+                        <button string="Cancel" class="btn-default" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_stock_import" model="ir.actions.act_window">
+            <field name="name">Import Inventory</field>
+            <field name="res_model">gen.stock.order</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+
+        <menuitem action="action_stock_import"
+                  id="import_stock_order"
+                  parent="stock.menu_stock_inventory_control"
+                  sequence="102"
+                  name="Import Inventory"/>
+    </data>
+</odoo>
+

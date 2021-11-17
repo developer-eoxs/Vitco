@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+	<!-- Owl Template Extend -->
+    <t t-name="ControlPanel">
+		<div class="o_control_panel">
+			<div class="o_cp_top">
+				<div class="o_cp_top_left">
+					<ol class="breadcrumb" role="navigation"/>
+				</div>
+				<div class="o_cp_top_right">
+					<div class="o_cp_searchview ks_search_responsive" role="search">
+						<button t-if="widget.isMobile" class="ks-search-close o_enable_searchview">
+							<svg width="16" height="16" viewBox="0 0 16 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+								<path d="M15 8.25H1" stroke="#616266" stroke-width="2" stroke-linecap="round"
+									  stroke-linejoin="round"/>
+								<path d="M8 15.5L1 8.25L8 1" stroke="#616266" stroke-width="2" stroke-linecap="round"
+									  stroke-linejoin="round"/>
+							</svg>
+						</button>
+						<t t-if="widget.withSearchBar" t-call="SearchView"/>
+					</div>
+					<button t-if="widget.withSearchBar" class="ks-phone-sr-btn o_enable_searchview">
+						<svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+							<path d="M17 17L11.6667 11.6667L17 17ZM13.4444 7.22222C13.4444 8.03934 13.2835 8.84845 12.9708 9.60336C12.6581 10.3583 12.1998 11.0442 11.622 11.622C11.0442 12.1998 10.3583 12.6581 9.60336 12.9708C8.84845 13.2835 8.03934 13.4444 7.22222 13.4444C6.40511 13.4444 5.596 13.2835 4.84108 12.9708C4.08617 12.6581 3.40023 12.1998 2.82245 11.622C2.24466 11.0442 1.78633 10.3583 1.47364 9.60336C1.16094 8.84845 1 8.03934 1 7.22222C1 5.57199 1.65555 3.98934 2.82245 2.82245C3.98934 1.65555 5.57199 1 7.22222 1C8.87246 1 10.4551 1.65555 11.622 2.82245C12.7889 3.98934 13.4444 5.57199 13.4444 7.22222Z"
+								  stroke="#454546" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+						</svg>
+					</button>
+				</div>
+			</div>
+			<div class="o_cp_bottom">
+				<div class="o_cp_left">
+					<div class="o_cp_buttons" role="toolbar" aria-label="Control panel toolbar"/>
+					<aside class="o_cp_sidebar"/>
+				</div>
+				<div class="o_cp_right">
+					<div class="btn-group o_search_options position-static" role="search"/>
+					<nav class="o_cp_pager" role="search" aria-label="Pager"/>
+					<nav class="btn-group o_cp_switch_buttons" role="toolbar" aria-label="View switcher"/>
+					<nav class="ks_fullscreen_div ml-2">
+						<button type="button" accesskey="f" class="btn btn-secondary fa fa-lg ks_fullscreen fa-expand"
+								aria-label="Full Screen" title="Full Screen" data-toggle="tooltip" tabindex="-1"/>
+						<button class="ks-phone-controll-option" t-if="widget.withSearchBar">
+							<svg width="20" height="16" viewBox="0 0 24 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+								<path d="M7.11099 1H23" stroke="#454546" stroke-width="2" stroke-linecap="round"
+									  stroke-linejoin="round"/>
+								<path d="M7.11081 7.70496H22.9998" stroke="#454546" stroke-width="2" stroke-linecap="round"
+									  stroke-linejoin="round"/>
+								<path d="M7.11081 14.4102H22.9998" stroke="#454546" stroke-width="2" stroke-linecap="round"
+									  stroke-linejoin="round"/>
+								<path d="M1 1H1.01222" stroke="#454546" stroke-width="2" stroke-linecap="round"
+									  stroke-linejoin="round"/>
+								<path d="M1 7.70496H1.01222" stroke="#454546" stroke-width="2" stroke-linecap="round"
+									  stroke-linejoin="round"/>
+								<path d="M1 14.4102H1.01222" stroke="#454546" stroke-width="2" stroke-linecap="round"
+									  stroke-linejoin="round"/>
+							</svg>
+						</button>
+					</nav>
+				</div>
+			</div>
+		</div>
+	</t>
+
+	<div t-name="SearchView" class="o_searchview" role="search" aria-autocomplete="list">
+		<t t-if="widget.isMobile">
+			<div class="ks-phone-filter-modal o_mobile_search o_hidden">
+				<div class="ks-phone-filter-topbar">
+					<div class="ks-top-icons">
+						<span class="o_mobile_search_close ks-back-btn">
+							<svg width="16" height="17" viewBox="0 0 16 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+								<path d="M15 8.25H1" stroke="#616266" stroke-width="2" stroke-linecap="round"
+									  stroke-linejoin="round"/>
+								<path d="M8 15.5L1 8.25L8 1" stroke="#616266" stroke-width="2"
+									  stroke-linecap="round" stroke-linejoin="round"/>
+							</svg>
+						</span>
+						<span class="o_mobile_search_clear_facets">CLEAR</span>
+					</div>
+				</div>
+				<div class="o_mobile_search_filter o_search_options position-static"/>
+			</div>
+			<button class="ks-phone-filter-btn o_toggle_searchview_full o_hidden">
+				<svg width="16" height="11" viewBox="0 0 13 10" fill="none"
+					 xmlns="http://www.w3.org/2000/svg">
+					<path fill-rule="evenodd" clip-rule="evenodd" d="M13 2H0V0H13V2Z" fill="#454546"/>
+					<path fill-rule="evenodd" clip-rule="evenodd" d="M12 6H1V4H12V5V6Z" fill="#454546"/>
+					<path fill-rule="evenodd" clip-rule="evenodd" d="M11 10H2V8H11V9V10Z" fill="#454546"/>
+				</svg>
+			</button>
+		</t>
+		<t t-else="">
+			<i class="o_searchview_icon o_searchview_more fa fa-search" title="Search..." role="img" aria-label="Search..."/>
+		</t>
+	</div>
+
+	<t t-name="ControlPanel.SwitchButtons.Mobile">
+		<t t-foreach="views" t-as="view">
+			<t t-call="ControlPanel.SwitchButton"/>
+		</t>
+	</t>
+
+	<t t-name="ControlPanel.SwitchButton">
+		<button type="button" t-att-accesskey="view.accessKey"
+			t-attf-class="btn btn-secondary fa fa-lg #{view.icon} o_switch_view o_cp_switch_#{view.type} #{viewType === view.type ? ' active' : ''}"
+			t-attf-aria-label="View #{view.type}"
+			t-att-data-view-type="view.type" t-attf-title="View #{view.type}" tabindex="-1"/>
+	</t>
+	<t t-name="ks_control_search_panel">
+		<div class="ks_search_control_panel">
+			<button class="ks-phone-category-btn">
+				<i class="fa fa-filter"/>
+			</button>
+			<t t-set="ks_active_filter" t-value="false"/>
+			<t t-foreach="filters" t-as="active_fil">
+				<t t-if="!active_fil.activeValueId">
+					<!--<div class="ks-select-status pr-4">All</div>-->
+				</t>
+				<t t-else="">
+					<t t-set="ks_active_filter" t-value="true"/>
+					<t t-set="ctgry" t-value="active_fil.values[activeValueId]"/>
+					<span class="active_items">
+						<i t-if="active_fil.icon" t-attf-class="fa {{ ctgry.icon }}"/>
+						<t t-esc="ctgry.display_name"/>
+					</span>
+				</t>
+			</t>
+			<t t-if="ks_active_filter == false">
+				<div class="ks-select-status pr-4">All</div>
+			</t>
+		</div>
+	</t>
+</templates>

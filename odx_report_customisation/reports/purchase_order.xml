@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="report_purchaseorder_document_inherit" inherit_id="purchase.report_purchaseorder_document"
+                  priority="100">
+            <xpath expr="//t[@t-call='web.external_layout']" position="replace">
+                <t t-call="web.internal_layout">
+                    <div class="page">
+                        <div class="oe_structure"/>
+
+                        <center>
+                            <h5>
+                                <u>
+                                    <strong>
+                                        <b>PURCHASE ORDER</b>
+                                    </strong>
+                                </u>
+                            </h5>
+                        </center>
+                        <div class="col-12">
+                            <div class="col-6 pull-right"
+                                 style="padding-left:1px;padding-top:1%; padding-bottom:1%;margin-top:40px;margin-top:2px;">
+                                <table style="width:90%;font-size:15px;">
+                                    <tbody>
+                                        <tr>
+                                            <td class="text-left" style="width:30%;">
+                                                Ship to Party
+                                            </td>
+                                            <td>
+                                                <span>
+                                                    :
+<!--                                                    <t t-if="o.partner_id" t-esc="o.partner_id.name"/>-->
+                                                   <t t-if="o.picking_type_id"
+                                                       t-esc="o.picking_type_id.warehouse_id.company_id.name"/>
+                                                    <br/>
+
+                                                </span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+
+                                            </td>
+                                            <td>
+                                                <address t-field="o.partner_id"
+                                                         t-options="{&quot;widget&quot;: &quot;contact&quot;, &quot;fields&quot;: [&quot;address&quot;], &quot;no_marker&quot;: True}"/>
+
+                                            </td>
+
+                                        </tr>
+                                        <tr>
+                                            <td style="width:30%;">
+                                                Ship via
+                                            </td>
+                                            <td>
+                                                <span>
+                                                    :
+                                                    <t t-if="o.shipped_via" t-esc="o.shipped_via"/>
+                                                </span>
+                                            </td>
+                                        </tr>
+
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="col-6"
+                                 style="padding-left:1px;margin-left:-5px; padding-top:1%; padding-bottom:1%;">
+                                <table style="width:100%;font-size:15px;">
+                                    <tbody>
+                                        <tr>
+                                            <td class="text-left" style="width:50%">
+                                                PO Number
+                                            </td>
+                                            <td>
+                                                :
+                                                <span>
+                                                    <t t-esc="o.name"/>
+                                                </span>
+                                            </td>
+
+                                        </tr>
+                                        <tr>
+                                            <td class="text-left" style="width:50%">
+                                                Date
+                                            </td>
+                                            <td>
+                                                :
+                                                <span>
+                                                    <t t-esc="o.date_order"/>
+                                                </span>
+                                            </td>
+
+                                        </tr>
+                                        <tr>
+                                            <td class="text-left" style="width:50%">
+                                                Purchase Representative
+                                            </td>
+                                            <td>
+                                                :
+                                                <span>
+                                                    <t t-esc="o.user_id.name"/>
+                                                </span>
+                                            </td>
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <br/>
+                            <br/>
+                        </div>
+                        <hr style="border-top:1px dashed black;"/>
+                        <hr style="border-top:1px dashed black;margin-top:-13px;"/>
+                        <div class="row"></div>
+                        <table class="table table-sm" name="invoice_line_table_new" style="border:1px solid black;">
+                            <thead>
+                                <tr>
+                                    <th style="border-top:1px solid black;border-right:1px solid black;">Sl No</th>
+                                    <th class="text-center"
+                                        style="border-top:1px solid black;border-right:1px solid black;width:25%">
+                                        Material Description
+                                    </th>
+                                    <th style="border-top:1px solid black;border-right:1px solid black;">Width (in)</th>
+                                    <th style="border-top:1px solid black;border-right:1px solid black;">Thickness
+                                        (in)
+                                    </th>
+                                    <th style="border-top:1px solid black;border-right:1px solid black;">Cutlength
+                                        (in)
+                                    </th>
+                                    <th style="border-top:1px solid black;border-right:1px solid black;">Weight (lbs)
+                                    </th>
+                                    <th style="border-top:1px solid black;border-right:1px solid black;">Rate ($)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-set="seq" t-value="1"/>
+                                <tr t-foreach="o.order_line" t-as="line">
+                                    <td class="text-center"
+                                        style="border-top:1px solid black;border-right:1px solid black;">
+                                        <span t-esc="seq"/>
+                                    </td>
+                                    <t t-set="seq" t-value="seq+1"/>
+                                    <td class="text-center"
+                                        style="border-top:1px solid black;border-right:1px solid black;">
+                                        <!-- <span t-esc="line.name"/> -->
+                                        <span t-esc="line.sub_category_id.name"/>
+                                        -
+                                        <span t-esc="line.product_id.name"/>
+                                    </td>
+                                    <td class="text-center"
+                                        style="border-top:1px solid black;border-right:1px solid black;">
+                                        <span t-esc="line.width_in"/>
+                                    </td>
+                                    <td class="text-center"
+                                        style="border-top:1px solid black;border-right:1px solid black;">
+                                        <span t-esc="line.thickness_in"/>
+                                    </td>
+                                    <td class="text-center"
+                                        style="border-top:1px solid black;border-right:1px solid black;">
+                                        <span t-esc="line.length_in"/>
+                                    </td>
+                                    <td class="text-center"
+                                        style="border-top:1px solid black;border-right:1px solid black;">
+                                        <span t-esc="int(line.product_qty)"/>
+                                    </td>
+                                    <td class="text-center"
+                                        style="border-top:1px solid black;border-right:1px solid black;">
+                                        <span t-esc="line.price_unit"/>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <br/>
+                        <br/>
+
+                        <p>
+                            <b>Technical Delivery Conditions:</b>
+                            <br/>
+                            <span t-field="o.technical_delivery_cond"></span>
+                        </p>
+
+                        <div class="row">
+                            <br/>
+                            <br/>
+                        </div>
+
+                        <div class="row"></div>
+                        <div style="padding-top:100px">
+                            <hr style="border-top:1px dashed black;"/>
+                            <hr style="border-top:1px dashed black;margin-top:-13px;"/>
+                            <p>
+                                <b>Terms and Conditions:</b>
+                                <br/>
+                                <span t-field="o.terms_conditions"></span>
+                            </p>
+                            <!--                         <div class="row"><br/></div>-->
+                            <!--                         <div class="clearfix">-->
+                            <!--                            <div id="author" class="row">-->
+                            <!--                                <div t-attf-class="#{'col-6' if report_type != 'html' else 'col-sm-7 col-md-6'} ml-auto">-->
+                            <!--                                    <table style="page-break-inside: avoid;">-->
+                            <!--                                        <tr>-->
+                            <!--                                            <td><span t-esc="o.company_id.name"/></td>-->
+                            <!--                                            <td >-->
+                            <!--                                            </td>-->
+                            <!--                                        </tr>-->
+                            <!--                                        <tr>-->
+                            <!--                                            <td><strong>Authorized By</strong></td>-->
+                            <!--                                            <td >:<span t-esc="user.name"/>-->
+                            <!--                                            </td>-->
+                            <!--                                        </tr>-->
+                            <!--                                        <tr>-->
+                            <!--                                            <td> <strong>Date </strong></td>-->
+                            <!--                                            <td >:<span t-esc="context_timestamp(datetime.datetime.now()).strftime('%Y-%m-%d %H:%M')"/>  -->
+                            <!--                                           </td>-->
+                            <!--                                           </tr>-->
+                            <!--                                    </table>-->
+                            <!--                                    </div>-->
+                            <!--                                </div>-->
+                            <!--                            </div>-->
+                        </div>
+                    </div>
+                </t>
+            </xpath>
+        </template>
+    </data>
+</odoo>

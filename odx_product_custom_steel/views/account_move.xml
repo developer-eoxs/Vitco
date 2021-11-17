@@ -1,0 +1,92 @@
+<odoo>
+    <data>
+        <record id="account_invoice_form_view_inherited" model="ir.ui.view">
+            <field name="name">account.move.form.view.inherited</field>
+            <field name="model">account.move</field>
+            <field name="inherit_id" ref="account.view_move_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='invoice_line_ids']/tree/field[@name='product_id']"
+                       position='before'>
+                    <field name="category_id" options="{'no_create_edit': True}"/>
+                    <field name="sub_category_id" options="{'no_create_edit': True}"/>
+                    <!--                    domain="['|',('parent_id', '=', category_id),(1,'=',1)]" -->
+                </xpath>
+
+                <xpath expr="//field[@name='invoice_line_ids']/tree/field[@name='product_id']"
+                       position='after'>
+                    <field name="lot_id" string="Lot Number" options="{'no_create_edit': True}"/>
+                    <field name="material_type" string="Type"/>
+                </xpath>
+                <xpath expr="//field[@name='line_ids']/tree" position="inside">
+                    <field name="category_id" options="{'no_create_edit': True}" invisible="1"/>
+                    <field name="sub_category_id" options="{'no_create_edit': True}" invisible="1"/>
+                    <field name="lot_id" string="Lot Number" options="{'no_create_edit': True}" invisible="1"/>
+                    <field name="material_type" string="Type" invisible="1"/>
+                    <field name="thickness_in" invisible="1"/>
+                    <field name="width_in" invisible="1"/>
+                    <field name="length_in"  attrs="{'readonly': [('material_type', '=', 'coil')], 'invisible': [('material_type', '!=', 'sheets')], }" invisible="1"/>
+                    <field name="produced_lot_ids" widget="many2many_tags" readonly="1" force_save="1" invisible="1"/>
+
+                </xpath>
+
+                <xpath expr="//field[@name='invoice_line_ids']/tree/field[@name='product_uom_id']"
+                       position='after'>
+                    <field name="thickness_in" />
+                    <field name="width_in"/>
+                    <field name="length_in"  attrs="{'readonly': [('material_type', '=', 'coil')], 'invisible': [('material_type', '!=', 'sheets')], }"/>
+                    <field name="produced_lot_ids" widget="many2many_tags" readonly="1" force_save="1"/>
+                </xpath>
+
+                <xpath expr="//field[@name='invoice_line_ids']/tree/field[@name='product_id']" position="attributes">
+                    <attribute name="string">Sub Product</attribute>
+                    <attribute name="options">{'no_create_edit': True, }</attribute>
+                </xpath>
+
+                <xpath expr="//field[@name='invoice_line_ids']/tree/field[@name='quantity']" position="attributes">
+                    <attribute name="string">Weight</attribute>
+                    <attribute name="widget">integer</attribute>
+                </xpath>
+                <xpath expr="//page[@name='other_info']" position="before">
+                    <page id="details" string="Detail" name="detail" attrs="{'invisible': [('type', '=', 'entry')]}">
+                        <group>
+                            <group >
+                                <field name="shipped_via"  attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                                <field name="truck_no" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                            </group>
+                            <group>
+                                <field name="fob_point" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                            </group>
+                        </group>
+
+                            <group string="Terms and Conditions">
+                                    <field name="terms_conditions"
+                                           nolabel="1"/>
+                                </group>
+
+                    </page>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="account.action_account_moves_ledger_partner" model="ir.actions.act_window">
+            <field name="context">{'journal_type':'general', 'search_default_group_by_partner': 1, 'search_default_posted':1, 'search_default_payable':1, 'search_default_receivable':1, 'search_default_unreconciled':1}</field>
+            <field name="name">Partner Ledger</field>
+            <field name="res_model">account.move.line</field>
+            <field name="domain">[('display_type', 'not in', ('line_section', 'line_note'))]</field>
+            <field name="view_id" ref="account.view_move_line_tree_grouped_partner"/>
+            <field name="search_view_id" ref="account.view_account_move_line_filter"/>
+            <field name="view_mode">tree,form,pivot,graph</field>
+        </record>
+
+        <record id="account.action_account_moves_ledger_general" model="ir.actions.act_window">
+            <field name="context">{'journal_type':'general', 'search_default_group_by_account': 1, 'search_default_posted':1}</field>
+            <field name="name">General Ledger</field>
+            <field name="res_model">account.move.line</field>
+            <field name="domain">[('display_type', 'not in', ('line_section', 'line_note'))]</field>
+            <field name="view_id" ref="account.view_move_line_tree_grouped_general"/>
+            <field name="search_view_id" ref="account.view_account_move_line_filter_with_root_selection"/>
+            <field name="view_mode">tree,form,pivot,graph</field>
+        </record>
+
+    </data>
+</odoo>

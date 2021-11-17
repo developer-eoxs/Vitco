@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record model="ir.module.category" id="vrm_security_groups">
+            <field name="name">VRM Access Rights</field>
+        </record>
+
+        <record model="res.groups" id="group_vrm_access">
+            <field name="name">Show VRM Features</field>
+            <field name="category_id" ref="odx_vrm.vrm_security_groups"/>
+            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+        </record>
+
+    </data>
+
+</odoo>

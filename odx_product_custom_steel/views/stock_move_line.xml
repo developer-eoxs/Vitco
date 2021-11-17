@@ -1,0 +1,132 @@
+<odoo>
+    <record id="stock_move_line_detailed_operation_tree_view_inherited" model="ir.ui.view">
+        <field name="name">stock.move.line.operations.tree</field>
+        <field name="model">stock.move.line</field>
+        <field name="inherit_id" ref="stock.view_stock_move_line_detailed_operation_tree"/>
+        <field name="arch" type="xml">
+            <!--            <xpath expr="//field[@name='move_line_ids_without_package']/tree//field[@name='product_uom_qty']"-->
+            <xpath expr="//field[@name='product_uom_qty']"
+                   position="attributes">
+                <attribute name="widget">integer</attribute>
+            </xpath>
+            <xpath expr="//field[@name='lot_id']" position="replace">
+            </xpath>
+            <xpath expr="//field[@name='product_id']" position="before">
+                 <field name="lot_id"/>
+            </xpath>
+            <xpath expr="//field[@name='lot_id']" position="attributes">
+                <attribute name="domain">['|','&amp;',('product_id', '=', product_id),('product_id', '=', False),('company_id', '=', company_id),('loc_city', '=', location_id)]
+                </attribute>
+            </xpath>
+
+            <xpath expr="//field[@name='qty_done']"
+                   position="attributes">
+                <attribute name="widget">integer</attribute>
+            </xpath>
+        </field>
+    </record>
+
+
+    <record id="stock_move_operations_tree_inherited_view" model="ir.ui.view">
+        <field name="name">stock.move.operations.inherited.views</field>
+        <field name="model">stock.move.line</field>
+        <field name="inherit_id" ref="stock.view_stock_move_line_operation_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='lot_name']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='location_dest_id']" position="before">
+                <field name="select"/>
+            </xpath>
+            <xpath expr="//field[@name='lot_id']" position="replace">
+            </xpath>
+            <xpath expr="//field[@name='qty_done']" position="before">
+
+                <field name="lot_id" readonly="not context.get('show_lots_m2o')" groups="stock.group_production_lot"/>
+
+            </xpath>
+            <xpath expr="//field[@name='qty_done']" position="attributes">
+                <attribute name="widget">integer</attribute>
+            </xpath>
+            <xpath expr="//field[@name='qty_done']" position="after">
+                <field name="lot_state" invisible="1"/>
+                <field name="is_invisible" invisible="1"/>
+
+                <button name="get_lot_serial" string="Generate Lot Number" type="object" class="oe_highlight"
+                        attrs="{'invisible': [('is_invisible', '=', True)]}"/>
+                <!--                        attrs="{'invisible': ['|', ('state', '=', 'confirm'), ('lot_id', '!=', False)]}"/>-->
+                <!--                not context.get('show_destination_location')-->
+
+            </xpath>
+            <xpath expr="//field[@name='product_uom_id']" position="after">
+                <button class="btn btn-primary" type="object" name="stock_lot_action" string="View"
+                        attrs="{'invisible': ['&amp;',('lot_state', '!=', 'confirm'), ('lot_id', '=', False)]}"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_stock_move_operations_inherited" model="ir.ui.view">
+        <field name="name">stock.move.operations.form.inherited</field>
+        <field name="model">stock.move</field>
+        <field name="inherit_id" ref="stock.view_stock_move_operations"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='next_serial']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//button[@name='action_assign_serial_show_details']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='next_serial_count']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//label[@for='next_serial_count']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+
+            <xpath expr="//field[@name='next_serial_count']" position="before">
+                <field name="lot_id" invisible="0"/>
+            </xpath>
+            <xpath expr="//field[@name='product_uom_qty']" position="attributes">
+                <attribute name="widget">integer</attribute>
+            </xpath>
+            <xpath expr="//field[@name='quantity_done']" position="attributes">
+                <attribute name="widget">integer</attribute>
+            </xpath>
+            <xpath expr="//field[@name='reserved_availability']" position="attributes">
+                <attribute name="widget">integer</attribute>
+            </xpath>
+
+            <xpath expr="//field[@name='move_line_ids']" position="before">
+                <field name="is_select" invisible="1"/>
+
+                <button type="object" class="btn-secondary"
+                        name="select_all_lines" icon="fa-check"
+                        style="padding-top:10px;margin-left:5px;" help="Select all records"/>&amp;nbsp;&amp;nbsp;
+                <button type="object" class="btn-secondary"
+                        name="un_select_all_lines" icon="fa-times"
+                        style="padding-top:10px;" help="Un Select all records"/>
+                <button type="object" class="btn-primary"
+                        name="gen_lot_serial"
+                        attrs="{'invisible': ['|',('state', '=', 'confirm'),('is_select', '=', False)]}"
+                        string="Generate Lot Number" style="margin-left:10px;"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_picking_form_analytic" model="ir.ui.view">
+        <field name="name">stock.picking.form</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='move_ids_without_package']/tree/field[@name='product_id']"
+                   position="after">
+                <field name="lot_id" invisible="1"/>
+
+            </xpath>
+        </field>
+    </record>
+
+
+</odoo>
+
+

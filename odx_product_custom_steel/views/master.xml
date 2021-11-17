@@ -1,0 +1,92 @@
+<odoo>
+    <data>
+        <record id="thickness_gauge_master_tree" model="ir.ui.view">
+            <field name="name">Thickness gauge master</field>
+            <field name="model">steel.gauge</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="gauge_no"/>
+                    <field name="gauge_inch"/>
+                    <field name="gauge_mm"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="thickness_gauge_master_form" model="ir.ui.view">
+            <field name="name">Thickness gauge master</field>
+            <field name="model">steel.gauge</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name"/>
+                                <field name="gauge_no"/>
+                            </group>
+                            <group>
+                                <field name="gauge_inch"/>
+                                <field name="gauge_mm"/>
+                            </group>
+                        </group>
+
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="thickness_range_master_tree" model="ir.ui.view">
+            <field name="name">Thickness Range master</field>
+            <field name="model">thickness.range</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="thk_ll"/>
+                    <field name="thk_ul"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="thickness_range_master_form" model="ir.ui.view">
+            <field name="name">Thickness Range master</field>
+            <field name="model">thickness.range</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name"/>
+
+                            </group>
+                            <group>
+                                <field name="thk_ll"/>
+                                <field name="thk_ul"/>
+                            </group>
+                        </group>
+
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_gauge_master" model="ir.actions.act_window">
+            <field name="name">Gauge</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">steel.gauge</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <record id="action_thickness_range_master" model="ir.actions.act_window">
+            <field name="name">Thickness Range</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">thickness.range</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem id="menu_gauge_master" name="Gauges" action="action_gauge_master"
+                  parent="stock.menu_stock_config_settings" sequence="277"/>
+<!--        <menuitem id="menu_thk_range_master" name="Thickness Range" action="action_thickness_range_master"-->
+<!--                  parent="stock.menu_stock_config_settings" sequence="278"/>-->
+
+
+    </data>
+</odoo>

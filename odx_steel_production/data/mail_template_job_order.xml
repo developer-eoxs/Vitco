@@ -1,0 +1,510 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="mail_template_job_order_eoxs" model="mail.template">
+            <field name="name">Send Email: Job Order</field>
+            <field name="model_id" ref="odx_steel_production.model_job_order"/>
+            <field name="subject">${object.company_id.name}
+                (Ref ${object.name or 'n/a' })
+            </field>
+            <field name="email_from">${(object.create_uid.email_formatted  or '') | safe}</field>
+            <field name="partner_to">${object.partner_id.id}</field>
+            <field name="report_name">${(object.name or '').replace('/','_')}</field>
+            <field name="report_template" ref="odx_report_customisation.job_order_report"/>
+            <field name="body_html" type="xml">
+                <table border="0" cellpadding="0" cellspacing="0"
+                       style="padding-top: 16px; background-color: #F1F1F1; font-family:Verdana, Arial,sans-serif; color: #454748; width: 100%; border-collapse:separate;">
+                    <tr>
+                        <td align="center">
+                            <table border="0" cellpadding="0" cellspacing="0" width="590"
+                                   style="padding: 16px; background-color: white; color: #454748; border-collapse:separate;">
+                                <tbody>
+                                    <!-- HEADER -->
+                                    <tr>
+                                        <td align="center" style="min-width: 590px;">
+                                            <table border="0" cellpadding="0" cellspacing="0" width="590"
+                                                   style="min-width: 590px; background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;">
+                                                <tr>
+                                                    <td valign="middle">
+                                                        % set company = object.company_id
+                                                        <span style="font-size: 13px;">Dear ${object.partner_id.name},
+                                                            <br/>
+
+                                                            We have placed a job order for the following coils to be
+                                                            processed at your mill.
+
+                                                            We have furnished the details of the order below:
+                                                            <br/>
+
+                                                        </span>
+
+                                                    </td>
+                                                    <td valign="middle" align="right">
+                                                        <img src="/logo.png?company=${company.id}"
+                                                             style="padding: 0px; margin: 0px; height: auto; width: 80px;"
+                                                             alt="${company.name}"/>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="2" style="text-align:center;">
+                                                        <hr width="100%"
+                                                            style="background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin:16px 0px 16px 0px;"/>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td align="center" style="min-width: 590px;">
+                                            <table border="0" cellpadding="0" cellspacing="0" width="590"
+                                                   style="min-width: 590px; background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;">
+                                                <tr>
+                                                    <td valign="top" style="font-size: 13px;">
+
+                                                        <table width="100%">
+                                                            <tr>
+                                                                <td style="font-size:12px;" width="12%">
+                                                                    <strong>Category</strong>
+                                                                </td>
+                                                                <td style="font-size:12px;" width="15%">
+                                                                    <strong>Sub Product</strong>
+                                                                </td>
+                                                                <td style="font-size:12px;" width="15%">
+                                                                    <strong>Tag Number</strong>
+                                                                </td>
+                                                                <td style="text-align:center;font-size:11px;"
+                                                                    width="12%">
+                                                                    <strong>Thickness</strong>
+                                                                </td>
+                                                                <td style="font-size:12px;" width="12%">
+                                                                    <strong>Width</strong>
+                                                                </td>
+                                                                <td style="font-size:12px;" width="12%">
+                                                                    <strong>Weight</strong>
+                                                                </td>
+                                                                <td style="font-size:12px;" width="15%">
+                                                                    <strong>Operation</strong>
+                                                                </td>
+                                                            </tr>
+
+                                                            % if object.multi_lot_line_ids:
+                                                            % for line in object.multi_lot_line_ids:
+                                                            <tr>
+                                                                <td style="font-size:11px;" width="12%">
+                                                                    <strong>${line.sub_category_id.name}</strong>
+                                                                </td>
+                                                                <td style="font-size:11px;" width="15%">
+                                                                    <strong>${line.product_id.display_name}</strong>
+                                                                </td>
+                                                                <td style="font-size:11px;" width="15%">
+                                                                    ${line.lot_id.name}
+                                                                    % if line.lot_id.tag_number_pr4:
+                                                                    (${(line.lot_id.tag_number_pr4 | safe)})
+                                                                    % elif line.lot_id.tag_number_pr3:
+                                                                    (${(line.lot_id.tag_number_pr3 | safe)})
+                                                                    % elif line.lot_id.tag_number_pr2:
+                                                                    (${(line.lot_id.tag_number_pr2 | safe)})
+                                                                    % elif line.lot_id.tag_number_pr1:
+                                                                    (${(line.lot_id.tag_number_pr1 | safe)})
+                                                                    % else:
+                                                                    (${(line.lot_id.tag_number | safe)})
+                                                                    % endif
+
+                                                                </td>
+
+                                                                <td style="text-align:center;font-size:11px;"
+                                                                    width="12%">
+                                                                    ${(line.thickness_in)}(in)
+                                                                </td>
+                                                                <td style="font-size:11px;" width="12%">
+
+                                                                    ${(line.width_in)}(in)
+                                                                </td>
+                                                                <td style="font-size:11px;" width="12%">
+                                                                    ${(line.product_qty) | int}
+                                                                    ${(line.product_uom_id.name)}
+                                                                </td>
+                                                                <td style="font-size:11px;" width="15%">
+
+                                                                    ${(object.operation) }
+                                                                </td>
+
+                                                            </tr>
+
+                                                            % endfor
+
+                                                            % endif
+                                                            <hr/>
+
+                                                        </table>
+
+
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="text-align:center;">
+                                                        <hr width="100%"
+                                                            style="background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin: 16px 0px 16px 0px;"/>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <strong>Physical Properties</strong>
+                                            <br/>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td align="center" style="min-width: 590px;">
+                                            <table border="0" cellpadding="0" cellspacing="0" width="590"
+                                                   style="min-width: 590px; background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;">
+                                                <tr>
+                                                    <td valign="top" style="font-size: 13px;">
+
+                                                        <hr/>
+
+                                                        <table width="100%">
+                                                            <tr>
+                                                                <td style="font-size:12px;" width="15%">
+                                                                    <strong>Lot</strong>
+                                                                </td>
+
+                                                                <td style="font-size:12px;" width="12%">
+                                                                    <strong>Grade</strong>
+                                                                </td>
+                                                                <td style="font-size:12px;" width="12%">
+                                                                    <strong>Rockwell</strong>
+
+                                                                </td>
+                                                                <td style="font-size:12px;" width="10%">
+                                                                    <strong>Elongation</strong>
+
+                                                                </td>
+                                                                <td style="font-size:12px;" width="12%">
+                                                                    <strong>Yield(mpa)</strong>
+
+                                                                </td>
+                                                                <td style="font-size:12px;" width="12%">
+                                                                    <strong>Yield(psi)</strong>
+
+                                                                </td>
+                                                                <td style="font-size:12px;" width="12%">
+                                                                    <strong>Tensile(mpa)</strong>
+
+                                                                </td>
+
+                                                                <td style="font-size:12px;" width="12%">
+                                                                    <strong>Tensile(psi)</strong>
+
+                                                                </td>
+
+                                                            </tr>
+                                                            % if object.multi_lot_line_ids:
+                                                            % for line in object.multi_lot_line_ids:
+
+
+                                                            <tr>
+                                                                <td style="font-size:11px;" width="15%">
+                                                                    % if line.lot_id:
+                                                                    <strong>${(line.lot_id.name | safe)}</strong>
+                                                                    % endif
+                                                                </td>
+
+                                                                <td style="font-size:11px;" width="12%">
+                                                                    % if line.lot_id.grade:
+                                                                    <strong>${(line.lot_id.grade | safe)}</strong>
+                                                                    % endif
+                                                                    <!--                                                                    <strong>${object.lot_id.grade}</strong>-->
+                                                                </td>
+                                                                <td style="font-size:11px;" width="12%">
+                                                                    <strong>${line.lot_id.rockwell}</strong>
+                                                                </td>
+                                                                <td style="font-size:11px;" width="10%">
+
+                                                                    <strong>${line.lot_id.elongation}</strong>
+                                                                </td>
+                                                                <td style="font-size:11px;" width="12%">
+
+                                                                    <strong>${line.lot_id.yield_mpa}</strong>
+                                                                </td>
+                                                                <td style="font-size:11px;" width="12%">
+
+                                                                    <strong>${line.lot_id.yield_psi}</strong>
+                                                                </td>
+                                                                <td style="font-size:11px;" width="12%">
+
+                                                                    <strong>${line.lot_id.tensile_mpa}</strong>
+                                                                </td>
+
+                                                                <td style="font-size:11px;" width="12%">
+
+                                                                    <strong>${line.lot_id.tensile_psi}</strong>
+                                                                </td>
+
+                                                            </tr>
+                                                            % endfor
+
+                                                            % endif
+
+                                                        </table>
+
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="text-align:center;">
+                                                        <hr width="100%"
+                                                            style="background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin: 16px 0px 16px 0px;"/>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>
+                                            <strong>Chemical Properties</strong>
+                                            <br/>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td align="center" style="min-width: 590px;">
+                                            <table border="0" cellpadding="0" cellspacing="0" width="590"
+                                                   style="min-width: 590px; background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;">
+                                                <tr>
+                                                    <td valign="top" style="font-size: 13px;">
+                                                        <table width="100%">
+                                                            <thead>
+                                                                <tr>
+                                                                    <td style="font-size:12px;" width="7%">
+                                                                        <strong>Lot</strong>
+                                                                    </td>
+
+                                                                    <td style="font-size:12px;" width="5%">
+                                                                        <strong>C</strong>
+
+                                                                    </td>
+                                                                    <td style="font-size:12px;" width="5%">
+                                                                        <strong>Mn</strong>
+
+                                                                    </td>
+                                                                    <td style="font-size:12px;" width="5%">
+                                                                        <strong>P</strong>
+
+                                                                    </td>
+                                                                    <td style="font-size:12px;" width="5%">
+                                                                        <strong>S</strong>
+
+                                                                    </td>
+                                                                    <td style="font-size:12px;" width="5%">
+                                                                        <strong>Si</strong>
+
+                                                                    </td>
+                                                                    <td style="font-size:12px;" width="5%">
+                                                                        <strong>Al</strong>
+
+                                                                    </td>
+
+                                                                    <td style="font-size:12px;" width="5%">
+                                                                        <strong>Cr</strong>
+
+                                                                    </td>
+                                                                    <td style="font-size:12px;" width="5%">
+                                                                        <strong>Nb</strong>
+
+                                                                    </td>
+                                                                    <td style="font-size:12px;" width="5%">
+                                                                        <strong>Ti</strong>
+
+                                                                    </td>
+                                                                    <td style="font-size:12px;" width="6%">
+                                                                        <strong>Ca</strong>
+
+                                                                    </td>
+                                                                    <td style="font-size:12px;" width="6%">
+                                                                        <strong>N</strong>
+
+                                                                    </td>
+                                                                    <td style="font-size:12px;" width="6%">
+                                                                        <strong>Cu</strong>
+
+                                                                    </td>
+                                                                    <td style="font-size:12px;" width="6%">
+                                                                        <strong>V</strong>
+
+                                                                    </td>
+                                                                    <td style="font-size:12px;" width="6%">
+                                                                        <strong>B</strong>
+
+                                                                    </td>
+                                                                    <td style="font-size:12px;" width="6%">
+                                                                        <strong>Cb</strong>
+
+                                                                    </td>
+                                                                    <td style="font-size:12px;" width="6%">
+                                                                        <strong>Mo</strong>
+
+                                                                    </td>
+                                                                    <td style="font-size:12px;" width="6%">
+                                                                        <strong>Sn</strong>
+
+                                                                    </td>
+                                                                </tr>
+
+                                                            </thead>
+                                                            <tbody>
+                                                                % if object.multi_lot_line_ids:
+                                                                % for line in object.multi_lot_line_ids:
+
+                                                                <tr>
+                                                                    <td style="font-size:11px;" width="7%">
+
+                                                                        <strong>${line.lot_id.name}</strong>
+                                                                    </td>
+
+                                                                    <td style="font-size:11px;" width="5%">
+
+                                                                        <strong>${line.lot_id.comp_c}</strong>
+                                                                    </td>
+                                                                    <td style="font-size:11px;" width="5%">
+
+                                                                        <strong>${line.lot_id.comp_mn}</strong>
+                                                                    </td>
+                                                                    <td style="font-size:11px;" width="5%">
+
+                                                                        <strong>${line.lot_id.comp_p}</strong>
+                                                                    </td>
+                                                                    <td style="font-size:11px;" width="5%">
+
+                                                                        <strong>${line.lot_id.comp_s}</strong>
+                                                                    </td>
+                                                                    <td style="font-size:11px;" width="5%">
+
+                                                                        <strong>${line.lot_id.comp_si}</strong>
+                                                                    </td>
+                                                                    <td style="font-size:11px;" width="5%">
+
+                                                                        <strong>${line.lot_id.comp_al}</strong>
+                                                                    </td>
+
+                                                                    <td style="font-size:11px;" width="5%">
+
+                                                                        <strong>${line.lot_id.comp_cr}</strong>
+                                                                    </td>
+                                                                    <td style="font-size:11px;" width="5%">
+
+                                                                        <strong>${line.lot_id.comp_nb}</strong>
+                                                                    </td>
+                                                                    <td style="font-size:11px;" width="5%">
+
+                                                                        <strong>${line.lot_id.comp_ti}</strong>
+                                                                    </td>
+                                                                    <td style="font-size:11px;" width="6%">
+
+                                                                        <strong>${line.lot_id.comp_ca}</strong>
+                                                                    </td>
+                                                                    <td style="font-size:11px;" width="6%">
+
+                                                                        <strong>${line.lot_id.comp_n}</strong>
+                                                                    </td>
+                                                                    <td style="font-size:11px;" width="6%">
+
+                                                                        <strong>${line.lot_id.comp_cu}</strong>
+                                                                    </td>
+                                                                    <td style="font-size:11px;" width="6%">
+
+                                                                        <strong>${line.lot_id.comp_v}</strong>
+                                                                    </td>
+                                                                    <td style="font-size:11px;" width="6%">
+
+                                                                        <strong>${line.lot_id.comp_b}</strong>
+                                                                    </td>
+                                                                    <td style="font-size:11px;" width="6%">
+
+                                                                        <strong>${line.lot_id.comp_co}</strong>
+                                                                    </td>
+                                                                    <td style="font-size:11px;" width="6%">
+
+                                                                        <strong>${line.lot_id.comp_mo}</strong>
+                                                                    </td>
+                                                                    <td style="font-size:11px;" width="6%">
+                                                                        <strong>${line.lot_id.comp_sn}</strong>
+                                                                    </td>
+
+                                                                </tr>
+                                                                % endfor
+
+
+                                                                % endif
+                                                            </tbody>
+                                                        </table>
+
+
+                                                        <hr/>
+                                                        <div style="text-align: center;">
+                                                            <strong>Thank you for doing business with ${company.name}!
+                                                            </strong>
+                                                        </div>
+
+
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="text-align:center;">
+                                                        <hr width="100%"
+                                                            style="background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin: 16px 0px 16px 0px;"/>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+
+                                    <!-- FOOTER -->
+                                    <tr>
+                                        <td align="center" style="min-width: 590px;">
+                                            <table border="0" cellpadding="0" cellspacing="0" width="590"
+                                                   style="min-width: 590px; background-color: white; font-size: 11px; padding: 0px 8px 0px 8px; border-collapse:separate;">
+                                                <tr>
+                                                    <td valign="middle" align="left">
+                                                        ${company.name}
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td valign="middle" align="left" style="opacity: 0.7;">
+                                                        ${company.phone}
+                                                        % if company.email
+                                                        |
+                                                        <a href="'mailto:%s' % ${company.email}"
+                                                           style="text-decoration:none; color: #454748;">
+                                                            ${company.email}
+                                                        </a>
+                                                        % endif
+                                                        % if company.website
+                                                        |
+                                                        <a href="'%s' % ${company.website}"
+                                                           style="text-decoration:none; color: #454748;">
+                                                            ${company.website}
+                                                        </a>
+                                                        % endif
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </field>
+            <field name="lang">${object.partner_id.lang}</field>
+            <field name="auto_delete" eval="False"/>
+            <field name="user_signature" eval="False"/>
+        </record>
+
+    </data>
+</odoo>

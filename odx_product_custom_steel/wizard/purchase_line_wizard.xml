@@ -1,0 +1,26 @@
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="purchase_line_wizard_form">
+            <field name="name">purchase.line.wizard.form</field>
+            <field name="model">purchase.line.wizard</field>
+            <field name="arch" type="xml">
+                <form>
+
+                    <group>
+
+                        <p>Some Products are not in the order line. Do you want to continue?</p>
+                    </group>
+                    <group>
+<!--                        <field name="name" invisible="0"/>-->
+                        <field name="purchase_order_id" invisible="1"/>
+                    </group>
+
+                    <footer>
+                        <button string="Confirm" name="action_generate_order_line" class="oe_highlight" type="object"/>
+                        <button string="Close" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+    </data>
+</odoo>

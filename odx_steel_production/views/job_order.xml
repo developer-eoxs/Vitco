@@ -1,0 +1,397 @@
+<odoo>
+    <data>
+        <!--        Tree View     -->
+        <record model="ir.ui.view" id="job_order_tree_view">
+            <field name="name">job.order.tree.view</field>
+            <field name="model">job.order</field>
+            <field name="arch" type="xml">
+                <tree string="Job Order">
+                    <field name="name"/>
+                    <field name="description"/>
+                    <field name="state"/>
+                    <field name="operation"/>
+                </tree>
+            </field>
+        </record>
+        <!--        Tree View    end -->
+        <record model="ir.ui.view" id="job_order_search_view">
+            <field name="name">job.order.search.view</field>
+            <field name="model">job.order</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="lot_id"/>
+                    <field name="operation"/>
+                    <group expand="1" string="Group By">
+                        <filter name="sale_order" string="Sale Order" domain="[]"
+                                context="{'group_by':'sale_order_id'}"/>
+                        <filter name="sale_line_id" string="Order Line" domain="[]"
+                                context="{'group_by':'sale_line_id'}"/>
+                        <filter name="operation" string="Operation" domain="[]" context="{'group_by':'operation'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <!--        Form View         -->
+        <record model="ir.ui.view" id="job_order_form_view">
+            <field name="name">job.order.form.view</field>
+            <field name="model">job.order</field>
+            <field name="arch" type="xml">
+                <form string="Job Order">
+                    <!--                    disable_autofocus="True"-->
+                    <header>
+                        <button name="send_job_order" string="Send Email"
+                                type="object" class="btn-primary"
+                                attrs="{'invisible': [('state', 'in', ('done','cancel'))]}"/>
+                        <button name="action_confirm" string="Confirm Production"
+                                type="object" class="btn-primary" attrs="{'invisible': [('state', '!=', 'draft')]}"/>
+                        <button name="create_picking" string="Create Picking"
+                                type="object" class="btn-primary"
+                                attrs="{'invisible': [('state', 'in', ('done','draft','cancel'))]}"/>
+                        <button name="generate_freight" string="Add Freight"
+                                type="object" class="btn-primary" attrs="{'invisible': [('state', 'in', ('cancel'))]}"/>
+                        <button name="action_reset_to_draft" string="Reset To Draft"
+                                type="object" class="btn-primary"
+                                attrs="{'invisible': [('state', '!=', 'confirm')]}"/>
+                        <button name="create_invoice" string="Create Invoice"
+                                type="object" class="btn-primary"
+                                attrs="{'invisible': ['|',('state', 'in', ('draft','cancel')),('invoice_id', '!=', False)]}"/>
+                        <button name="action_cancel" string="Cancel"
+                                type="object" class="btn-primary"
+                                attrs="{'invisible': [('state', 'in', ('done','cancel'))]}"/>
+                        <!--                        <button name="action_create_picking" string="Picking"-->
+                        <!--                                type="object" class="btn-primary"-->
+                        <!--                                attrs="{'invisible': [('state', 'in', ('cancel'))]}"/>-->
+
+
+                        <field name="state" widget="statusbar" statusbar_visible="draft,confirm,done,cancel"/>
+                    </header>
+                    <sheet>
+                        <script>
+                            $('.focus_field').focus()
+
+                        </script>
+                        <div class="oe_button_box" name="button_box">
+                            <button type="object"
+                                    name="action_view_freight"
+                                    class="oe_stat_button"
+                                    icon="fa-truck" string="Freight"
+                                    attrs="{'invisible': [('state','in', ('draft','cancel'))]}">
+                            </button>
+                            <button type="object"
+                                    name="action_view_delivery"
+                                    class="oe_stat_button"
+                                    icon="fa-cart-arrow-down" string="Delivery"
+                                    attrs="{'invisible': ['|',('state','!=', 'done'),('sale_order_id','=', False) ]}">
+
+                            </button>
+                            <button name="action_view_invoice" type="object" class="oe_stat_button" string="Invoice"
+                                    icon="fa-pencil-square-o" attrs="{'invisible': [('invoice_id', '=', False)]}">
+
+                            </button>
+                        </div>
+
+                        <div class="oe_title">
+                            <label for="name" class="oe_edit_only"/>
+                            <h1>
+                                <field name="name" placeholder="e.g. JOB/0001"/>
+                            </h1>
+                            <br/>
+                        </div>
+
+                        <group>
+                            <group>
+                                <field name="partner_id" string="Vendor"
+                                       context="{'res_partner_search_mode': 'supplier', 'show_vat': True}"/>
+
+                                <field name="dest_warehouse_id" options="{'no_create': True}" force_save="1"
+                                       attrs="{'invisible': [('sale_order_id', '!=', False)],'readonly': [('state', '=', 'done')]}"/>
+                            </group>
+                            <group>
+                                <field name="job_due_date"/>
+                                <field name="job_event_date"/>
+                                <field name="job_processed_date"/>
+                                <field name="invoice_id" invisible="1"/>
+                                <field name="order_line_product" invisible="1"/>
+
+                            </group>
+
+                        </group>
+
+                        <group>
+                            <group>
+                                <div class="oe_title" width="60%">
+
+                                    <label for="operation" style="font-size:15px;font-weight:bold;"/>
+                                    <br/>
+                                    <h3>
+                                        <field name="operation" attrs="{'readonly': [('state','!=', 'draft')]}"/>
+                                    </h3>
+                                </div>
+                            </group>
+                            <group>
+
+                                <field name="second_operation"
+                                       attrs="{'invisible': [('operation', '!=', 'multistage')]}"/>
+                                <field name="number_of_parts" invisible="1"/>
+                                <!--                                       attrs="{'invisible': ['|',('operation', 'not in', ('parting','multistage')),('second_operation','=','cutting')],'required': [('operation', '=', 'parting')]}"/>-->
+                                <field name="number_of_bundles" invisible="1"/>
+                                <!--                                       attrs="{'invisible': ['|',('operation', 'not in', ('cutting','multistage',))],'readonly': [('state', '=', 'done')]}"/>-->
+
+                                <field name="sale_order_id" readonly="1" force_save="1" string="Sale Reference"
+                                       attrs="{'invisible': [('sale_order_id', '=', False)]}"/>
+                                <field name="finished_picking_id" invisible="1"/>
+                                <field name="finished_move_id" invisible="1"/>
+                                <field name="sale_line_id" invisible="1"/>
+                                <field name="company_id" invisible="1"/>
+                            </group>
+
+                        </group>
+                        <group string="Master Tags">
+                            <field name="multi_lot_line_ids" class="focus_field" default_focus="1" nolabel="1">
+                                <tree editable="bottom">
+                                    <field name="job_order_ref_id" invisible="1"/>
+                                    <field name="lot_id" options="{'no_create_edit': True}"/>
+
+                                    <field name="category_id" invisible="1" force_save="1"/>
+                                    <field name="sub_category_id" readonly="1" force_save="1"/>
+                                    <field name="product_id" readonly="1" force_save="1"/>
+                                    <field name="thickness_in" readonly="1" force_save="1"/>
+                                    <field name="width_in" readonly="1" force_save="1"/>
+
+                                    <field name="product_qty" widget="integer"
+                                           readonly="1" force_save="1"/>
+                                    <field name="product_uom_id" readonly="1" force_save="1"/>
+                                    <field name="lot_pricing"/>
+                                    <field name="number_of_parts"
+                                           attrs="{'column_invisible': ['|',('parent.operation', 'not in', ('parting','multistage')),('parent.second_operation','=','cutting')],'required': [('parent.operation', '=', 'parting')]}"/>
+                                    <field name="number_of_bundles"
+                                           attrs="{'column_invisible': [('parent.operation', 'not in', ('cutting','multistage'))],'readonly': [('parent.state', '=', 'done')]}"/>
+                                    <field name="number_of_slits"
+                                           attrs="{'column_invisible': [('parent.operation', 'not in', ('slitting'))],'readonly': [('parent.state', '=', 'done')]}"/>
+                                    <field name="lot_status" readonly="1" force_save="1"/>
+                                    <field name="src_warehouse_id" readonly="1" force_save="1"/>
+                                    <button name="add_product_to_line" string="Update Lines"
+                                            type="object" class="btn-primary"
+                                            attrs="{'invisible': [('parent.state','!=', 'draft')]}"/>
+                                </tree>
+
+                            </field>
+
+                        </group>
+
+                        <notebook>
+                            <page string="Job Order">
+                                <br/>
+
+                                <button name="add_line" string="Add Lines"
+                                        type="object" icon="fa-paperclip" style="margin-left:10px;"
+                                        attrs="{'invisible': ['|',('operation','!=', 'multistage'),('state','!=', 'confirm')]}"/>
+                                <button name="add_scrap_line" string="Add Scrap Weight"
+                                        type="object" icon="fa-paperclip" style="margin-left:10px;"
+                                        attrs="{'invisible': [('state','!=', 'confirm')]}"/>
+                                <br/>
+                                <br/>
+                                <field name="job_line_ids">
+
+                                    <tree editable="bottom">
+                                        <field name="job_ref_id" invisible="1"/>
+                                        <field name="lot_id" options="{'no_create_edit': True}" readonly="1"
+                                               force_save="1"/>
+                                        <field name="finished_lot_id" force_save="1"
+                                               attrs="{'readonly': True,'column_invisible': [('parent.state', '!=', 'done')]}"/>
+                                        <field name="material_type" readonly="1" force_save="1"/>
+                                        <field name="category_id" invisible="1"/>
+                                        <field name="sub_category_id"
+                                               attrs="{'readonly': [('parent.operation', '!=', 'annealing')]}"
+                                               force_save="1"/>
+                                        <field name="product_id"
+                                               attrs="{'readonly': [('parent.operation', '!=', 'annealing')]}"
+                                               force_save="1"/>
+                                        <field name="description"/>
+                                        <!--                                               attrs="{'readonly': [('parent.state', '=', 'done')]}"  force_save="1"/>-->
+                                        <field name="pricing"
+                                               attrs="{'readonly': [('parent.state', '=', 'done')]}"/>
+                                        <field name="thickness_in"
+                                               attrs="{'readonly': [('parent.operation', '!=', 'cr')]}" force_save="1"/>
+                                        <field name="width_in" attrs="{'readonly': [('parent.state', '=', 'done')]}"/>
+                                        <field name="length_in"
+                                               attrs="{'column_invisible': [('parent.operation', 'not in', ['cutting','multistage'])],'readonly': ['|',('parent.state', '=', 'done'),('material_type', '=', 'coil')]}"/>
+                                        <field name="number_of_sheets" string="No. of Sheets"
+                                               attrs="{'column_invisible': [('parent.operation', 'not in', ['cutting','multistage'])],'readonly': ['|',('parent.state', '=', 'done'),('material_type', '=', 'coil')]}"/>
+                                        <field name="product_qty" widget="integer"
+                                               attrs="{'readonly': [('parent.state', '=', 'done')]}" sum="Total"/>
+                                        <field name="product_uom_id" readonly="1" force_save="1"/>
+                                        <field name="lot_status" readonly="1" force_save="1" optional="hide"/>
+                                        <field name="is_balance" invisible="0"/>
+                                        <field name="is_update_lot_in_stock" invisible="1"/>
+<!--                                        <field name="is_lot_updated_to_so" invisible="1"/>-->
+                                        <field name="is_scrap" invisible="0" optional="hide"/>
+
+                                        <field name="sale_order_ref" attrs="{'column_invisible': [('parent.sale_order_id', '!=', False)]}"/>
+                                        <field name="sale_order_line_ref" attrs="{'column_invisible': [('parent.sale_order_id', '!=', False)]}"/>
+                                        <button name="attach_lots_to_sale_order" string="Add to SO" type="object"
+                                                class="oe_highlight" attrs="{'column_invisible': ['|',('parent.state', '!=', 'done'),('parent.sale_order_id', '!=', False)]}"/>
+<!--'|',('is_lot_updated_to_so', '!=', False),-->
+                                        <button name="update_lot_in_stock" string="Attach to SO" class="btn-primary"
+                                                type="object"
+                                                attrs="{'invisible': ['|', '|','|',('is_scrap','=', True),('is_balance','=', True),('is_update_lot_in_stock','=', True),'|',('parent.state', '!=', 'done'), ('parent.sale_order_id', '=', False)]}"/>
+
+                                        <!--                                                attrs="{'invisible': ['|','|',('is_balance','!=', False),('is_update_lot_in_stock','!=', False),('parent.state', '!=', 'done')]}"/>-->
+
+                                        <button name="get_jo_finished_lot_barcode" string="Barcode" type="object"
+                                                class="oe_highlight"
+                                                attrs="{'invisible': ['|',('parent.state', '!=', 'done'),('is_scrap','=', True)]}"/>
+                                    </tree>
+
+                                </field>
+
+                            </page>
+                            <!--                            <script>-->
+                            <!--                                    document.addEventListener("DOMContentLoaded", function(event) {-->
+                            <!--                                    var scrollpos = localStorage.getItem('scrollpos');-->
+                            <!--                                    if (scrollpos) window.scrollTo(0, scrollpos);-->
+                            <!--                                    });-->
+
+                            <!--                                    window.onbeforeunload = function(e) {-->
+                            <!--                                    localStorage.setItem('scrollpos', window.scrollY);-->
+                            <!--                                    };-->
+                            <!--                                </script>-->
+                            <page string="Multi Stage"
+                                  attrs="{'invisible': [('operation', 'not in', ['multistage'])]}">
+                                <field name="multi_stage_line_ids">
+                                    <tree editable="bottom">
+                                        <field name="job_stage_id" invisible="1"/>
+                                        <field name="lot_id" options="{'no_create_edit': True}" readonly="1"
+                                               force_save="1"/>
+
+                                        <field name="material_type" readonly="1" force_save="1"/>
+                                        <field name="category_id" invisible="1"/>
+                                        <field name="sub_category_id" readonly="1" force_save="1"/>
+                                        <field name="product_id" readonly="1" force_save="1"/>
+                                        <field name="thickness_in" readonly="1" force_save="1"/>
+                                        <field name="width_in" attrs="{'readonly': [('parent.state', '=', 'done')]}"/>
+
+                                        <field name="product_qty" widget="integer"
+                                               attrs="{'readonly': [('parent.state', '=', 'done')]}"/>
+                                        <field name="product_uom_id" readonly="1" force_save="1"/>
+
+                                        <field name="is_balance" invisible="1"/>
+
+                                    </tree>
+
+                                </field>
+                            </page>
+                            <page string="Processing Instructions">
+                                <group string="Coil Processing Details">
+                                    <field name="coil_processing_details"
+                                           attrs="{'readonly': [('state', '=', 'done')]}" nolabel="1"/>
+                                </group>
+                            </page>
+
+<!--                             <page string="Technical Details">
+                                <group>
+                                    <group>
+                                        <field name="shipped_via"/>
+                                        <field name="payment_terms"/>
+                                        <field name="fob_point"/>
+
+                                    </group>
+                                    <group>
+
+
+                                    </group>
+
+                                </group> -->
+
+                                <!--                                <group>-->
+                                <!--                                    <field name="processing_info"/>-->
+                                <!--                                </group>-->
+                                <!-- <group string="Technical Delivery Conditions">
+                                    <field name="technical_delivery_cond"
+                                           attrs="{'readonly': [('state', '=', 'done')]}" nolabel="1"/>
+                                </group>
+                            </page> -->
+                            <page string="Terms and Conditions">
+                                <group string="Terms and Conditions">
+                                    <field name="terms_conditions"
+                                           attrs="{'readonly': [('state', '=', 'done')]}" nolabel="1"/>
+                                </group>
+                            </page>
+                            <page string="Removed" invisible="1">
+
+                                <group string="Requested Specs" attrs="{'invisible': [('sale_order_id', '=',  False)]}">
+                                    <group>
+                                        <field name="description" readonly="1" force_save="1"/>
+                                        <field name="req_width" readonly="1" force_save="1"/>
+                                        <field name="req_thickness" readonly="1" force_save="1"/>
+
+                                    </group>
+                                    <group>
+                                        <field name="req_material_type" readonly="1" force_save="1"/>
+                                        <field name="req_weight" widget="integer" readonly="1" force_save="1"/>
+                                        <field name="req_length" readonly="1" force_save="1"
+                                               attrs="{'invisible': [('material_type', '=', 'coil')]}"/>
+                                    </group>
+                                </group>
+                                <group>
+                                    <label for="lot_id" style="font-size:15px;font-weight:bold;"/>
+                                    <h3>
+                                        <field name="lot_id" options="{'no_create_edit': True}"
+                                               attrs="{'readonly': [('state','!=', 'draft')]}"/>
+                                    </h3>
+                                    <br/>
+                                    <button name="add_product_to_line" string="Update Lines"
+                                            type="object" icon="fa-paperclip"
+                                            attrs="{'invisible': [('state','!=', 'draft')]}"/>
+                                    <field name="category_id" invisible="1"/>
+                                    <field name="picking_id" invisible="1"/>
+                                    <field name="src_warehouse_id" invisible="1"/>
+
+                                    <field name="sub_category_id" readonly="1" force_save="1"/>
+                                    <field name="product_id" readonly="1" force_save="1"/>
+                                    <field name="width_in" readonly="1" force_save="1"/>
+                                    <field name="thickness_in" readonly="1" force_save="1"/>
+                                    <field name="product_qty" readonly="1" force_save="1" widget="integer"/>
+                                    <field name="product_uom_id" readonly="1" force_save="1"/>
+                                    <field name="material_type" readonly="1" force_save="1"/>
+                                    <field name="lot_status" readonly="1" force_save="1"/>
+                                </group>
+                            </page>
+
+                        </notebook>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers" groups="base.group_user"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <!--        Form View         end-->
+
+        <record id="action_job_order" model="ir.actions.act_window">
+            <field name="name">Job Order</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">job.order</field>
+            <field name="view_mode">tree,form,search</field>
+        </record>
+
+        <menuitem
+                id="menu_job_order_root"
+                name="Job Orders"
+                web_icon="odx_steel_production,static/description/job_order.png"
+                sequence="27"/>
+
+        <record id="odx_steel_production.menu_job_order_root" model="ir.ui.menu">
+            <field name="groups_id" eval="[(6,0, [ref('odx_steel_production.group_production_view_access')])]"/>
+        </record>
+
+
+        <menuitem id="menu_job_order" name="Job Orders" action="action_job_order" parent="menu_job_order_root"
+                  sequence="10"/>
+
+
+    </data>
+</odoo>

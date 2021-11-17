@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+      <!-- Purchase Form View -->
+      <record id="purchase_order_form_inherited_view" model="ir.ui.view">
+            <field name="name">purchase.form.inherit.view</field>
+            <field name="model">purchase.order</field>
+            <field name="inherit_id" ref="purchase.purchase_order_form"/>
+            <field name="arch" type="xml">
+              <xpath expr="//div[hasclass('oe_button_box')]" position="inside">
+                  <button type="object" name="preview_purchase_order" class="oe_stat_button" icon="fa-globe icon">
+                      <div class="o_field_widget o_stat_info">
+                        <span class="o_stat_text">Customer</span>
+                        <span class="o_stat_text">Preview</span>
+                      </div>
+                  </button>
+              </xpath>
+              <xpath expr="//div[hasclass('oe_title')]" position="replace">
+                  <span class="o_form_label" attrs="{'invisible': [('state','not in',('draft','sent'))]}">Request for Quote </span>
+                  <span class="o_form_label" attrs="{'invisible': [('state','in',('draft','sent'))]}">Purchase Order </span>
+                  <h1>
+                      <field name="name" readonly="1"/>
+                  </h1>
+              </xpath>
+          </field>
+      </record>
+
+      <!-- Purchase/Orders/Requests For Quote -->
+      <!-- <record model="ir.ui.menu" id="purchase.menu_purchase_rfq">
+        <field name="name">Requests for Quote</field>
+      </record> -->
+
+      <!-- Purchase RFQ Tree View  -->
+      <record id="purchase.purchase_rfq" model="ir.actions.act_window">
+          <field name="name">Requests for Quote</field>
+          <field name="type">ir.actions.act_window</field>
+          <field name="res_model">purchase.order</field>
+          <field name="view_mode">tree,kanban,form,pivot,graph,calendar,activity</field>
+          <field name="view_id" ref="purchase.purchase_order_tree"/>
+          <field name="domain">[('state','in',('draft', 'sent', 'to approve', 'cancel'))]</field>
+          <field name="context">{}</field>
+          <field name="search_view_id" ref="purchase.view_purchase_order_filter"/>
+          <field name="context">{'quotation_only': True}</field>
+          <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+              Create a request for quote
+            </p><p>
+              The quote contains the history of the discussion
+              you had with your vendor.
+            </p>
+          </field>
+      </record>
+
+    </data>
+</odoo>

@@ -1,0 +1,137 @@
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="instructions_run_tree_view">
+            <field name="name">instructions.run.tree.view</field>
+            <field name="model">instructions.run.line</field>
+            <field name="arch" type="xml">
+                <tree string="Production Run" create="false">
+                    <field name="name" readonly="1"/>
+                    <field name="prod_inst_ref_id" string="Work order"/>
+                    <field name="send_for_production"/>
+                    <field name="operation"/>
+                    <field name="machine_id"/>
+                    <field name="scrap_percent"/>
+                    <field name="prod_inst_ref_id" invisible="1"/>
+                    <field name="production_ref_id" invisible="1"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="instructions_run_form_view">
+            <field name="name">instructions.run.line.form.view</field>
+            <field name="model">instructions.run.line</field>
+            <field name="arch" type="xml">
+                <form string="Production Run" create="false">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name" readonly="1" string="Production #"/>
+                                <field name="prod_inst_ref_id" string="Work order" readonly="1"/>
+                                <field name="send_for_production" readonly="1"/>
+                                <field name="operation" readonly="1"/>
+                            </group>
+                            <group>
+                                <field name="machine_id"  readonly="1"/>
+                                <field name="scrap_percent"/>
+                                <field name="production_ref_id" invisible="1"/>
+                            </group>
+
+                        </group>
+                        <group>
+                            <field name="instruction_run_line_ids" nolabel="1">
+                                <tree editable="bottom">
+                                    <field name="lot_id"
+                                           attrs="{'readonly': [('parent.send_for_production', '!=', False)]}"
+                                           string="Tag #"/>
+
+                                    <field name="category_id" readonly="1" optional="hide"
+                                           force_save="1"/>
+                                    <field name="sub_category_id" readonly="1" force_save="1"/>
+                                    <field name="product_id" readonly="1" force_save="1"/>
+                                    <field name="thickness_in" readonly="1" force_save="1"/>
+                                    <field name="width_in" readonly="1" force_save="1"/>
+                                    <field name="product_qty" readonly="1" force_save="1"
+                                           widget="integer"/>
+                                    <field name="no_of_slits" string="No. of Slits"
+                                           attrs="{'column_invisible': [('parent.operation', 'not in', ('slitting'))],'readonly':[('parent.send_for_production','!=', False)]}"/>
+                                    <field name="no_of_parts" string="No. of Parts"
+                                           attrs="{'column_invisible': [('parent.operation', 'not in', ('parting'))],'readonly':[('parent.send_for_production','!=', False)]}"/>
+                                    <field name="no_of_bundles" string="No. of Bundles"
+                                           attrs="{'column_invisible': [('parent.operation', 'not in', ('cutting'))],'readonly':[('parent.send_for_production','!=', False)]}"/>
+                                    <field name="product_uom_id" readonly="1" optional="hide"
+                                           force_save="1"/>
+                                    <field name="tagline_ref_id" invisible="1"/>
+                                    <field name="lot_status" readonly="1" optional="=hide"
+                                           force_save="1"/>
+                                    <field name="instruction_line_id" invisible="1"/>
+
+                                    <field name="src_warehouse_id" force_save="1" readonly="1"
+                                           optional="hide"/>
+                                    <button name="update_lines" string="Update Lines"
+                                            type="object" class="btn-primary"
+                                            attrs="{'invisible': [('parent.send_for_production', '!=', False)]}"/>
+                                </tree>
+                            </field>
+                        </group>
+
+                        <notebook>
+                            <page string="Production">
+                                <br/>
+                                <group>
+                                    <button name="add_scrap_line" string="Add Scrap Weight"
+                                            type="object" icon="fa-paperclip"/>
+                                </group>
+                                <br/>
+                                <field name="tag_line_ids" nolabel="1">
+                                    <tree editable="bottom">
+                                        <field name="lot_id" readonly="1" string="Parent Coil"/>
+
+                                        <field name="finished_lot_id" readonly="1"
+                                               string="Lot #"/>
+                                        <field name="category_id" readonly="1" optional="hide"/>
+                                        <field name="sub_category_id" readonly="1"/>
+                                        <field name="product_id" readonly="1"/>
+                                        <field name="thickness_in" readonly="1"/>
+                                        <field name="width_in"
+                                               attrs="{'readonly':['|',('parent.send_for_production','!=', False),('parent.operation', 'not in', ('slitting'))]}"/>
+                                        <field name="length_in"
+                                               attrs="{'column_invisible': [('parent.operation', 'not in', ('cutting'))],'readonly':[('parent.send_for_production','!=', False)]}"/>
+                                        <field name="number_of_sheets"
+                                               attrs="{'column_invisible': [('parent.operation', 'not in', ('cutting'))],'readonly':[('parent.send_for_production','!=', False)]}"/>
+                                        <field name="product_qty" widget="integer"
+                                               attrs="{'readonly':[('parent.send_for_production','!=', False)]}"/>
+                                        <field name="product_uom_id" readonly="1" optional="hide"/>
+                                        <field name="material_type" optional="hide" readonly="1"
+                                               force_save="1"/>
+                                        <field name="action"/>
+                                        <field name="lot_status"/>
+                                        <field name="instruction_ref_line_id" invisible="1"/>
+                                        <field name="is_scrap" optional="hide"/>
+                                        <button name="add_to_sale_order" string="Add to SO"
+                                                type="object"
+                                                class="btn-primary"
+                                                attrs="{'invisible': [('action', '!=', 'finished_goods')]}"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page string="Instructions">
+                                <field name="pr_instructions"/>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+
+            </field>
+        </record>
+
+        <record id="action_production_run_view" model="ir.actions.act_window">
+            <field name="name">Production Runs</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">instructions.run.line</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem id="menu_work_order_prun" name="Production Runs" action="action_production_run_view"
+                  sequence="21" parent="menu_production_processing_instructions_topmenu"/>
+    </data>
+</odoo>

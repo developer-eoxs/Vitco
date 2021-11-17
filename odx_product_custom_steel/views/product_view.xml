@@ -1,0 +1,134 @@
+<odoo>
+    <record model="ir.ui.view" id="product_inherit_template">
+        <field name="name">product.inherit.template</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_only_form_view"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//page[@name='general_information']" position="after">
+                <page string="Structural Details" invisible="1">
+                    <group>
+                        <group string="Specifications">
+
+                            <group>
+                                <field name="width_mm" string="Width(MM)"/>
+                                <field name="thickness_mm" string="Thickness(MM)"/>
+                                <field name="length_mm" string="Length(MM)"/>
+                                <field name="weight_kg" string="Weight(Kg)"/>
+                            </group>
+                            <group>
+                                <field name="width_in" string="Width(IN)"/>
+                                <field name="thickness_in" string="Thickness(IN)"/>
+                                <field name="length_in" string="Length(IN)"/>
+                                <field name="weight_lb" string="Weight(LB)"/>
+                            </group>
+                            <group>
+                                <field name="thickness_spec" string="Thickness Spec"/>
+                                <field name="piw" string="PIW"/>
+                            </group>
+                        </group>
+                    </group>
+                    <group>
+                        <group string="Physical Properties">
+                            <group>
+                                <field name="grade" string="Grade"/>
+                                <field name="rockwell" string="Rockwell"/>
+                                <field name="elongation" string="Elongation"/>
+                            </group>
+                            <group>
+                                <field name="yield_mpa" string="Yield(mpa)"/>
+                                <field name="yield_psi" string="Yield(psi)"/>
+                                <field name="tensile_mpa" string="Tensile(mpa)"/>
+                                <field name="tensile_psi" string="Tensile(psi)"/>
+                            </group>
+                            <group>
+                                <field name="coil_number" string="Coil Number"/>
+                                <field name="quality" string="Quality"/>
+                                <field name="location" string="Location"/>
+                                <field name="vendor_id" string="Vendor id"/>
+                            </group>
+
+                        </group>
+                    </group>
+                </page>
+                <page string="Specifications" invisible="1">
+                    <field name="component_ids" no_label="1" required="1">
+                        <tree editable="bottom">
+                            <field name="name" string="Component" force_save="1"/>
+                            <field name="value" string="Values" force_save="1"/>
+                        </tree>
+                    </field>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+
+    <record model="ir.ui.view" id="product_inherit_customisation">
+        <field name="name">product.inherit.customisation</field>
+        <field name="model">product.product</field>
+        <field name="inherit_id" ref="product.product_normal_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='uom_po_id']" position="after">
+                <field name="material_type" widget="radio"/>
+            </xpath>
+            <xpath expr="//page[@name='general_information']" position="after">
+
+
+                <page string="Structural Details" invisible="1">
+                    <group>
+                        <group string="Specifications">
+                            <group>
+                                <field name="width_in" string="Width(IN)"/>
+                                <field name="thickness_in" string="Thickness(IN)"/>
+                                <field name="length_in" string="Length(IN)"/>
+                                <field name="weight_lb" string="Weight(LB)"/>
+                            </group>
+                            <group>
+                                <field name="width_mm" string="Width(MM)"/>
+                                <field name="thickness_mm" string="Thickness(MM)"/>
+                                <field name="length_mm" string="Length(MM)"/>
+                                <field name="weight_kg" string="Weight(Kg)"/>
+                            </group>
+                            <group>
+                                <field name="thickness_spec" string="Thickness Spec"/>
+                                <field name="piw" string="PIW"/>
+                            </group>
+                        </group>
+                    </group>
+                    <group>
+                        <group string="Physical Properties">
+                            <group>
+                                <field name="grade" string="Grade"/>
+                                <field name="rockwell" string="Rockwell"/>
+                                <field name="elongation" string="Elongation"/>
+                            </group>
+                            <group>
+                                <field name="yield_mpa" string="Yield(mpa)"/>
+                                <field name="yield_psi" string="Yield(psi)"/>
+                                <field name="tensile_mpa" string="Tensile(mpa)"/>
+                                <field name="tensile_psi" string="Tensile(psi)"/>
+                            </group>
+                            <group>
+                                <field name="coil_number" string="Coil Number"/>
+                                <field name="quality" string="Quality"/>
+                                <field name="location" string="Location"/>
+                                <field name="vendor_id" string="Vendor id"/>
+                            </group>
+
+                        </group>
+                    </group>
+                </page>
+
+                <page string="Specifications" invisible="1">
+                    <field name="component_ids" no_label="1">
+                        <tree editable="bottom">
+                            <field name="name" string="Components" required="1" force_save="1"/>
+                            <field name="value" string="Values" force_save="1"/>
+                        </tree>
+                    </field>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>

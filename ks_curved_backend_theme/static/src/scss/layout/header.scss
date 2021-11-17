@@ -1,0 +1,613 @@
+//$ks_top_link : $primary-text;
+
+.o_main_navbar {
+  //   background: var(--body-background);
+  background: transparent;
+  border: transparent;
+  .ks-app-open {
+    padding: 0 10px 0;
+  }
+  .brand_logo {
+    padding: 0 0px 0 0px;
+    float: left;
+    height: 46px;
+    line-height: 46px;
+    margin-right: 12px;
+  }
+}
+.o_main_navbar > a:not([href]):not([tabindex]).o_menu_brand {
+  color: var(--nav-link-color);
+  background-color: transparent;
+  font-size: 1.375em;
+  &:hover {
+    background-color: transparent;
+  }
+}
+
+.ks_hide_app_names {
+  .o_main_navbar {
+    .ks-app-open {
+      padding: 0 10px 0;
+    }
+  }
+}
+
+.nav-link,
+.o_main_navbar > ul > li > a,
+.o_main_navbar > ul > li > label {
+  color: var(--nav-link-color);
+  &:hover {
+    color: var(--nav-link-color);
+  }
+}
+.brand_logo {
+  cursor: pointer;
+  &:hover {
+    background: none !important;
+    text-decoration: none;
+    user-select: none;
+  }
+  img {
+    height: 36px;
+    user-select: none;
+  }
+}
+
+// Horizontal  nav panel
+
+.o_main_navbar .show .dropdown-toggle {
+  //background-color: #e6e5e5;
+  background-color: var(--ks-over-link);
+}
+
+.o_notification_counter {
+  @extend %empty;
+}
+
+%counter_circle {
+  background-color: $danger;
+  @include square(1.2rem, 4rem);
+  color: $white;
+  position: relative;
+  text-align: center;
+  filter: inherit;
+}
+.ks_appsmenu_edit {
+  ul.o_menu_systray {
+    li {
+      #ks_customize_appdrawer {
+        background-color: var(--hover-nav-bg);
+        color: var(--icon-color);
+      }
+    }
+  }
+}
+ul.o_menu_systray {
+  > li {
+    //z-index: 99;
+    @include square(2.8rem, 4rem);
+    text-align: center;
+    margin: auto;
+
+    > a {
+      width: 100%;
+      height: 100%;
+      padding: 0px;
+      border-radius: 4rem;
+      line-height: 3rem;
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: 1.6rem;
+      display: block;
+      //color: var(--color-reverce);
+      color: var(--icon-color);
+      //filter: invert(1);
+
+      .fa {
+        font-size: $base-font + 0.3;
+        opacity: 0.9;
+      }
+
+      &:hover {
+        //background-color: var(--nav-hoverbg-reverce);
+        //background-color: var(--hover-nav-bg);
+        background-color: var(--ks-over-link);
+        color: var(--icon-color);
+      }
+      &#ks_customize_appdrawer {
+        background-image: url("/ks_curved_backend_theme/static/src/images/fav_menu.svg");
+      }
+    }
+
+    &.show {
+      > a,
+      > a.dropdown-toggle {
+        //background-color: var(--nav-hoverbg-reverce);
+        background-color: var(--hover-nav-bg);
+        color: var(--icon-color);
+      }
+    }
+
+    &.o_mail_systray_item {
+      .o_notification_counter {
+        @extend %counter_circle;
+        min-width: 1.2rem;
+        right: -1rem;
+        top: -0.2rem;
+        padding-left: 3px;
+        padding-right: 3px;
+      }
+    }
+    // o_notification_counter
+
+    &.o_MessagingMenu {
+      .o_MessagingMenu_counter,
+      .o_notification_counter {
+        @extend %counter_circle;
+        padding: 2px 0px;
+        right: -0.75rem;
+        top: -0.2rem;
+      }
+    }
+    &.o_switch_company_menu {
+      > a {
+        background-image: url("/ks_curved_backend_theme/static/src/images/company-icon.svg");
+        //@extend %filter_reverce;
+        &::after,
+        .oe_topbar_name {
+          @extend %d_none;
+        }
+      }
+    }
+    &.ks_quick_settings {
+      > a {
+        background-image: url("/ks_curved_backend_theme/static/src/images/setting-icon.svg");
+        .fa-cog {
+          display: none;
+        }
+      }
+    }
+
+    &.o_mail_systray_item {
+      > a[title="Activities"] {
+        background-image: url("/ks_curved_backend_theme/static/src/images/time-icon.svg");
+        .fa-clock-o {
+          display: none;
+        }
+      }
+    }
+
+    &.o_mail_systray_item {
+      > a[title="Conversations"] {
+        background-image: url("/ks_curved_backend_theme/static/src/images/chat-icon.svg");
+        .fa {
+          display: none;
+        }
+      }
+    }
+    // o_MessagingMenu
+    &.o_mail_systray_item.gift_icon {
+      > a {
+        background-image: url("/ks_curved_backend_theme/static/src/images/gift-icon.svg");
+        .fa {
+          display: none;
+        }
+      }
+    }
+  }
+}
+
+.o_main_navbar, .ks_left_sidebar_panel{
+  > ul.o_menu_sections {
+    > li {
+      > a {
+        span.fa {
+          font-size: $base-font + 0.3;
+        }
+        &:hover {
+          //background-color: $gray;
+          background-color: var(--ks-over-link);
+        }
+      }
+    }
+  }
+  // o_menu_sections / end
+    ul.o_menu_systray {
+    margin-top: 0.5rem;
+    margin-right: 1rem;
+    &.ks-menu-systray {
+      > li{
+        margin: auto;
+      }
+    }
+    > li {
+      margin: 0 2px;
+      &.o_user_menu {
+        .dropdown-toggle {
+          padding-right: 0px;
+          filter: none;
+          &::after,
+          .oe_topbar_name {
+            @extend %d_none;
+          }
+        }
+        .dropdown-item {
+          padding-top: 0.5rem;
+          padding-bottom: 0.5rem;
+        }
+      }
+      // Header Dropdown Menus
+      .o_mail_systray_dropdown {
+        .o_mail_systray_dropdown_top{
+          border-bottom-color: var(--ks-border);
+          .btn{
+            &:hover, &.active{
+              color: var(--primary);
+            }
+          }
+        }
+        .o_mail_systray_dropdown_items {
+          .o_mail_preview {
+            background: var(--background);
+            border-bottom-color: var(--ks-border);
+            &:hover {
+              background: var(--hover-nav-bg);
+            }
+            &.o_preview_unread{
+              .o_preview_info {
+                .o_preview_title{
+                  .o_last_message_date{
+                    color: var(--primary);
+                  }
+                }
+              }
+            }
+            .o_preview_info {
+              .o_no_activity {
+                color: var(--color);
+              }
+              .o_note_input_box {
+                .o_note_input {
+                  background: var(--background);
+                  border: 1px solid var(--ks-border);
+                  color: var(--color);
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  // o_menu_systray / end
+  
+  //left nav user img dropdown icon remove
+  .ks-user-info-inside-dropdown{
+    border-bottom-color: var(--ks-border) !important;
+  }
+  .ks_user_menu{
+    .o_user_menu{
+      .dropdown-toggle{
+        &::after{
+          display: none;
+        }
+      }
+    }
+  }
+}
+// Vertical  nav panel
+.dropdown-menu {
+  border: 1px solid var(--menu-border-color);
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25);
+  border-radius: var(--theme-style-radius-5);
+  background: var(--background);
+  color: var(--color);
+  .dropdown-item-text {
+    color: var(--color);
+  }
+  .dropdown-item {
+    color: var(--color);
+    .o_Follower_details {
+      opacity: 1;
+      color: inherit;
+      &:hover {
+        background: transparent;
+      }
+    }
+    .o_Follower_button {
+      color: var(--color);
+      &:hover {
+        background: var(--drk-border);
+      }
+    }
+  }
+}
+.show .dropdown-menu .dropdown-header {
+  color: var(--color);
+  white-space: normal;
+}
+header {
+  .o_main_navbar {
+    .dropdown-menu {
+      .dropdown-item {
+        padding-top: 0.5rem;
+        padding-bottom: 0.5rem;
+        color: var(--color);
+        &:hover,
+        &:focus {
+          //background-color: var(--heading-text-bg);
+          background-color: var(--ks-over-link);
+          color: var(--nav-link-color);
+        }
+      }
+    }
+    .o_menu_sections {
+      .dropdown-menu {
+        animation: leftScale ease-in-out 0.3s;
+        transform-origin: left top;
+      }
+    }
+
+    .o_menu_systray {
+      .dropdown-menu {
+        animation: leftScale ease-in-out 0.3s;
+        transform-origin: right top;
+
+        .o_mail_preview:not(:last-child) {
+          border-bottom-color: rgba($ks_border, 0.6);
+        }
+      }
+    }
+
+    .ks-user-info-inside-dropdown {
+      padding: 3px 20px;
+    }
+  }
+}
+
+// ks_menubar_autohide
+.ks_menubar_autohide {
+  padding-top: 1rem;
+  > header {
+    position: fixed;
+    z-index: 999;
+    width: 100%;
+    //     background: var(--background);
+    background: var(--body-background);
+    transform: translateY(-90%);
+    -webkit-transform: translateY(-90%);
+    -o-transform: translateY(-90%);
+    -moz-transform: translateY(-90%);
+    transition: all ease-in-out 0.3s;
+    opacity: 0;
+    &:hover {
+      transform: translateY(-1rem);
+      -webkit-transform: translateY(-1rem);
+      -o-transform: translateY(-1rem);
+      -moz-transform: translateY(-1rem);
+      opacity: 1;
+    }
+  }
+}
+
+.dropdown-divider {
+  border-top: 1px solid var(--menu-border-color);
+}
+.o_dropdown_menu {
+  .o_menu_item {
+    .dropdown-item {
+      color: var(--color);
+      &:hover {
+        color: var(--color);
+      }
+    }
+  }
+  .dropdown-item {
+    color: var(--color);
+    &:hover,
+    &:focus {
+      background-color: var(--heading-text-bg);
+      color: var(--color);
+    }
+  }
+}
+.o_main_navbar > .o_menu_brand {
+  margin: 0 10px;
+  padding-left: 0;
+}
+
+.o_mail_preview .o_preview_info {
+  color: var(--color);
+  .o_no_activity {
+    color: var(--color);
+  }
+}
+.o_mail_preview.o_systray_activity:hover {
+  background-color: var(--hover-nav-bg);
+}
+.o_MessagingMenu_dropdownMenu {
+  .o_NotificationList {
+    .o_NotificationRequest,
+    .o_NotificationGroup,
+    .o_ThreadPreview {
+      background: none;
+      .o_NotificationRequest_header,
+      .o_NotificationGroup_header,
+      .o_ThreadPreview_header {
+        color: var(--color);
+      }
+      &:hover {
+        background: var(--hover-nav-bg);
+      }
+    }
+    .o_NotificationList_separator {
+      border-bottom: 1px solid var(--ks-border);
+    }
+  }
+}
+.o_MessagingMenu_dropdownMenuHeader {
+  border-bottom: 1px solid var(--ks-border);
+}
+
+// For dark Mode
+[data-color-mode="ks-dark"] {
+  ul.o_menu_systray {
+    li {
+      > a {
+        color: var(--color);
+        opacity: 0.8;
+      }
+    }
+    li.o_switch_company_menu > a {
+      background-image: url("/ks_curved_backend_theme/static/src/images/company-icon-light.svg");
+    }
+    li.ks_quick_settings > a {
+      background-image: url("/ks_curved_backend_theme/static/src/images/global-light.svg");
+    }
+    li.o_mail_systray_item > a[title="Conversations"] {
+      background-image: url("/ks_curved_backend_theme/static/src/images/chat-icon-ling.svg");
+    }
+    li.o_mail_systray_item > a[title="Activities"] {
+      background-image: url("/ks_curved_backend_theme/static/src/images/time-icon-light.svg");
+    }
+    li > a#ks_customize_appdrawer {
+      background-image: url("/ks_curved_backend_theme/static/src/images/fav_menu_light.svg");
+    }
+  }
+  //End ul
+  .o_menu_apps {
+    li {
+      a {
+        .ks_app_drawer_arrow {
+          opacity: 0.8;
+          path {
+            stroke: #fff;
+          }
+        }
+      }
+    }
+  }
+
+  .table tbody tr:hover {
+    background-color: var(--primary) !important;
+  }
+
+  .table.global-setting-table {
+    tbody {
+      tr:hover {
+        background-color: var(--table-td-hoverbg) !important;
+      }
+    }
+  }
+
+  .table {
+    tr:hover {
+      td {
+        .custom-control.custom-checkbox .custom-control-label::before {
+          background: white;
+        }
+      }
+    }
+  }
+
+  // Profile img Dropdown
+  .ks-profile-icon {
+    filter: invert(1);
+  }
+
+}
+
+.ks_show_bookmark {
+  .ks_right_sidebar_panel {
+    .right-sidebar-inner {
+      .ks-bookmark-body {
+        .ks-add-bookmark-dropdown {
+          border: 1px solid var(--ks-border);
+          background: var(--background);
+          .ks-add-bookmark-header {
+            border-bottom-color: var(--ks-border);
+          }
+          .ks-add-bookmark-body {
+            .form-control {
+              color: var(--color);
+              background-color: transparent;
+              border: 1px solid var(--ks-border);
+              &:focus {
+                border-color: var(--ks-border);
+                background-color: transparent;
+                box-shadow: none;
+              }
+            }
+          }
+          .ks-add-bookmark-footer {
+            border-color: var(--ks-border);
+            .btn-default {
+              color: var(--color);
+              &:hover {
+                opacity: 0.7;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+ul.o_menu_systray {
+  li.o_mail_systray_item,
+  li.o_MessagingMenu {
+    .o_notification_counter,
+    .o_MessagingMenu_counter {
+      max-width: 1.5rem;
+      min-width: 1.2rem;
+      width: auto;
+    }
+  }
+}
+.phone-menu-btn {
+  display: none;
+}
+
+.ks-phone-profile {
+  display: none;
+}
+
+ul.o_menu_systray.ks_color_theme_dark_header {
+  li {
+    a.language_icon {
+      color: white;
+      opacity: 0.8;
+    }
+    a.o_debug_mode {
+      color: white;
+      opacity: 0.8;
+    }
+  }
+  li.o_switch_company_menu > a {
+    background-image: url("/ks_curved_backend_theme/static/src/images/company-icon-light.svg");
+  }
+  li.ks_quick_settings > a {
+    background-image: url("/ks_curved_backend_theme/static/src/images/global-light.svg");
+  }
+  li.o_mail_systray_item > a[title="Conversations"] {
+    background-image: url("/ks_curved_backend_theme/static/src/images/chat-icon-ling.svg");
+  }
+  li.o_mail_systray_item > a[title="Activities"] {
+    background-image: url("/ks_curved_backend_theme/static/src/images/time-icon-light.svg");
+  }
+  li > a#ks_customize_appdrawer {
+    background-image: url("/ks_curved_backend_theme/static/src/images/fav_menu_light.svg");
+  }
+}
+
+.show > .dropdown-toggle.btn-primary {
+  background-color: var(--primary);
+  border-color: var(--primary);
+}
+
+.o_form_view .o_form_statusbar > .o_statusbar_status > .o_arrow_button:not(.disabled):active,
+.o_form_view .o_form_statusbar > .o_statusbar_status > .o_arrow_button:not(.disabled):focus,
+.o_form_view .o_form_statusbar > .o_statusbar_status > .o_arrow_button:not(.disabled):hover {
+  color: var(--primary);
+}

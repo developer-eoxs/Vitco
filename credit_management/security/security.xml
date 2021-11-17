@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright 2019 Sodexis
+     License OPL-1 (See LICENSE file for full copyright and licensing details). -->
+
+<odoo>
+    <record id="group_credit_limit" model="res.groups">
+        <field name="name">Manage Credit Limit</field>
+        <field name="users" eval="[(4, ref('base.user_root')),(4, ref('base.user_admin'))]" />
+    </record>
+</odoo>

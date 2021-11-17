@@ -1,0 +1,321 @@
+<odoo>
+
+
+    <template id="report_mill_tc">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="web.internal_layout">
+
+                    <div class="page">
+                        <div class="row">
+                            <br/>
+                            <br/>
+                        </div>
+                        <h4 style="text-align:center">
+                            <u style="padding:1px">Certificate of Analysis(Mill TC)</u>
+                        </h4>
+                        <!--                        <div class="col-12 text-right" style="font-size:11px;">Vendor copy</div>-->
+                        <div>
+                            <table width="100%">
+                                <tr>
+                                    <td width="14%">Invoice No:</td>
+                                    <td style="text-align:left">
+                                        <span t-field="o.name"/>
+                                    </td>
+                                    <td width="30%"></td>
+                                    <td class="text-left" width="15%">Bill to Party :</td>
+                                    <td>
+                                        <span t-field="o.partner_id.name"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Date:</td>
+                                    <td style="text-align:left">
+                                        <span t-field="o.invoice_date"/>
+                                    </td>
+                                    <td width="30%"></td>
+                                    <td class="text-left" width="15%">Address:</td>
+                                    <td style="max-width=10px">
+                                        <address t-field="o.partner_id"
+                                                 t-options="{&quot;widget&quot;: &quot;contact&quot;, &quot;fields&quot;: [&quot;address&quot;], &quot;no_marker&quot;: True}"/>
+
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+
+                        <div class="row"></div>
+                        <hr style="border-top:1px dashed black;"/>
+                        <hr style="border-top:1px dashed black;margin-top:-13px;"/>
+                        <div class="row"></div>
+
+                        <p style="text-align:center">
+                            <strong>Chemical Properties</strong>
+                        </p>
+                        <table class="bg-100 table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Lot</th>
+                                    <th>C</th>
+                                    <th>Mn</th>
+                                    <th>P</th>
+                                    <th>S</th>
+                                    <th>Si</th>
+                                    <th>Al</th>
+                                    <th>Cr</th>
+                                    <th>Nb</th>
+                                    <th>Ti</th>
+                                    <th>Ca</th>
+                                    <th>N</th>
+                                    <th>Cu</th>
+                                    <th>V</th>
+                                    <th>B</th>
+                                    <th>Cb</th>
+                                    <th>Mo</th>
+                                    <th>Sn</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-foreach="o.invoice_line_ids" t-as="line">
+                                    <t t-if="line.lot_id">
+                                        <tr>
+                                            <td width="8%">
+                                                <span t-field="line.lot_id" style="font-weight:bold"/>
+                                            </td>
+                                            <td width="5%">
+                                                <span t-field="line.lot_id.comp_c"/>
+                                            </td>
+                                            <td width="5%">
+                                                <span t-field="line.lot_id.comp_mn"/>
+                                            </td>
+                                            <td width="5%">
+                                                <span t-field="line.lot_id.comp_p"/>
+                                            </td>
+                                            <td width="5%">
+                                                <span t-field="line.lot_id.comp_s"/>
+                                            </td>
+                                            <td width="5%">
+                                                <span t-field="line.lot_id.comp_si"/>
+                                            </td>
+                                            <td width="5%">
+                                                <span t-field="line.lot_id.comp_al"/>
+                                            </td>
+                                            <td width="5%">
+                                                <span t-field="line.lot_id.comp_cr"/>
+                                            </td>
+                                            <td width="5%">
+                                                <span t-field="line.lot_id.comp_nb"/>
+                                            </td>
+                                            <td width="5%">
+                                                <span t-field="line.lot_id.comp_ti"/>
+                                            </td>
+                                            <td width="5%">
+                                                <span t-field="line.lot_id.comp_ca"/>
+                                            </td>
+                                            <td width="5%">
+                                                <span t-field="line.lot_id.comp_n"/>
+                                            </td>
+                                            <td width="5%">
+                                                <span t-field="line.lot_id.comp_cu"/>
+                                            </td>
+                                            <td width="5%">
+                                                <span t-field="line.lot_id.comp_v"/>
+                                            </td>
+                                            <td width="5%">
+                                                <span t-field="line.lot_id.comp_b"/>
+                                            </td>
+                                            <td width="5%">
+                                                <span t-field="line.lot_id.comp_co"/>
+                                            </td>
+                                            <td width="5%">
+                                                <span t-field="line.lot_id.comp_mo"/>
+                                            </td>
+                                            <td width="5%">
+                                                <span t-field="line.lot_id.comp_sn"/>
+                                            </td>
+                                        </tr>
+                                    </t>
+                                    <t t-if="line.produced_lot_ids">
+                                        <t t-foreach="line.produced_lot_ids" t-as="p_lot">
+                                            <tr>
+                                                <td width="8%">
+                                                    <span t-field="p_lot.name" style="font-weight:bold"/>
+                                                </td>
+                                                <td width="5%">
+                                                    <span t-field="p_lot.comp_c"/>
+                                                </td>
+                                                <td width="5%">
+                                                    <span t-field="p_lot.comp_mn"/>
+                                                </td>
+                                                <td width="5%">
+                                                    <span t-field="p_lot.comp_p"/>
+                                                </td>
+                                                <td width="5%">
+                                                    <span t-field="p_lot.comp_s"/>
+                                                </td>
+                                                <td width="5%">
+                                                    <span t-field="p_lot.comp_si"/>
+                                                </td>
+                                                <td width="5%">
+                                                    <span t-field="p_lot.comp_al"/>
+                                                </td>
+                                                <td width="5%">
+                                                    <span t-field="p_lot.comp_cr"/>
+                                                </td>
+                                                <td width="5%">
+                                                    <span t-field="p_lot.comp_nb"/>
+                                                </td>
+                                                <td width="5%">
+                                                    <span t-field="p_lot.comp_ti"/>
+                                                </td>
+                                                <td width="5%">
+                                                    <span t-field="p_lot.comp_ca"/>
+                                                </td>
+                                                <td width="5%">
+                                                    <span t-field="p_lot.comp_n"/>
+                                                </td>
+                                                <td width="5%">
+                                                    <span t-field="p_lot.comp_cu"/>
+                                                </td>
+                                                <td width="5%">
+                                                    <span t-field="p_lot.comp_v"/>
+                                                </td>
+                                                <td width="5%">
+                                                    <span t-field="p_lot.comp_b"/>
+                                                </td>
+                                                <td width="5%">
+                                                    <span t-field="p_lot.comp_co"/>
+                                                </td>
+                                                <td width="5%">
+                                                    <span t-field="p_lot.comp_mo"/>
+                                                </td>
+                                                <td width="5%">
+                                                    <span t-field="p_lot.comp_sn"/>
+                                                </td>
+                                            </tr>
+                                        </t>
+                                    </t>
+
+                                </t>
+                            </tbody>
+                        </table>
+                        <br/>
+                        <div class="row"></div>
+                        <hr style="border-top:1px dashed black;"/>
+                        <hr style="border-top:1px dashed black;margin-top:-13px;"/>
+                        <div class="row"></div>
+                        <p style="text-align:center">
+                            <strong>Physical Properties</strong>
+                        </p>
+                        <table class="bg-100 table-bordered">
+                            <thead>
+                                <th>Lot</th>
+                                <th>Grade</th>
+                                <th>Rockwell</th>
+                                <th>Elongation</th>
+                                <th>Yield(mpa)</th>
+                                <th>Tensile(mpa)</th>
+                                <th>Yield(psi)</th>
+                                <th>Tensile(psi)</th>
+                            </thead>
+                            <tbody>
+                                <t t-foreach="o.invoice_line_ids" t-as="line">
+                                    <t t-if="line.lot_id">
+                                        <tr>
+
+                                            <td width="15%">
+                                                <span t-field="line.lot_id" style="font-weight:bold"/>
+                                            </td>
+                                            <td width="12%">
+                                                <span t-field="line.lot_id.grade"/>
+                                            </td>
+                                            <td width="12%">
+                                                <span t-field="line.lot_id.rockwell"/>
+                                            </td>
+                                            <td width="12%">
+                                                <span t-field="line.lot_id.elongation"
+                                                      t-options='{"widget": "integer"}'/>
+                                            </td>
+                                            <td width="12%">
+                                                <span t-field="line.lot_id.yield_mpa"
+                                                      t-options='{"widget": "integer"}'/>
+                                            </td>
+                                            <td width="12%">
+                                                <span t-field="line.lot_id.yield_psi"
+                                                      t-options='{"widget": "integer"}'/>
+                                            </td>
+                                            <td width="12%">
+                                                <span t-field="line.lot_id.tensile_mpa"
+                                                      t-options='{"widget": "integer"}'/>
+                                            </td>
+                                            <td width="12%">
+                                                <span t-field="line.lot_id.tensile_psi"
+                                                      t-options='{"widget": "integer"}'/>
+                                            </td>
+
+                                        </tr>
+                                    </t>
+                                    <t t-if="line.produced_lot_ids">
+                                        <t t-foreach="line.produced_lot_ids" t-as="p_lot">
+                                            <tr>
+
+                                                <td width="15%">
+                                                    <span t-field="p_lot.name" style="font-weight:bold"/>
+                                                </td>
+                                                <td width="12%">
+                                                    <span t-field="p_lot.grade"/>
+                                                </td>
+                                                <td width="12%">
+                                                    <span t-field="p_lot.rockwell"/>
+                                                </td>
+                                                <td width="12%">
+                                                    <span t-field="p_lot.elongation"
+                                                    />
+                                                </td>
+                                                <td width="12%">
+                                                    <span t-field="p_lot.yield_mpa"
+                                                          t-options='{"widget": "integer"}'/>
+                                                </td>
+                                                <td width="12%">
+                                                    <span t-field="p_lot.yield_psi"
+                                                          t-options='{"widget": "integer"}'/>
+                                                </td>
+                                                <td width="12%">
+                                                    <span t-field="p_lot.tensile_mpa"
+                                                          t-options='{"widget": "integer"}'/>
+                                                </td>
+                                                <td width="12%">
+                                                    <span t-field="p_lot.tensile_psi"
+                                                          t-options='{"widget": "integer"}'/>
+                                                </td>
+
+                                            </tr>
+                                        </t>
+
+                                    </t>
+                                </t>
+                            </tbody>
+
+                        </table>
+                        <div class="row"></div>
+                        <hr style="border-top:1px dashed black;"/>
+                        <hr style="border-top:1px dashed black;margin-top:-13px;"/>
+                        <div class="row"></div>
+
+                    </div>
+
+                </t>
+            </t>
+        </t>
+    </template>
+
+
+    <report
+            id="mill_tc_report_menu"
+            model="account.move"
+            string="Cert.of Anlaysis"
+            report_type="qweb-pdf"
+            name="odx_report_customisation.report_mill_tc"
+            file="odx_report_customisation.report_mill_tc"
+            paperformat="paperformat_invoice"/>
+</odoo>

@@ -1,0 +1,52 @@
+<odoo>
+  <data>
+        <record id="hr_payslip_view_form" model="ir.ui.view">
+            <field name="name">hr.payslip.form</field>
+            <field name="model">hr.payslip</field>
+            <field name="inherit_id" ref="om_hr_payroll.view_hr_payslip_form"/>
+            <field name="arch" type="xml">
+                <field name="worked_days_line_ids" position="before">
+                    <group>
+                        <div class="oe_right oe_button_box">
+                            <button string="Import from Attendance" name="button_import_attendance" type="object" states="draft" />
+                        </div>
+                    </group>
+                </field>
+                <xpath expr="//field[@name='worked_days_line_ids']/tree/field[@name='number_of_hours']" position="replace">
+                    <field name="number_of_hours" sum="Total Working Hours"/>
+                </xpath>
+                <xpath expr="//field[@name='worked_days_line_ids']/tree/field[@name='number_of_days']" position="replace">
+                    <field name="number_of_days" sum="Total Working Days" invisible="0"/>
+                </xpath>
+            </field>
+        </record>
+
+
+        <record id="hr_contract_view_form_inher" model="ir.ui.view">
+            <field name="name">hr.contract.form</field>
+            <field name="model">hr.contract</field>
+            <field name="inherit_id" ref="hr_contract.hr_contract_view_form"/>
+            <field name="arch" type="xml">
+                <page name="information" position="replace">
+                    <page string="Salary Information" name="information">
+                        <group name="main_info">
+                            <group name="salary_and_advantages" string="Advantages in Cash">
+                                <label for="wage"/>
+                                <div class="o_row" name="wage">
+                                    <field name="wage" nolabel="1"/>
+                                </div>
+                                <field name="advantages" nolabel="1" placeholder="Advantages..." colspan="2" invisible="1"/>
+                            </group>
+                        </group>
+                    </page>
+                </page>
+            </field>
+        </record>
+
+        <menuitem id="om_hr_payroll.menu_hr_payroll_root"
+              name="Payroll"
+              sequence="76"
+              web_icon="odx_hr_attendence,static/description/Payroll.png"/>            
+                             
+    </data>
+</odoo>

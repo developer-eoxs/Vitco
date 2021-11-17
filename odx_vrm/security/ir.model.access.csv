@@ -1,0 +1,10 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+
+access_vrm_lead,access_vrm_lead,model_vrm_lead,,1,1,1,1
+access_vrm_lead_tag,access_vrm_lead_tag,model_vrm_lead_tag,,1,1,1,1
+access_vrm_stage,access_vrm_stage,model_vrm_stage,,1,1,1,1
+access_vrm_lead_scoring_frequency,access_vrm_lead_scoring_frequency,model_vrm_lead_scoring_frequency,,1,1,1,1
+access_vrm_lead_scoring_frequency_field,access_vrm_lead_scoring_frequency_field,model_vrm_lead_scoring_frequency_field,,1,1,1,1
+access_vrm_lost_reason,access_vrm_lost_reason,model_vrm_lost_reason,,1,1,1,1
+access_product_quotation,access_product_quotation,model_product_quotation,,1,1,1,1
+

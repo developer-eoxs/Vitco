@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+<!--     <record id="sale_crm.sale_action_quotations_new" model="ir.actions.act_window">
+        <field name="name">Quote</field>
+        <field name="res_model">sale.order</field>
+        <field name="view_mode">form,tree,graph</field>
+        <field name="domain">[('opportunity_id', '=', active_id)]</field>
+        <field name="context">{'search_default_opportunity_id': active_id, 'default_opportunity_id': active_id}</field>
+    </record> -->
+
+    <!-- CRM/Sales/My Quote -->
+    <record model="ir.ui.menu" id="sale_crm.sale_order_menu_quotations_crm">
+        <field name="name">My Quote</field>
+    </record>
+
+</odoo>

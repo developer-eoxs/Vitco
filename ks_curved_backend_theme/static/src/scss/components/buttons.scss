@@ -1,0 +1,54 @@
+
+.btn-group > .btn:not(:last-child):not(.dropdown-toggle),
+.btn-group > .btn-group:not(:last-child) > .btn {
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+}
+
+.btn-fill-primary, .btn-primary{
+    background-color: var(--primary-btn);
+    border-color: var(--primary-btn);
+
+    &:hover{
+        background-color: var(--primary-btn);
+        border-color: var(--primary-btn);
+    }
+
+    &:not(:disabled):not(.disabled):active{
+        background-color: var(--primary-btn);
+        border-color: var(--primary-btn);
+        box-shadow: 0 4px 8px rgba($primary, 0.3);
+
+    }
+    &:focus{
+         outline: none;
+         box-shadow: none;
+    }
+}
+.btn{
+  box-shadow: none !important;
+}
+.o_web_client{
+  .btn-link{
+    color: var(--primary);
+  }
+}
+.btn-fill-primary.disabled,
+.disabled.btn-primary,
+.btn-fill-primary:disabled,
+.btn-primary:disabled{
+  background-color: var(--primary);
+  border-color: var(--primary);
+}
+
+// follow_button
+.o_followers{
+  .o_followers_follow_button{
+    .o_followers_unfollow{
+      color: #ffc107;
+    }
+    .o_follow, .o_followers_following, .o_followers_following.fa.fa-check{
+      color: var(--primary);
+    }
+  }
+}

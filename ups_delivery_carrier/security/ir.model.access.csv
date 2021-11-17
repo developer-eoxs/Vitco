@@ -1,0 +1,7 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_ups_service_users,delivery.carrier.ups.service,model_delivery_carrier_ups_service,,1,0,0,0
+access_ups_service_admin,delivery.carrier.ups.service,model_delivery_carrier_ups_service,stock.group_stock_manager,1,1,1,1
+access_ups_pickup_users,delivery.carrier.ups.pickup,model_delivery_carrier_ups_pickup,,1,0,0,0
+access_ups_pickup_admin,delivery.carrier.ups.pickup,model_delivery_carrier_ups_pickup,stock.group_stock_manager,1,1,1,1
+access_ups_return_delivery_carrier_users,delivery.carrier.ups.return.service,model_delivery_carrier_ups_return_service,,1,0,0,0
+access_ups_return_delivery_carrier_admin,delivery.carrier.ups.return.service,model_delivery_carrier_ups_return_service,stock.group_stock_manager,1,1,1,1

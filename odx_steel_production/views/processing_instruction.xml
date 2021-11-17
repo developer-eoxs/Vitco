@@ -1,0 +1,290 @@
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="processing_instructions_tree_view">
+            <field name="name">processing.instructions.tree.view</field>
+            <field name="model">production.instructions</field>
+            <field name="arch" type="xml">
+                <tree string="Processing Instruction">
+                    <field name="date" string="Creation Date"/>
+                    <field name="name" string="WO #"/>
+                    <field name="due_date" string="Due Date"/>
+                    <field name="state" string="Status"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="processing_instructions_form_view">
+            <field name="name">processing.instructions.form.view</field>
+            <field name="model">production.instructions</field>
+            <field name="arch" type="xml">
+                <form string="Work Order">
+                    <header>
+
+                        <button name="confirm_prd" string="Confirm"
+                                class="oe_highlight" type="object" attrs="{'invisible': [('state', '!=', 'draft')]}"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,done,produced"/>
+                    </header>
+                    <!--                    options="{'datepicker': {'warn_future': true}}"-->
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                            <button type="object"
+                                    name="action_view_production"
+                                    class="oe_stat_button"
+                                    icon="fa-cog"
+                                    attrs="{'invisible': [ ('production_count', '=', 0)]}">
+                                <div class="o_field_widget o_stat_info">
+                                    <span class="o_stat_value" widget="statinfo">
+                                        <field name="production_count"/>
+                                    </span>
+                                    <span>
+                                        Production
+                                    </span>
+
+                                </div>
+                            </button>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="name" readonly='1' string="WO #"/>
+                                <field name="date" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+<!--                                <field name="number_of_productions" attrs="{'readonly': [('state', '!=', 'draft')]}"/>-->
+                                <field name="production_id" invisible="1"/>
+                            </group>
+                            <group>
+                                <field name="due_date" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                                <div>
+                                    <label for="scrap_percent"/>
+                                    <field name="scrap_percent"/>
+                                    <span>&#160;</span>
+                                    <button
+                                            help="Scrap weight exceeded the scrap limit"
+                                            attrs="{'invisible': [('warning_message','=',False)]}" style="margin-left:5px;">
+                                        <i class="fa fa-exclamation-triangle" style="color:red;"/>
+                                    </button>
+<!--                                    <button name="add_number_of_runs" string="Add Run"-->
+<!--                                            class="oe_highlight" type="object" style="margin-left:30px;"-->
+<!--                                            attrs="{'invisible': [('state', '!=', 'draft')]}"/>-->
+
+                                </div>
+                            </group>
+                        </group>
+<!--                        <div style="margin-left:50%">-->
+<!--                            <label for="scrap_percent"/>-->
+<!--                            <field name="scrap_percent"/>-->
+<!--                            <span>&#160;</span>-->
+<!--                            <button-->
+<!--                                    help="Scrap weight exceeded the scrap limit"-->
+<!--                                    attrs="{'invisible': [('warning_message','=',False)]}" style="margin-left:5px;">-->
+<!--                                <i class="fa fa-exclamation-triangle" style="color:red;"/>-->
+<!--                            </button>-->
+<!--                            <button name="add_number_of_runs" string="Add Run"-->
+<!--                                    class="oe_highlight" type="object" style="margin-left:30px;"-->
+<!--                                    attrs="{'invisible': [('state', '!=', 'draft')]}"/>-->
+
+<!--                        </div>-->
+                        <div class="alert alert-warning" role="alert" invisible="1">
+                            <field name="warning_message" invisible="1"/>
+                        </div>
+                        <!--                        <div class="alert alert-warning" role="alert"
+                                                     attrs="{'invisible': [('warning_message','=',False)]}">
+                                                    <field name="warning_message"/>
+                                                </div>-->
+                        <notebook>
+                            <page string="Production Runs">
+                                <br/>
+                                <field name="run_line_ids"
+                                       context="{'default_prod_inst_ref_id': active_id}"
+                                       nolabel="1">
+                                    <tree>
+                                        <field name="name" readonly="1"/>
+                                        <field name="send_for_production"/>
+                                        <field name="operation"/>
+                                        <field name="machine_id"/>
+                                        <field name="scrap_percent"/>
+                                        <field name="prod_inst_ref_id" invisible="1"/>
+                                        <field name="production_ref_id" invisible="1"/>
+                                        <field name="instruction_run_line_ids" invisible="1"/>
+                                        <field name="rolled_coil_thickness" invisible="1"/>
+                                    </tree>
+                                    <form>
+                                        <sheet>
+                                            <group>
+                                                <group>
+                                                    <field name="name" readonly="1" string="Production #"/>
+                                                    <field name="machine_id"/>
+                                                </group>
+                                                <group>
+                                                    <field name="send_for_production" invisible="1"/>
+                                                    <field name="operation"
+                                                           attrs="{'readonly': [('send_for_production', '!=', False)]}"/>
+
+                                                    <field name="total_scrap_wt" invisible="0"/>
+                                                    <field name="prod_inst_ref_id" invisible="1"/>
+                                                    <field name="production_ref_id" invisible="1"/>
+                                                    <field name="production_ids" invisible="1"/>
+                                                </group>
+                                            </group>
+                                            <div style="margin-left:50%">
+                                                <label for="scrap_percent"/>
+                                                <field name="scrap_percent"/>
+                                                <span>&#160;</span>
+                                                <button
+                                                        help="Scrap weight exceeded the scrap limit"
+                                                        attrs="{'invisible': [('warning_message','=',False)]}"
+                                                        style="margin-left:5px;">
+                                                    <i class="fa fa-exclamation-triangle" style="color:red;"/>
+                                                </button>
+                                                <field name="warning_message" invisible="1"/>
+                                            </div>
+                                            <br/>
+
+                                            <field name="instruction_run_line_ids" nolabel="1">
+                                                <tree editable="bottom">
+                                                    <field name="lot_id"
+                                                           attrs="{'readonly': [('parent.send_for_production', '!=', False)]}"
+                                                           string="Tag #"/>
+                                                    <field name="category_id" readonly="1" optional="hide"
+                                                           force_save="1"/>
+                                                    <field name="sub_category_id" readonly="1" force_save="1"
+                                                           optional="hide"/>
+                                                    <field name="product_id" readonly="1" force_save="1"/>
+                                                    <field name="thickness_in" readonly="1" force_save="1"/>
+                                                    <field name="width_in" readonly="1" force_save="1"/>
+                                                    <field name="product_qty" readonly="1" force_save="1"
+                                                           widget="integer"/>
+                                                    <field name="no_of_slits" string="No. of Slits"
+                                                           attrs="{'column_invisible': [('parent.operation', 'not in', ('slitting'))],'readonly':[('parent.send_for_production','!=', False)]}"/>
+                                                    <field name="no_of_parts" string="No. of Parts"
+                                                           attrs="{'column_invisible': [('parent.operation', 'not in', ('parting'))],'readonly':[('parent.send_for_production','!=', False)]}"/>
+                                                    <field name="no_of_bundles" string="No. of Bundles"
+                                                           attrs="{'column_invisible': [('parent.operation', 'not in', ('cutting'))],'readonly':[('parent.send_for_production','!=', False)]}"/>
+                                                    <field name="product_uom_id" readonly="1" optional="hide"
+                                                           force_save="1"/>
+                                                    <field name="tagline_ref_id" invisible="1"/>
+                                                    <field name="lot_status" readonly="1" optional="=hide"
+                                                           force_save="1"/>
+                                                    <field name="instruction_line_id" invisible="1"/>
+
+                                                    <field name="src_warehouse_id" force_save="1" readonly="1"
+                                                           optional="hide"/>
+<!--                                                    <button name="update_lines" string="Update Lines"-->
+<!--                                                            type="object" class="btn-primary"-->
+<!--                                                            attrs="{'invisible': [('parent.send_for_production', '!=', False)]}"/>-->
+                                                </tree>
+                                            </field>
+                                            <button name="update_instruction_run_line" string="Update Lines"
+                                                type="object" style="float:right;" class="btn-primary"
+                                                attrs="{'invisible': [('send_for_production', '!=', False)]}"/>
+<!--                                            <button name="save_form" string="Save"-->
+<!--                                                    type="object" style="float:right;" class="btn-primary"/>-->
+
+                                            <notebook>
+                                                <page string="Production">
+                                                    <br/>
+<!--                                                    <group>-->
+<!--                                                        <button name="add_scrap_line" string="Add Scrap Weight"-->
+<!--                                                                type="object" icon="fa-paperclip"/>-->
+<!--                                                    </group>-->
+                                                    <br/>
+                                                    <field name="tag_line_ids" nolabel="1">
+                                                        <tree editable="bottom" create="false">
+                                                            <field name="lot_id" readonly="1" string="Parent Coil"/>
+
+                                                            <field name="finished_lot_id" readonly="1"
+                                                                   string="Lot #"/>
+                                                            <field name="category_id" readonly="1" optional="hide"/>
+                                                            <field name="sub_category_id" readonly="1" optional="hide"/>
+                                                            <field name="product_id" readonly="1"/>
+                                                            <field name="thickness_in" readonly="1"/>
+                                                            <field name="width_in"
+                                                                   attrs="{'readonly':['|',('parent.send_for_production','!=', False),('parent.operation', 'not in', ('slitting'))]}"/>
+                                                            <field name="length_in"
+                                                                   attrs="{'column_invisible': [('parent.operation', 'not in', ('cutting'))],'readonly':[('parent.send_for_production','!=', False)]}"/>
+                                                            <field name="number_of_sheets"
+                                                                   attrs="{'column_invisible': [('parent.operation', 'not in', ('cutting'))],'readonly':[('parent.send_for_production','!=', False)]}"/>
+                                                            <field name="product_qty" widget="integer"
+                                                                   attrs="{'readonly':[('parent.send_for_production','!=', False)]}"/>
+                                                            <field name="product_uom_id" readonly="1" optional="hide"/>
+                                                            <field name="material_type" optional="hide" readonly="1"
+                                                                   force_save="1"/>
+                                                            <field name="action"
+                                                                   attrs="{'readonly':[('is_scrap','!=', False)]}"/>
+                                                            <field name="lot_status" readonly="1"/>
+                                                            <field name="instruction_ref_line_id" invisible="1"/>
+                                                            <field name="is_scrap" optional="hide"/>
+                                                            <field name="so_line_updated" invisible="1"/>
+                                                            <field name="sale_order_id"
+                                                                   options="{'no_create_edit': True}"
+                                                                   attrs="{'readonly':['|',('is_scrap','!=', False),('action', '!=', 'finished_goods')]}"/>
+                                                            <!--                                                             attrs="{'readonly':[('is_scrap','!=', False)],'column_invisible': [('action', '!=', 'finished_goods')]}"-->
+                                                            <field name="order_line_id"
+                                                                   options="{'no_create_edit': True, 'no_open': True}"
+                                                                   attrs="{'readonly':['|',('is_scrap','!=', False),('action', '!=', 'finished_goods')]}"/>
+                                                            <button name="add_to_sale_order" string="Add to SO"
+                                                                    type="object"
+                                                                    class="btn-primary"
+                                                                    attrs="{'invisible': ['|','|',('action', '!=', 'finished_goods'),('parent.send_for_production','=', False),('so_line_updated','!=',False)]}"/>
+                                                        </tree>
+                                                    </field>
+                                                </page>
+                                                <page string="Instructions">
+                                                    <field name="pr_instructions"/>
+                                                </page>
+                                            </notebook>
+                                            <button name="create_production" string="Create Production"
+                                                    type="object" style="float:right;" class="btn-primary"
+                                                    invisible="1"/>
+                                            <button name="create_picking" string="Create Production"
+                                                    type="object" style="float:right;" class="btn-primary"
+                                                    attrs="{'invisible': [('send_for_production', '!=', False)]}"/>
+                                            <button name="add_scrap_line" string="Add Scrap Weight"
+                                                    type="object" style="float:right;" icon="fa-paperclip"/>
+                                        </sheet>
+<!--                                        <footer>-->
+
+<!--                                        </footer>-->
+                                    </form>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+
+        <record id="action_processing_instructions" model="ir.actions.act_window">
+            <field name="name">Work Orders</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">production.instructions</field>
+            <field name="view_mode">kanban,tree,form</field>
+        </record>
+
+        <menuitem id="menu_work_order" name="Work Order" action="action_processing_instructions"
+                  sequence="28" web_icon="odx_steel_production,static/description/production.png"
+                  groups="odx_steel_production.group_production_view_access"/>
+        <!--        <field name="groups_id" eval="[(6,0, [ref('odx_steel_production.group_production_view_access')])]"/>/>-->
+
+        <menuitem
+                id="menu_production_processing_instructions_topmenu"
+                name="Work Orders"
+                parent="menu_work_order"
+                sequence="20"/>
+        <menuitem
+                id="menu_production_processing_instructions_submenu"
+                name="Work Orders"
+                action="action_processing_instructions"
+                parent="menu_production_processing_instructions_topmenu"
+                sequence="20"/>
+
+<!--        <menuitem-->
+<!--                id="menu_work_order_configuration"-->
+<!--                name="Configuration"-->
+<!--                action="action_processing_instructions" parent="menu_work_order"-->
+<!--                sequence="22"/>-->
+
+        <!--        <menuitem id="menu_work_orders" name="Work Orders" parent="menu_steel_production"  action="action_steel_production"-->
+        <!--                  sequence="28" web_icon="odx_steel_production,static/description/production.png"/>-->
+
+    </data>
+</odoo>

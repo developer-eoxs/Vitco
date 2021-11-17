@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+    <!-- Copyright (c) 2017-Present Webkul Software Pvt. Ltd. (<https://webkul.com/>) -->
+    <!-- See LICENSE URL <https://store.webkul.com/license.html/> for full copyright and licensing details. -->
+    <!-- Length x Width x Height  -->
+    <!-- 13in x 11in x 2in=  -->
+
+        <record forcecreate= "True" id= "ups_service_GRD" model= "delivery.carrier.ups.service">
+            <field name= "name">UPS Ground[03]</field>
+            <field name= "code">03</field>
+        </record>
+
+        <record forcecreate= "True" id= "ups_service_STD" model= "delivery.carrier.ups.service">
+            <field name= "name">UPS Standard</field>
+            <field name= "code">11</field>
+        </record>
+
+        <record forcecreate= "True" id= "ups_service_NDA" model= "delivery.carrier.ups.service">
+            <field name= "name">UPS Next Day Air[01]</field>
+            <field name= "code">01</field>
+        </record>
+
+        <record forcecreate= "True" id= "ups_service_NAS" model= "delivery.carrier.ups.service">
+            <field name= "name">UPS Next Day Air Saver</field>
+            <field name= "code">13</field>
+        </record>
+
+        <record forcecreate= "True" id= "ups_service_NEA" model= "delivery.carrier.ups.service">
+            <field name= "name"> UPS Next Day Air Early AM</field>
+            <field name= "code">14</field>
+        </record>
+        
+        <record forcecreate= "True" id= "ups_service_SDA" model= "delivery.carrier.ups.service">
+            <field name= "name">UPS Second Day Air[02]</field>
+            <field name= "code">02</field>
+        </record>
+
+        <record forcecreate= "True" id= "ups_service_SAA" model= "delivery.carrier.ups.service">
+            <field name= "name">UPS Second Day Air AM</field>
+            <field name= "code">59</field>
+        </record>
+
+        <record forcecreate= "True" id= "ups_service_TDS" model= "delivery.carrier.ups.service">
+            <field name= "name">UPS Three-Day Select</field>
+            <field name= "code">12</field>
+        </record>
+
+        <record forcecreate= "True" id= "ups_service_WWE" model= "delivery.carrier.ups.service">
+            <field name= "name">UPS Worldwide Express</field>
+            <field name= "code">07</field>
+        </record>
+
+        <record forcecreate= "True" id= "ups_service_WWD" model= "delivery.carrier.ups.service">
+            <field name= "name">UPS Worldwide Expedited</field>
+            <field name= "code">08</field>
+        </record>
+
+        <record forcecreate= "True" id= "ups_service_WEP" model= "delivery.carrier.ups.service">
+            <field name= "name">UPS Worldwide Express Plus</field>
+            <field name= "code">54</field>
+        </record>
+
+        <record forcecreate= "True" id= "ups_service_SV" model= "delivery.carrier.ups.service">
+            <field name= "name">UPS Saver</field>
+            <field name= "code">65</field>
+        </record>
+
+
+
+
+        <record forcecreate= "True" id="(PNM)" model="delivery.carrier.ups.return.service">
+                    <field name= "name">UPS Print and Mail (PNM)</field>
+                    <field name = "code">2</field>
+        </record>
+
+        <record forcecreate= "True" id="(RS1)" model="delivery.carrier.ups.return.service">
+                    <field name= "name">UPS Return Service 1-Attempt (RS1)</field>
+                    <field name = "code">3</field>
+        </record>
+
+        <record forcecreate= "True" id="(RS3)" model="delivery.carrier.ups.return.service">
+                    <field name= "name">UPS Return Service 3-Attempt (RS3)</field>
+                    <field name = "code">5</field>
+        </record>
+
+        <record forcecreate= "True" id="(ERL)" model="delivery.carrier.ups.return.service">
+                    <field name= "name">UPS Electronic Return Label (ERL)</field>
+                    <field name = "code">8</field>
+        </record>
+
+        <record forcecreate= "True" id="(PRL)" model="delivery.carrier.ups.return.service">
+                    <field name= "name">UPS Print Return Label (PRL)</field>
+                    <field name = "code">9</field>
+        </record>
+
+        <record forcecreate= "True" id="(EPRL)" model="delivery.carrier.ups.return.service">
+                    <field name= "name">UPS Exchange Print Return Label</field>
+                    <field name = "code">10</field>
+        </record>
+
+        <record forcecreate= "True" id="(CS_1_1)" model="delivery.carrier.ups.return.service">
+                    <field name= "name">UPS Pack &amp; Collect Service 1-Attempt Box 1</field>
+                    <field name = "code">11</field>
+        </record>
+
+        <record forcecreate= "True" id="(CS_1_2)" model="delivery.carrier.ups.return.service">
+                    <field name= "name">UPS Pack &amp; Collect Service 1-Attempt Box 2</field>
+                    <field name = "code">12</field>
+        </record>
+
+        <record forcecreate= "True" id="(CS_1_3)" model="delivery.carrier.ups.return.service">
+                    <field name= "name">UPS Pack &amp; Collect Service 1-Attempt Box 3</field>
+                    <field name = "code">13</field>
+        </record>
+
+        <record forcecreate= "True" id="(CS_1_4)" model="delivery.carrier.ups.return.service">
+                    <field name= "name">UPS Pack &amp; Collect Service 1-Attempt Box 4</field>
+                    <field name = "code">14</field>
+        </record>
+
+        <record forcecreate= "True" id="(CS_1_5)" model="delivery.carrier.ups.return.service">
+                    <field name= "name">UPS Pack &amp; Collect Service 1-Attempt Box 5</field>
+                    <field name = "code">15</field>
+        </record>
+
+        <record forcecreate= "True" id="(CS_3_1)" model="delivery.carrier.ups.return.service">
+                    <field name= "name">UPS Pack &amp; Collect Service 3-Attempt Box 1</field>
+                    <field name = "code">16</field>
+        </record>
+
+        <record forcecreate= "True" id="(CS_3_2)" model="delivery.carrier.ups.return.service">
+                    <field name= "name">UPS Pack &amp; Collect Service 3-Attempt Box 2</field>
+                    <field name = "code">17</field>
+        </record>
+
+        <record forcecreate= "True" id="(CS_3_3)" model="delivery.carrier.ups.return.service">
+                    <field name= "name">UPS Pack &amp; Collect Service 3-Attempt Box 3</field>
+                    <field name = "code">18</field>
+        </record>
+
+        <record forcecreate= "True" id="(CS_3_4)" model="delivery.carrier.ups.return.service">
+                    <field name= "name">UPS Pack &amp; Collect Service 3-Attempt Box 4</field>
+                    <field name = "code">19</field>
+        </record>
+
+        <record forcecreate= "True" id="(CS_3_5)" model="delivery.carrier.ups.return.service">
+                    <field name= "name">UPS Pack &amp; Collect Service 3-Attempt Box 5</field>
+                    <field name = "code">20</field>
+        </record>
+
+
+        <record forcecreate= "True" id= "ups_package_CP" model= "product.packaging">
+            <field name='package_carrier_type'>ups</field>
+            <field name='qty'>10</field>
+            <field name= "name">Custom Packaging</field>
+            <field name= "shipper_package_code">02</field>
+            <field name= "max_weight">40</field>
+            <field name= "height">10</field>
+            <field name= "width">10</field>
+            <field name= "length">10</field>
+        </record>
+
+        <record forcecreate= "True" id= "ups_package_UL" model= "product.packaging">
+            <field name='package_carrier_type'>ups</field>
+            <field name='qty'>10</field>
+            <field name= "name">UPS Letter</field>
+            <field name= "shipper_package_code">01</field>
+            <field name= "max_weight">40</field>
+            <field name= "height">10</field>
+            <field name= "width">10</field>
+            <field name= "length">10</field>
+        </record>
+
+         <record forcecreate= "True" id= "ups_package_UT" model= "product.packaging">
+            <field name='qty'>10</field>
+            <field name='package_carrier_type'>ups</field>
+            <field name= "name">UPS Tube</field>
+            <field name= "shipper_package_code">03</field>
+            <field name= "max_weight">40</field>
+            <field name= "height">15</field>
+            <field name= "width">15</field>
+            <field name= "length">96</field>
+        </record>
+
+         <record forcecreate= "True" id= "ups_package_UEB" model= "product.packaging">
+            <field name='qty'>10</field>
+            <field name='package_carrier_type'>ups</field>
+            <field name= "name">UPS Express Box</field>
+            <field name= "shipper_package_code">21</field>
+            <field name= "max_weight">13</field>
+            <field name= "height">5</field>
+            <field name= "width">27</field>
+            <field name= "length">33</field>
+        </record>
+
+         <record forcecreate= "True" id= "ups_package_SEB" model= "product.packaging">
+            <field name='qty'>10</field>
+            <field name='package_carrier_type'>ups</field>
+            <field name= "name">Small Express Box</field>
+            <field name= "shipper_package_code">2a</field>
+            <field name= "max_weight">13</field>
+            <field name= "height">5</field>
+            <field name= "width">27</field>
+            <field name= "length">33</field>
+        </record>
+
+         <record forcecreate= "True" id= "ups_package_MEB" model= "product.packaging">
+            <field name='qty'>10</field>
+            <field name='package_carrier_type'>ups</field>
+            <field name= "name">Medium Express Box</field>
+            <field name= "shipper_package_code">2b</field>
+            <field name= "max_weight">13</field>
+            <field name= "height">7</field>
+            <field name= "width">27</field>
+            <field name= "length">40</field>
+        </record>
+
+         <record forcecreate= "True" id= "ups_package_LEX" model= "product.packaging">
+            <field name='qty'>10</field>
+            <field name='package_carrier_type'>ups</field>
+            <field name= "name">Large Express Box</field>
+            <field name= "shipper_package_code">2c</field>
+            <field name= "max_weight">13</field>
+            <field name= "height">7</field>
+            <field name= "width">13</field>
+            <field name= "length">45</field>
+        </record>
+
+         <record forcecreate= "True" id= "ups_pickup_cc" model= "delivery.carrier.ups.pickup">
+            <field name= "name">Customer Counter(CC)</field>
+            <field name= "code">03</field>
+        </record>
+
+         <record forcecreate= "True" id= "ups_pickup_rdp" model= "delivery.carrier.ups.pickup">
+            <field name= "name">Daily Pickup(RDP )</field>
+            <field name= "code">01</field>
+        </record>
+
+         <record forcecreate= "True" id= "ups_pickup_otp" model= "delivery.carrier.ups.pickup">
+            <field name= "name">One Time Pickup(OTP)</field>
+            <field name= "code">06</field>
+        </record>
+
+         <record forcecreate= "True" id= "ups_pickup_OCA" model= "delivery.carrier.ups.pickup">
+            <field name= "name">On Call Air </field>
+            <field name= "code">07</field>
+        </record>
+
+        <record forcecreate= "True" id= "ups_pickup_LC" model= "delivery.carrier.ups.pickup">
+            <field name= "name">Letter Center(LC)</field>
+            <field name= "code">19</field>
+        </record>
+
+         <record forcecreate= "True" id= "ups_pickup_ASC" model= "delivery.carrier.ups.pickup">
+            <field name= "name">Air Service Center(ASC)</field>
+            <field name= "code">20</field>
+        </record>
+    </data>
+</odoo>

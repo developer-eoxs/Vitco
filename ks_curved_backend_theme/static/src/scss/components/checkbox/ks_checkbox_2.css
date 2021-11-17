@@ -1,0 +1,6 @@
+.custom-control.custom-checkbox .custom-control-input:checked ~ .custom-control-label::after {
+  background-image: url('/ks_curved_backend_theme/static/src/images/checkbox-checked.svg');
+  background-size: 15px;
+  opacity: 0.5;
+  background-position: 0px center;
+}

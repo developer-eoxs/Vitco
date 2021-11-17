@@ -1,0 +1,9 @@
+id,name,model_id/id,group_id/id,perm_read,perm_write,perm_create,perm_unlink
+access_product_components,access_product_components,model_product_components,,1,1,1,1
+access_surface_finish,access_surface_finish,model_surface_finish,,1,1,1,1
+access_product_specification,access_product_specification,model_product_specification,,1,1,1,1
+access_purchase_offer,access_purchase_offer,model_purchase_offer,,1,1,1,1
+access_steel_gauge,access_steel_gauge,model_steel_gauge,,1,1,1,1
+access_thickness_range,access_thickness_range,model_thickness_range,,1,1,1,1
+
+

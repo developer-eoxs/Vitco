@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_odx_break_point,odx.break.point,model_odx_break_point,,1,1,1,1
+access_odx_break_point_line,odx.break.point.line,model_odx_break_point_line,,1,1,1,1
+access_odx_sale_history,odx.sale.history,model_odx_sale_history,,1,1,1,1
+access_odx_purchase_history,odx.purchase.history,model_odx_purchase_history,,1,1,1,1

@@ -1,0 +1,251 @@
+<odoo>
+     <data>
+
+     <!-- <Vehicle Tree> -->
+          <record model="ir.ui.view" id="frm_vehicle_tree">
+               <field name="name">FRM Vehicle</field>
+               <field name="model">frm.vehicle</field>
+               <field name="arch" type="xml">
+                    <tree>
+                         <field name="code"/>
+                         <field name="name"/>
+                         <field name="loading_type"/>
+                    </tree>
+               </field>
+          </record>
+     <!-- <Vehicle Form> -->
+          <record model="ir.ui.view" id="frm_vehicle_form">
+          <field name="name">FRM Vehicle</field>
+          <field name="model">frm.vehicle</field>
+          <field name="arch" type="xml">
+            <form>
+              <sheet>
+                    <group>
+                         <group>
+                              <field name="code"/>
+                              <field name="loading_type"/>
+                         </group>
+                         <group>
+                              <field name="name"/>
+                              <field name="license_plate"/>
+                         </group>
+                         <group string="Model">
+                              <field name="seats"/>
+                              <field name="doors"/>
+                              <field name="color"/>
+                              <field name="model"/>
+                              <field name="model_year"/>
+                         </group>
+                    </group>
+                </sheet>
+            </form>
+          </field>
+          </record>
+     <!-- <Vehicle action> -->
+
+        <record model="ir.actions.act_window" id="frm_vehicle_action">
+            <field name="name">Vehicle</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">frm.vehicle</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">Create the first Vehicle
+                </p>
+            </field>
+
+        </record>
+
+     <!-- <Location Tree> -->
+          <record model="ir.ui.view" id="frm_location_tree">
+               <field name="name">FRM Location</field>
+               <field name="model">frm.location</field>
+               <field name="arch" type="xml">
+                    <tree>
+                         <field name="code"/>
+                         <field name="name"/>
+                         <field name="country_id"/>
+                    </tree>
+               </field>
+          </record>
+     <!-- <Location Form> -->
+        <record model="ir.ui.view" id="frm_location_form">
+        <field name="name">FRM Location</field>
+        <field name="model">frm.location</field>
+        <field name="arch" type="xml">
+            <form>
+              <sheet>
+                    <div class="oe_title">
+                            <label for="code" class="oe_edit_only"/>
+                            <h1>
+                                <field name="code" placeholder="e.g. FRM/0001" readonly="1"/>
+                            </h1>
+                            <br/>
+                        </div>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="adress" />
+                            <field name="country_id"/>
+                        </group>
+                        <group>
+                             <field name="phone" />
+                            <field name="email" widget="email"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+        </record>
+     <!-- <Location action> -->
+
+        <record model="ir.actions.act_window" id="frm_location_action">
+            <field name="name">Location</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">frm.location</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">Create the first Location
+                </p>
+            </field>
+
+        </record>
+
+     <!-- < Mode of Operation Tree> -->
+          <record model="ir.ui.view" id="frm_operation_tree">
+               <field name="name">FRM Operation</field>
+               <field name="model">frm.mode.operation</field>
+               <field name="arch" type="xml">
+                    <tree>
+                         <field name="code"/>
+                         <field name="name"/>
+                    </tree>
+               </field>
+          </record>
+     <!-- <Mode of Operation Form> -->
+        <record model="ir.ui.view" id="frm_operation_form">
+        <field name="name">FRM Operation</field>
+        <field name="model">frm.mode.operation</field>
+        <field name="arch" type="xml">
+            <form>
+              <sheet>
+                    <group>
+                        <group>
+                            <field name="code"/>
+                        </group>
+                        <group>
+                            <field name="name"/>
+
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+        </record>
+     <!-- <Mode of Operation action> -->
+
+        <record model="ir.actions.act_window" id="frm_operation_action">
+            <field name="name">Mode of Operation</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">frm.mode.operation</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">Create the first Vehicle
+                </p>
+            </field>
+       </record>
+
+          <record id="view_res_partner_transporter_inherit" model="ir.ui.view">
+              <field name="name">view.res.partner.form.inherit</field>
+              <field name="model">res.partner</field>
+              <field name="type">form</field>
+              <field name="inherit_id" ref="base.view_partner_form" />
+              <field name="arch" type="xml">
+                    <xpath expr="//field[@name='ref']" position="after">
+                         <field name='transporter'/>   
+                    </xpath>
+                   <xpath expr="//sheet" position="before">
+                    <header>
+                         <button name="daily_transporter_email" string="Send Transporting Details"
+                                type="object" class="btn-primary" attrs="{'invisible': [('transporter', '=', False)]}"/>
+                       
+                    </header>
+                   </xpath>
+                       
+                     
+              </field>
+          </record>
+        
+          <record id="view_transporter_search" model="ir.ui.view">
+            <field name="name">res.partner.inherit.search</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_res_partner_filter"/>
+            <field name="arch" type="xml">
+                <search>
+                    <filter string="Transporters" name="transporter" icon="terp-gtk-media-pause" domain="[('transporter','=',True)]"/>
+               </search>
+            </field>
+          </record>
+
+          <record id="action_partner_transporter_form" model="ir.actions.act_window">
+               <field name="name">Transporter</field>
+               <field name="type">ir.actions.act_window</field>
+               <field name="res_model">res.partner</field>
+               <field name="view_mode">kanban,tree,form</field>
+               <field name="domain">[]</field>
+               <field name="context">{'search_default_transporter': 1,'res_partner_search_mode': 'transporter', 'default_transporter': True}</field>
+               <field name="filter" eval="True"/>
+               <field name="help" type="html">
+               <p class="o_view_nocontent_smiling_face">
+               Create a new Transporter in your address book
+               </p><p>
+               Odoo helps you easily track all activities related to a Transporter.
+               </p>
+               </field>
+          </record>
+
+        <record id="product_template_only_form_view" model="ir.ui.view">
+            <field name="name">view.product.template.form.inherit</field>
+            <field name="model">product.template</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="product.product_template_only_form_view" />
+            <field name="arch" type="xml">
+                <div name="options" position="inside">
+                    <div invisible="1" >
+                        <field name="freight"/>
+                        <label for="freight"/>
+                    </div>
+                </div>
+                 
+            </field>
+        </record>
+
+      <menuitem
+               id="frm_transporter_menu"
+               name="Transporter"
+               parent="menu_odx_freight"
+               sequence="1"
+               action="action_partner_transporter_form"
+               />
+     <menuitem
+               id="frm_vehicle_menu"
+               name="Vehicle"
+               parent="menu_odx_freight"
+               sequence="2"
+               action="frm_vehicle_action"
+               />
+     <menuitem
+               id="frm_location_menu"
+               name="Location"
+               parent="menu_odx_freight"
+               sequence="3"
+               action="frm_location_action"
+               />
+      <menuitem
+               id="frm_operation_menu"
+               name="Mode of Operation"
+               parent="menu_odx_freight"
+               sequence="4"
+               action="frm_operation_action"
+               />
+     </data>
+</odoo>

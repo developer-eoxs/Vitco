@@ -1,0 +1,6 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+customer_relation,crd.customer_relation,model_customer_relation,base.group_user,1,1,1,1
+customer_relation_lines,crd.customer_relation_lines,model_customer_relation_lines,base.group_user,1,1,1,1
+crd_lot_lines,crd.crd_lot_lines,model_crd_lot_lines,base.group_user,1,1,1,1
+product_wizard,crd.product_wizard,model_product_wizard,base.group_user,1,1,1,1
+product_wizard_lines,crd.product_wizard_lines,model_product_wizard_lines,base.group_user,1,1,1,1

@@ -1,0 +1,40 @@
+<odoo>
+    <data>
+        <record id="import_crd_form_view" model="ir.ui.view">
+            <field name="name">Import CRD</field>
+            <field name="model">import.crd.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Import Offers">
+                    <group>
+                        <field name="import_option" widget="selection"/>
+                        <field name="file_to_upload"/>
+                    </group>
+                    <group>
+                        <p><strong>
+                            Please Provide the exact internal reference in the sample template for the product to avoid product mismatch.
+                        </strong></p>
+                    </group>
+                    <group>
+
+                        <a href="/crd/static/sample_files/crd_import_template.xlsx"
+                                style="text-align:left">Download
+                            the Sample Xls template
+                        </a>
+
+                        <a href="/crd/static/sample_files/crd_import_template.csv"
+                                style="text-align:left">Download
+                            the Sample CSV template
+                        </a>
+
+                    </group>
+                    <footer>
+                        <button string="Import" name="import_crd_recieved" type="object"/>
+                        <button string="Cancel" class="btn-default" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+    </data>
+</odoo>
+

@@ -1,0 +1,158 @@
+<odoo>
+    <data>
+        <record id="production_process_wizard_view" model="ir.ui.view">
+            <field name="name">Production Process Wizard View</field>
+            <field name="model">production.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Production Process">
+
+                    <field name="sale_line_id" invisible="1"/>
+                    <field name="warehouse_id" invisible="1" force_save="1"/>
+                    <group>
+                        <div>
+                            <br/>
+                            <br/>
+                            <table width="100%">
+                                <tr>
+                                    <td width="15%">
+                                        <span style="font-size:14px;font-weight:bold">Master</span>
+                                    </td>
+                                    <td width="15%">
+                                        <span style="font-size:14px;font-weight:bold">Sub Category</span>
+                                    </td>
+                                    <td width="15%">
+                                        <span style="font-size:14px;font-weight:bold">Sub Product</span>
+                                    </td>
+                                    <td width="10%"></td>
+                                    <td width="15%"></td>
+                                    <td width="10%"></td>
+                                    <td width="10%"></td>
+                                    <td style="width:10%;text-align:center"></td>
+
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <field name="category_id" options="{'no_create_edit': True}" widget="selection"
+                                               readonly="1" force_save="1"/>
+                                    </td>
+                                    <td>
+                                        <field name="sub_category_id" options="{'no_create_edit': True}"
+                                               widget="selection" readonly="1" force_save="1"/>
+                                    </td>
+                                    <td>
+                                        <field name="product_id" options="{'no_create_edit': True}" widget="selection"
+                                               readonly="1" force_save="1"/>
+                                    </td>
+                                    <td>
+                                        <span style="font-size:13px;font-weight:bold;">Width(in)</span>
+
+                                    </td>
+                                    <td>
+                                        <field name="width_operator"/>
+
+                                    </td>
+                                    <td>
+                                        <field name="width_in"/>
+
+                                    </td>
+                                    <td>
+                                        <field name="width_ibt"
+                                               attrs="{'invisible':[('width_operator', '!=', 'ibt')]}"/>
+                                    </td>
+                                    <td>
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td>
+                                        <span style="font-size:13px;font-weight:bold;">Thickness(in)</span>
+                                    </td>
+                                    <td>
+                                        <field name="thickness_operator"/>
+                                    </td>
+                                    <td>
+                                        <field name="thickness_in"/>
+                                    </td>
+                                    <td>
+                                        <field name="thickness_ibt"
+                                               attrs="{'invisible':[('thickness_operator', '!=', 'ibt')]}"/>
+                                    </td>
+
+                                    <td>
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td>
+                                        <label for="coil_search" string="Search By Lot"/>
+                                    </td>
+                                    <td colspan="2">
+                                        <field name="coil_search" help="Provide Lot number to get the specificied lot.
+                                            Criteria based search works only if the lot number is vacant."/>
+                                    </td>
+
+
+                                    <td></td>
+                                    <td>
+                                        <button type="object" class="btn-primary text-right"
+                                                name="action_search_product"
+                                                string="Search" help="Provide Lot number to get the specificied lot.
+                                            Criteria based search works only if the lot number is vacant."/>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </group>
+                    <group string="Requested specs">
+                        <group>
+                            <field name="description" readonly="1" force_save="1"/>
+                            <field name="width_in" readonly="1" force_save="1"/>
+                            <field name="thickness_in" readonly="1" force_save="1"/>
+
+                        </group>
+                        <group>
+                            <field name="material_type" readonly="1" force_save="1"/>
+                            <!--                            <field name="number_of_sheets" readonly="1" force_save="1" attrs="{'invisible': [('material_type', '=', 'coil')]}"/>-->
+                            <field name="weight_lb" readonly="1" force_save="1" widget="integer"/>
+
+                            <field name="length_in" readonly="1" force_save="1"
+                                   attrs="{'invisible': [('material_type', '=', 'coil')]}"/>
+                             <field name="dest_warehouse_id" invisible="1"/>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="production_wizard_line_ids" nolabel="1">
+                            <tree create="false" editable="bottom">
+                                <field name="select_line"/>
+                                <field name="is_job_order"/>
+                                <field name="operation"/>
+                                <field name="production_wizard_id" invisible="1"/>
+                                <field name="lot_id" readonly="1" force_save="1"/>
+                                <field name="category_id" readonly="1" force_save="1"/>
+                                <field name="category_id" invisible="1"/>
+                                <field name="sub_category_id" readonly="1" force_save="1"/>
+                                <field name="product_id" readonly="1" force_save="1"/>
+                                <field name="width_in" readonly="1" force_save="1"/>
+                                <field name="thickness_in" readonly="1" force_save="1"/>
+                                <field name="weight_lb" readonly="1" force_save="1" widget="integer"/>
+                                <field name="uom_id" readonly="1" force_save="1"/>
+
+                            </tree>
+                        </field>
+
+                    </group>
+                    <footer>
+                        <button string="Produce" name="pass_to_production" class="oe_highlight" type="object"/>
+                        <button string="Close" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+    </data>
+</odoo>

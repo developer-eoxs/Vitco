@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+      <!-- Form view inherit -->
+      <record model="ir.ui.view" id="stock_lot_view_reinherit">
+        <field name="name">stock.production.lot.view.reinherit</field>
+        <field name="model">stock.production.lot</field>
+        <field name="inherit_id" ref="odx_product_custom_steel.stock_lot_view_inherit"/>
+        <field name="arch" type="xml">
+          <xpath expr="//button[@name='action_view_lot_history']" position="attributes">
+            <attribute name="invisible">1</attribute>
+          </xpath>
+        </field>
+      </record>
+      
+    </data>
+</odoo>

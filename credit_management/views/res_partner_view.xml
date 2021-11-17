@@ -1,0 +1,51 @@
+<?xml version ="1.0" encoding="utf-8"?>
+<!-- Copyright 2019 Sodexis
+     License OPL-1 (See LICENSE file for full copyright and licensing details). -->
+
+<odoo>
+    <record model="ir.ui.view" id="view_partner_property_form">
+        <field name="name">res.partner.property.form.inherit</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="account.view_partner_property_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='sales_purchases']" position="inside" >
+                <group name="credit_entries" String="Partner Credit Hold/Credit Limit" attrs="{'invisible': [('parent_id','!=',False)]}">
+                    <field name="credit_limit"  readonly="1" />
+                    <field name="total_credit_used" />
+                    <field name="credit_hold" readonly="1"/>
+                    <field name="has_overdue_by_x_days" />
+                    <field name="override_credit_threshold_limit"  readonly="1"/>
+                    <field name="hold_delivery_till_payment"  readonly="1"/>
+                </group>
+                <group attrs="{'invisible': [('parent_id','=',False)]}">
+                <div name="credit_entry" colspan="2">
+                        <p>Credit is managed on
+                            <button name="open_commercial_entity" type="object" string="the parent company" class="oe_link" />
+                        </p>
+                    </div>
+                </group>
+            </xpath>
+        </field>
+    </record>
+    <record id="view_partner_property_form_security" model="ir.ui.view">
+        <field name="name">res.partner</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="credit_management.view_partner_property_form"/>
+        <field name="priority">99</field>
+        <field name="groups_id" eval="[(6, 0, [ref('credit_management.group_credit_limit')])]" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='credit_limit']" position="attributes">
+                <attribute name="readonly">0</attribute>
+            </xpath>
+            <xpath expr="//field[@name='credit_hold']" position="attributes">
+                <attribute name="readonly">0</attribute>
+            </xpath>
+            <xpath expr="//field[@name='override_credit_threshold_limit']" position="attributes">
+                <attribute name="readonly">0</attribute>
+            </xpath>
+            <xpath expr="//field[@name='hold_delivery_till_payment']" position="attributes">
+                <attribute name="readonly">0</attribute>
+            </xpath>
+        </field>
+    </record>
+</odoo>

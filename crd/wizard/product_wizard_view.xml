@@ -1,0 +1,43 @@
+<odoo>
+    <record model="ir.ui.view" id="product_wizard_form">
+        <field name="name">Our Inventory</field>
+        <field name="model">product.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Our Inventory">
+                <header>
+
+                    <button
+                            name="action_create_quotation"
+                            string="Create Quotation"
+                            type="object"
+                            class="oe_highlight"
+                    />
+                </header>
+                <label for="select_all" string="Select All/Un Select All"/>
+                    <field name="select_all"/>
+                <field name="crd_id" invisible="1"/>
+                <field name="product_line_ids">
+                    <tree editable="bottom">
+                        <field name="select"/>
+                        <field name="category_id"/>
+                        <field name="sub_category_id"/>
+                        <field name="product_id"/>
+                        <field name="lot_id"/>
+                        <field name="width_in"/>
+                        <field name="thickness_in"/>
+                    </tree>
+                </field>
+                <footer>
+
+                    <button
+                            name="action_cancel"
+                            string="Cancel"
+                            class="oe_link"
+                            special="cancel"
+                    />
+                </footer>
+            </form>
+        </field>
+    </record>
+
+</odoo>

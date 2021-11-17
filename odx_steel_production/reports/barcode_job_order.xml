@@ -1,0 +1,173 @@
+<odoo>
+    <template id="barcode_report_header_job_order">
+        <t t-foreach="docs" t-as="o">
+            <div class="header">
+                <div class="row" width="100%">
+                    <div class="col-3">
+                        <span>
+                            <img t-if="o.lot_id.company_id.logo"
+                                 t-att-src="image_data_uri(o.lot_id.company_id.logo)"
+                                 style="height:40px;width:70px;" alt="Company Logo"/>
+                        </span>
+                    </div>
+                    <div class="col-9">
+                        <b>
+                            <span style="font-size:23px;text-align:center;"
+                                  t-field="o.lot_id.company_id.name"/>
+                        </b>
+                    </div>
+<!--                    <div class="col-3">-->
+<!--                        <span>-->
+<!--                            <img class="img" src="/odx_report_customisation/static/description/footer.jpeg"-->
+<!--                                 style="height: 25px;;width:70px;"/>-->
+<!--                        </span>-->
+<!--                        <br/>-->
+<!--                        <span style="font-size:10px;">www.eoxs.com</span>-->
+<!--                    </div>-->
+                </div>
+            </div>
+        </t>
+    </template>
+
+    <template id="jo_finished_lot_barcode">
+        <t t-call="web.html_container">
+            <t t-call="web.basic_layout">
+                <t t-call="odx_steel_production.barcode_report_header_job_order"></t>
+                <t t-foreach="docs" t-as="o">
+                    <div class="page">
+                        <br/>
+                        <div name="barcode">
+                            <table width="100%" class="table table-bordered">
+                                <t t-if="o.lot_id">
+                                    <tr>
+                                        <td style="font-size:11px;padding:0px;" width="40%">
+                                            <b>MATERIAL DESCRIPTION:</b>
+
+                                        </td>
+                                        <td style="text-align:left;padding:0px;font-weight:bold">
+                                            <span style="font-size:11px;" t-field="o.finished_lot_id.sub_category_id.name"/>&amp;nbsp;
+                                            <!--                                            <span style="font-size:11px;padding:0px;" t-field="o.product_id"/>-->
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td style="font-size:11px;padding:0px;height:10px" width="40%">
+                                            <b>SPECIFICATION:</b>
+                                        </td>
+                                        <td style="text-align:left;padding:0px;font-weight:bold">
+
+                                            (
+                                            <span style="font-size:11px;padding:0px;"
+                                                  t-field="o.finished_lot_id.thickness_in"/>
+
+
+                                            x
+                                            <span style="font-size:11px;padding:0px;"
+                                                  t-field="o.finished_lot_id.width_in"/>
+                                            x
+                                            <span style="font-size:11px;padding:0px;"
+                                                  t-field="o.finished_lot_id.length_in"/>)
+                                            <span style="font-size:11px;padding:0px;">in</span>
+
+
+                                            <br/>
+                                            (
+                                            <span style="font-size:11px;padding:0px;"
+                                                  t-field="o.finished_lot_id.thickness_mm"/>
+
+                                            x
+                                            <span style="font-size:11px;padding:0px;"
+                                                  t-field="o.finished_lot_id.width_mm"/>
+                                            x
+                                            <span style="font-size:11px;padding:0px;"
+                                                  t-field="o.finished_lot_id.length_mm"/>)
+
+                                            <span style="font-size:11px;padding:0px;">mm</span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="font-size:11px;padding:0px;" width="40%">
+                                            <b>WEIGHT:</b>
+                                            <!--                                            <br/>-->
+
+                                        </td>
+                                        <td style="text-align:left;padding:0px;font-weight:bold">
+                                            <span style="font-size:11px;"
+                                                  t-field="o.finished_lot_id.product_qty"
+                                                  t-options='{"widget": "integer"}'/>
+                                            <span style="font-size:11px;">lbs</span>
+                                            <span>&amp;nbsp;&amp;nbsp;</span>
+
+                                            <span style="font-size:11px;margin-top:-1px;"
+                                                  t-field="o.finished_lot_id.weight_kg"
+                                                  t-options='{"widget": "integer"}'/>
+                                            <span style="font-size:11px;">Kg</span>
+                                        </td>
+                                    </tr>
+
+                                    <tr style="height:40px;">
+                                        <td colspan="3" style="font-size:20px;font-family:sans-serif">
+
+                                            <center>
+                                                <b>
+                                                    <span t-field="o.finished_lot_id.name"/>
+                                                    <span>&#160;</span>
+                                                </b>
+                                            </center>
+
+                                        </td>
+                                    </tr>
+                                </t>
+                            </table>
+                            <div class="row" width="100%">
+                                <div class="col-2">
+                                    <span>
+                                        <img class="img" src="/odx_report_customisation/static/description/footer.jpeg"
+                                             style="height: 16px;width:42px;"/>
+                                    </span>
+                                    <br/>
+                                    <span style="font-size:6px;">www.eoxs.com</span>
+                                </div>
+                                <div class="col-10">
+                                    <h3 style="text-align:left;">
+                                        <img t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s' % ('Code128', o.finished_lot_id.name, 600, 100)"
+                                             style="width:350px;height:22px;" class="float-left"/>
+                                    </h3>
+                                </div>
+                            </div>
+
+<!--                            <hr style="border-top:1px dashed black;"/>-->
+
+                        </div>
+                    </div>
+                </t>
+                <!--                </t>-->
+            </t>
+        </t>
+    </template>
+    <record id="paperformat_barcode_for_finished_lot" model="report.paperformat">
+        <field name="name">Finished Lot Barcode</field>
+        <field name="default" eval="True"/>
+        <field name="format">custom</field>
+        <field name="page_height">95</field>
+        <field name="page_width">84</field>
+        <field name="orientation">Landscape</field>
+        <field name="margin_top">15</field>
+        <field name="margin_bottom">15</field>
+        <field name="margin_left">0</field>
+        <field name="margin_right">0</field>
+        <field name="header_spacing">10</field>
+        <field name="dpi">90</field>
+    </record>
+
+    <report
+            string="Barcode for Finished Lots"
+            id="barcode_for_finished_lot_jo"
+            model="job.order.line"
+            report_type="qweb-pdf"
+            menu="False"
+            name="odx_steel_production.jo_finished_lot_barcode"
+            file="odx_steel_production.jo_finished_lot_barcode"
+            paperformat="paperformat_barcode_for_finished_lot"
+    />
+</odoo>

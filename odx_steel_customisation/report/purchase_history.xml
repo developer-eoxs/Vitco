@@ -1,0 +1,63 @@
+<odoo>
+	<data>
+		
+		<record model="ir.ui.view" id="odx_purchase_history_tree_view">
+            <field name="name">odx.purchase.history.tree</field>
+            <field name="model">odx.purchase.history</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="tree_string" create='false'>
+                    <field name="name" invisible="1"/>
+                    <field name="partner_id"/>
+                    <field name="product_id"/>
+                    <field name="product_qty"/>
+                    <field name="product_uom"/>
+                    <field name="price_unit"/>
+                </tree>
+            </field>
+        </record>
+        
+        <record model="ir.ui.view" id="odx_purchase_history_pivot_view">
+            <field name="name">odx.purchase.history.pivot</field>
+            <field name="model">odx.purchase.history</field>
+            <field name="type">pivot</field>
+            <field name="arch" type="xml">
+                <pivot>
+                    <field name="name" invisible="1"/>
+                    <field name="partner_id"/>
+                    <field name="product_id"/>
+                    <field name="product_qty"/>
+                    <field name="product_uom"/>
+                    <field name="price_unit" type="measure"/>
+                </pivot>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="odx_purchase_history_search_view">
+            <field name="name">odx.purchase.history.search</field>
+            <field name="model">odx.purchase.history</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="name"/>
+                    <field name="partner_id"/>
+                    <field name="product_id"/>
+                    <field name="product_qty"/>
+                    <field name="product_uom"/>
+                    <field name="price_unit"/>
+                    <filter name="partner_id_gr" string="Vendor" domain="[]" context="{'group_by':'partner_id'}" separator="1"/>
+                    <filter name="product_id_gr" string="Product" domain="[]" context="{'group_by':'product_id'}" separator="1"/>
+                </search>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_odx_purchase_history">
+            <field name="name">purchase History</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">odx.purchase.history</field>
+            <field name="view_mode">tree,pivot</field>
+            <field name="view_id" ref="odx_purchase_history_tree_view"/>
+            <field name="context">{}</field>
+        </record>
+
+    </data>
+</odoo>

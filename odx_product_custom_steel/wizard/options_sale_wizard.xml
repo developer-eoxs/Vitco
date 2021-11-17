@@ -1,0 +1,21 @@
+<odoo>
+    <data>
+        <record id="options_sale_wizard_view" model="ir.ui.view">
+            <field name="name">Sale Wizard View</field>
+            <field name="model">display.options.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Similar Options">
+                    <sheet>
+                        <field name="memo" nolabel="1"/>
+                        <field name="sale_order_id" invisible="1"/>
+                        <field name="lot_ref_id" invisible="1"/>
+                    </sheet>
+                    <footer>
+<!--                        <button string="Continue" name="continue_order" class="oe_highlight" type="object"/>-->
+                        <button string="Close" class="oe_highlight" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+    </data>
+</odoo>

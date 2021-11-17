@@ -17,4 +17,6 @@ access_production_instructions_tag,access_production_instructions_tag,model_prod
 access_production_instructions_tag_line,access_production_instructions_tag_line,model_production_instructions_tag_line,,1,1,1,1
 access_production_machine,access_production_machine,model_production_machine,,1,1,1,1
 access_machine_scheduler,access_machine_scheduler,model_machine_scheduler,,1,1,1,1
+access_production_run_block_type,access_production_run_block_type,model_production_run_block_type,base.group_user,1,1,1,1
+access_production_run_block,access_production_run_block,model_production_run_block,base.group_user,1,1,1,1
 

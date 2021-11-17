@@ -47,28 +47,41 @@
                             <group>
                                 <field name="name" readonly='1' string="WO #"/>
                                 <field name="date" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
-                                <field name="number_of_productions" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+<!--                                <field name="number_of_productions" attrs="{'readonly': [('state', '!=', 'draft')]}"/>-->
                                 <field name="production_id" invisible="1"/>
                             </group>
                             <group>
                                 <field name="due_date" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                                <div>
+                                    <label for="scrap_percent"/>
+                                    <field name="scrap_percent"/>
+                                    <span>&#160;</span>
+                                    <button
+                                            help="Scrap weight exceeded the scrap limit"
+                                            attrs="{'invisible': [('warning_message','=',False)]}" style="margin-left:5px;">
+                                        <i class="fa fa-exclamation-triangle" style="color:red;"/>
+                                    </button>
+<!--                                    <button name="add_number_of_runs" string="Add Run"-->
+<!--                                            class="oe_highlight" type="object" style="margin-left:30px;"-->
+<!--                                            attrs="{'invisible': [('state', '!=', 'draft')]}"/>-->
 
+                                </div>
                             </group>
                         </group>
-                        <div style="margin-left:50%">
-                            <label for="scrap_percent"/>
-                            <field name="scrap_percent"/>
-                            <span>&#160;</span>
-                            <button
-                                    help="Scrap weight exceeded the scrap limit"
-                                    attrs="{'invisible': [('warning_message','=',False)]}" style="margin-left:5px;">
-                                <i class="fa fa-exclamation-triangle" style="color:red;"/>
-                            </button>
-                            <button name="add_number_of_runs" string="Add Run"
-                                    class="oe_highlight" type="object" style="margin-left:30px;"
-                                    attrs="{'invisible': [('state', '!=', 'draft')]}"/>
+<!--                        <div style="margin-left:50%">-->
+<!--                            <label for="scrap_percent"/>-->
+<!--                            <field name="scrap_percent"/>-->
+<!--                            <span>&#160;</span>-->
+<!--                            <button-->
+<!--                                    help="Scrap weight exceeded the scrap limit"-->
+<!--                                    attrs="{'invisible': [('warning_message','=',False)]}" style="margin-left:5px;">-->
+<!--                                <i class="fa fa-exclamation-triangle" style="color:red;"/>-->
+<!--                            </button>-->
+<!--                            <button name="add_number_of_runs" string="Add Run"-->
+<!--                                    class="oe_highlight" type="object" style="margin-left:30px;"-->
+<!--                                    attrs="{'invisible': [('state', '!=', 'draft')]}"/>-->
 
-                        </div>
+<!--                        </div>-->
                         <div class="alert alert-warning" role="alert" invisible="1">
                             <field name="warning_message" invisible="1"/>
                         </div>
@@ -79,8 +92,10 @@
                         <notebook>
                             <page string="Production Runs">
                                 <br/>
-                                <field name="run_line_ids" nolabel="1">
-                                    <tree create="false">
+                                <field name="run_line_ids"
+                                       context="{'default_prod_inst_ref_id': active_id}"
+                                       nolabel="1">
+                                    <tree>
                                         <field name="name" readonly="1"/>
                                         <field name="send_for_production"/>
                                         <field name="operation"/>
@@ -152,21 +167,24 @@
 
                                                     <field name="src_warehouse_id" force_save="1" readonly="1"
                                                            optional="hide"/>
-                                                    <button name="update_lines" string="Update Lines"
-                                                            type="object" class="btn-primary"
-                                                            attrs="{'invisible': [('parent.send_for_production', '!=', False)]}"/>
+<!--                                                    <button name="update_lines" string="Update Lines"-->
+<!--                                                            type="object" class="btn-primary"-->
+<!--                                                            attrs="{'invisible': [('parent.send_for_production', '!=', False)]}"/>-->
                                                 </tree>
                                             </field>
-                                            <button name="save_form" string="Save"
-                                                    type="object" style="float:right;" class="btn-primary"/>
+                                            <button name="update_instruction_run_line" string="Update Lines"
+                                                type="object" style="float:right;" class="btn-primary"
+                                                attrs="{'invisible': [('send_for_production', '!=', False)]}"/>
+<!--                                            <button name="save_form" string="Save"-->
+<!--                                                    type="object" style="float:right;" class="btn-primary"/>-->
 
                                             <notebook>
                                                 <page string="Production">
                                                     <br/>
-                                                    <group>
-                                                        <button name="add_scrap_line" string="Add Scrap Weight"
-                                                                type="object" icon="fa-paperclip"/>
-                                                    </group>
+<!--                                                    <group>-->
+<!--                                                        <button name="add_scrap_line" string="Add Scrap Weight"-->
+<!--                                                                type="object" icon="fa-paperclip"/>-->
+<!--                                                    </group>-->
                                                     <br/>
                                                     <field name="tag_line_ids" nolabel="1">
                                                         <tree editable="bottom" create="false">
@@ -219,10 +237,12 @@
                                             <button name="create_picking" string="Create Production"
                                                     type="object" style="float:right;" class="btn-primary"
                                                     attrs="{'invisible': [('send_for_production', '!=', False)]}"/>
+                                            <button name="add_scrap_line" string="Add Scrap Weight"
+                                                    type="object" style="float:right;" icon="fa-paperclip"/>
                                         </sheet>
-                                        <footer>
+<!--                                        <footer>-->
 
-                                        </footer>
+<!--                                        </footer>-->
                                     </form>
                                 </field>
                             </page>

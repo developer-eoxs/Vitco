@@ -62,10 +62,37 @@ class ProductionInstructions(models.Model):
 
     def confirm_prd(self):
         if self.run_line_ids:
+            prepare_scheduler_line = []
+            check_machine = []
             for rec in self.run_line_ids:
+                set_ready_state = False
                 if not rec.send_for_production:
                     raise UserError(_("Please create production for %s" % rec.name))
+                if rec.machine_id.id not in check_machine:
+                    check_machine.append(rec.machine_id.id)
+                    set_ready_state = True
+
+                if set_ready_state:
+                    state = 'ready'
+                else:
+                    state = 'pending'
+
+                next_pr_run_id = self.env['instructions.run.line'].search([
+                    ('id', '>', rec.id),
+                    ('prod_inst_ref_id', '=', self.id)], limit=1)
+
+                prepare_scheduler_line.append({
+                    'machine_id': rec.machine_id.id,
+                    'work_order_id': self.id,
+                    'pr_run_id': rec.id,
+                    'due_date': self.due_date,
+                    'state': state,
+                    'next_pr_run_id': next_pr_run_id.id or False,
+                })
             self.state = 'done'
+            machine_schedular_obj = self.env['machine.scheduler']
+            for line in prepare_scheduler_line:
+                machine_schedular_obj.create(line)
 
     def _compute_production_count(self):
         lines = []
@@ -106,12 +133,20 @@ class InstructionsRunLine(models.Model):
     _order = "id asc"
 
     @api.model
+    def default_get(self, fields):
+        rec = super(InstructionsRunLine, self).default_get(fields)
+        if not self.env.context.get('default_prod_inst_ref_id'):
+            raise UserError(_("Please Save the Work Order details!"))
+        rec['prod_inst_ref_id'] = self.env.context.get('default_prod_inst_ref_id')
+        return rec
+
+    @api.model
     def create(self, vals):
         if vals.get('name', _('New')) == _('New'):
             vals['name'] = self.env['ir.sequence'].next_by_code('production.run.sequence') or _('New')
         return super(InstructionsRunLine, self).create(vals)
 
-    name = fields.Char(string='PR #')
+    name = fields.Char(string='PR No.')
     instruction_run_line_ids = fields.One2many('production.instructions.tag', 'instruction_line_id',
                                                string="Instruction Line")
     tag_line_ids = fields.One2many('production.instructions.tag.line', 'instruction_ref_line_id',
@@ -131,6 +166,7 @@ class InstructionsRunLine(models.Model):
     total_scrap_wt = fields.Float(string='Scrap Weight', compute='calculate_scrap_weight')
     pr_instructions = fields.Html(string='Instructions')
     warning_message = fields.Char(string='Warning', readonly=True, compute='show_warning_message')
+    finish_picking_id = fields.Many2one('stock.picking', 'Finish Picking')
 
     def show_warning_message(self):
         for rec in self:
@@ -253,6 +289,12 @@ class InstructionsRunLine(models.Model):
                     scrap_wt += line.product_qty
             if scrap_wt:
                 rec.total_scrap_wt = scrap_wt
+
+    def update_instruction_run_line(self):
+        self.save_form()
+        self.tag_line_ids.unlink()
+        for instruction_run_line_id in self.instruction_run_line_ids:
+            instruction_run_line_id.update_lines()
 
     def save_form(self):
         # self.write(vals)
@@ -395,6 +437,7 @@ class InstructionsRunLine(models.Model):
             [('code', '=', 'internal'), ('company_id', '=', self.env.company.id),
              ('warehouse_id', '=', warehouse.id)])
 
+        self.add_scrap_line()
         for lots in self.instruction_run_line_ids:
             picking_type = self.env['stock.picking.type'].search(
                 [('code', '=', 'internal'), ('company_id', '=', self.env.company.id),
@@ -557,13 +600,15 @@ class InstructionsRunLine(models.Model):
                     line.qty_done = qty
                     new_move_list = line.id
 
-            try:
-                finished_picking.action_confirm()
-            except:
-                pass
-            finished_picking.with_context({'baby_lot': True}).button_validate()
+            # try:
+            #     finished_picking.action_confirm()
+            # except:
+            #     pass
+            # finished_picking.with_context({'baby_lot': True}).button_validate()
+            self.finish_picking_id = finished_picking.id
             self.send_for_production = True
             # self.write({'state': 'done'})
+            # return {'type': 'ir.actions.client', 'tag': 'reload'}
 
 
 class ProductionInstructionsTag(models.Model):
@@ -598,7 +643,7 @@ class ProductionInstructionsTag(models.Model):
         self.category_id = self.lot_id.category_id.id if self.lot_id.category_id else False
         self.sub_category_id = self.lot_id.sub_category_id.id if self.lot_id.sub_category_id else False
         self.product_id = self.lot_id.product_id.id if self.lot_id.product_id else False
-        self.product_qty = self.lot_id.product_qty
+        self.product_qty = self.lot_id.product_qty / self.lot_id.no_of_pieces if self.lot_id.no_of_pieces else self.lot_id.product_qty
         self.width_in = self.lot_id.width_in
         self.thickness_in = self.lot_id.thickness_in
         self.product_uom_id = self.lot_id.product_uom_id.id if self.lot_id.product_uom_id else False

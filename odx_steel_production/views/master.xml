@@ -28,18 +28,74 @@
                         </group>
                         <notebook>
                             <page string="Scheduler">
-
                                 <field name="machine_scheduler_ids" nolabel="1">
                                     <tree editable="bottom">
                                         <field name="sequence" widget="handle"/>
-                                        <field name="start_time"/>
-                                        <field name="end_time"/>
                                         <field name="work_order_id"/>
                                         <field name="pr_run_id"/>
+                                        <field name="due_date"/>
+                                        <field name="start_time"/>
+                                        <field name="end_time"/>
+                                        <field name="state"/>
                                         <field name="machine_id" invisible="1"/>
+                                        <field name="working_state" invisible="1"/>
+                                        <field name="is_user_working" invisible="1"/>
+                                        <button name="button_start"
+                                            type="object"
+                                            string="Start"
+                                            class="btn-success"
+                                            attrs="{'invisible': [
+                                            ('state', 'not in', ['ready', 'pending'])]}"
+                                        />
+                                        <button
+                                            name="record_production"
+                                            type="object"
+                                            string="Done"
+                                            class="btn-success"
+                                            attrs="{'invisible': [
+                                            '|',
+                                            ('state', '!=', 'progress'),
+                                            ('is_user_working', '=', False)]}"/>
+                                        <button
+                                                name="button_pending"
+                                                type="object"
+                                                string="Pause"
+                                                class="btn-warning"
+                                                attrs="{'invisible': [
+                                            '|', ('state', 'in', ('done', 'pending', 'ready', 'cancel')),
+                                            ('is_user_working', '=', False)]}"/>
+                                        <button
+                                            name="%(odx_steel_production.act_block_scheduler)d"
+                                            type="action"
+                                            context="{
+                                                'default_work_order_id': work_order_id,
+                                                'default_pr_run_id': pr_run_id,
+                                                'default_machine_id': machine_id,
+                                                'default_machine_scheduler_id': active_id,
+                                                }"
+                                            string="Block"
+                                            class="btn-danger"
+                                            attrs="{'invisible': ['|', '|',
+                                            ('working_state', '=', 'blocked'),
+                                            ('state', 'in', ('done', 'cancel')),
+                                            ('is_user_working', '=', False)]}"/>
+                                        <button
+                                            name="button_unblock"
+                                            type="object"
+                                            string="Unblock"
+                                            class="btn-danger"
+                                            attrs="{'invisible': [('working_state', '!=', 'blocked')]}"/>
+                                        <button
+                                            name="button_start"
+                                            type="object"
+                                            string="Continue"
+                                            help="Continue Production"
+                                            attrs="{'invisible': ['|', '|',
+                                            ('working_state', '=', 'blocked'),
+                                            ('is_user_working', '=', True),
+                                            ('state', '!=', 'progress')]}"/>
                                     </tree>
                                 </field>
-
                             </page>
                         </notebook>
                     </sheet>
@@ -62,11 +118,121 @@
 <!--                sequence="20"/>-->
         <menuitem
                 id="menu_production_scheduler"
-                name="Scheduler"
+                name="Machines"
                 action="action_machine_master"
                 parent="menu_production_processing_instructions_topmenu"
                 sequence="22"/>
 
+        <record model="ir.ui.view" id="machine_scheduler_tree_view">
+            <field name="name">machine.scheduler.tree.view</field>
+            <field name="model">machine.scheduler</field>
+            <field name="arch" type="xml">
+                <tree string="Scheduler" delete="0" create="0"
+                      decoration-success="state == 'done'" decoration-info="state not in ('done', 'cancel')">
+                    <field name="sequence" widget="handle"/>
+                    <field name="work_order_id"/>
+                    <field name="pr_run_id"/>
+                    <field name="machine_id" optional="hide"/>
+                    <field name="due_date"/>
+                    <field name="start_time"/>
+                    <field name="end_time"/>
+                    <field name="state" />
+                    <field name="working_state" invisible="1"/>
+                    <field name="is_user_working" invisible="1"/>
+                    <button name="button_start"
+                        type="object"
+                        string="Start"
+                        class="btn btn-success"
+                        attrs="{'invisible': [
+                        ('state', 'not in', ['ready', 'pending'])]}"
+                    />
+                    <button
+                        name="record_production"
+                        type="object"
+                        string="Done"
+                        class="btn-success"
+                        attrs="{'invisible': [
+                        '|',
+                        ('state', '!=', 'progress'),
+                        ('is_user_working', '=', False)]}"/>
+                    <button
+                            name="button_pending"
+                            type="object"
+                            string="Pause"
+                            class="btn-warning"
+                            attrs="{'invisible': [
+                        '|', ('state', 'in', ('done', 'pending', 'ready', 'cancel')),
+                        ('is_user_working', '=', False)]}"/>
+                    <button
+                        name="%(odx_steel_production.act_block_scheduler)d"
+                        type="action"
+                        context="{
+                            'default_work_order_id': work_order_id,
+                            'default_pr_run_id': pr_run_id,
+                            'default_machine_id': machine_id,
+                            'default_machine_scheduler_id': active_id,
+                            }"
+                        string="Block"
+                        class="btn-danger"
+                        attrs="{'invisible': ['|', '|',
+                        ('working_state', '=', 'blocked'),
+                        ('state', 'in', ('done', 'cancel')),
+                        ('is_user_working', '=', False)]}"/>
+                    <button
+                        name="button_unblock"
+                        type="object"
+                        string="Unblock"
+                        class="btn-danger"
+                        attrs="{'invisible': [('working_state', '!=', 'blocked')]}"/>
+                    <button
+                        name="button_start"
+                        type="object"
+                        string="Continue"
+                        help="Continue Production"
+                        attrs="{'invisible': ['|', '|',
+                        ('working_state', '=', 'blocked'),
+                        ('is_user_working', '=', True),
+                        ('state', '!=', 'progress')]}"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_machine_scheduler_filter" model="ir.ui.view">
+            <field name="name">machine.scheduler.search</field>
+            <field name="model">machine.scheduler</field>
+            <field name="arch" type="xml">
+                <search string="Search Scheduler">
+                    <field name="machine_id"/>
+                    <field name="pr_run_id"/>
+                    <filter string="In Progress" name="progress" domain="[('state', '=', 'progress')]"/>
+                    <filter string="Ready" name="ready" domain="[('state', '=', 'ready')]"/>
+                    <filter string="Pending" name="pending" domain="[('state', '=', 'pending')]"/>
+                    <filter string="Finished" name="finish" domain="[('state', '=', 'done')]"/>
+                    <separator/>
+                    <group expand="0" string="Group By">
+                        <filter string="Machine" name="machine_id" domain="[]" context="{'group_by': 'machine_id'}"/>
+                        <filter string="Production" name="pr_run_id" domain="[]" context="{'group_by': 'pr_run_id'}"/>
+                        <filter string="Status" name="status" domain="[]" context="{'group_by': 'state'}"/>
+                    </group>
+                 </search>
+            </field>
+        </record>
+
+        <record id="action_machine_scheduler" model="ir.actions.act_window">
+            <field name="name">Scheduler</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">machine.scheduler</field>
+            <field name="view_mode">tree</field>
+            <field name="search_view_id" ref="view_machine_scheduler_filter"/>
+            <field name="context">{'search_default_ready': True, 'search_default_progress': True, 'search_default_pending': True}</field>
+        </record>
+
+        <menuitem
+            id="menu_main_production_scheduler"
+            name="Scheduler"
+            action="action_machine_scheduler"
+            parent="menu_production_processing_instructions_topmenu"
+            sequence="22"/>
 <!-- -->
     </data>
 </odoo>

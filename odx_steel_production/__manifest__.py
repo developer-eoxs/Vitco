@@ -22,6 +22,7 @@
         'views/job_order.xml',
         'views/back_end.xml',
         'views/processing_instruction.xml',
+        'wizard/production_run_block_view.xml',
         'views/master.xml',
         'views/production_run.xml',
         # 'views/stock_valuation.xml',

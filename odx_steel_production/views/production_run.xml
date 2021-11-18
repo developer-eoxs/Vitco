@@ -4,7 +4,7 @@
             <field name="name">instructions.run.tree.view</field>
             <field name="model">instructions.run.line</field>
             <field name="arch" type="xml">
-                <tree string="Production Run" create="false">
+                <tree string="Production Run">
                     <field name="name" readonly="1"/>
                     <field name="prod_inst_ref_id" string="Work order"/>
                     <field name="send_for_production"/>
@@ -21,79 +21,101 @@
             <field name="name">instructions.run.line.form.view</field>
             <field name="model">instructions.run.line</field>
             <field name="arch" type="xml">
-                <form string="Production Run" create="false">
+                <form string="Production Run">
                     <sheet>
                         <group>
                             <group>
                                 <field name="name" readonly="1" string="Production #"/>
-                                <field name="prod_inst_ref_id" string="Work order" readonly="1"/>
-                                <field name="send_for_production" readonly="1"/>
-                                <field name="operation" readonly="1"/>
+                                <field name="machine_id"/>
                             </group>
                             <group>
-                                <field name="machine_id"  readonly="1"/>
-                                <field name="scrap_percent"/>
+                                <field name="send_for_production" invisible="1"/>
+                                <field name="operation"
+                                       attrs="{'readonly': [('send_for_production', '!=', False)]}"/>
+
+                                <field name="total_scrap_wt" invisible="0"/>
+                                <field name="prod_inst_ref_id" invisible="1"/>
                                 <field name="production_ref_id" invisible="1"/>
+                                <field name="production_ids" invisible="1"/>
                             </group>
-
                         </group>
-                        <group>
-                            <field name="instruction_run_line_ids" nolabel="1">
-                                <tree editable="bottom">
-                                    <field name="lot_id"
-                                           attrs="{'readonly': [('parent.send_for_production', '!=', False)]}"
-                                           string="Tag #"/>
+                        <div style="margin-left:50%">
+                            <label for="scrap_percent"/>
+                            <field name="scrap_percent"/>
+                            <span>&#160;</span>
+                            <button
+                                    help="Scrap weight exceeded the scrap limit"
+                                    attrs="{'invisible': [('warning_message','=',False)]}"
+                                    style="margin-left:5px;">
+                                <i class="fa fa-exclamation-triangle" style="color:red;"/>
+                            </button>
+                            <field name="warning_message" invisible="1"/>
+                        </div>
+                        <br/>
 
-                                    <field name="category_id" readonly="1" optional="hide"
-                                           force_save="1"/>
-                                    <field name="sub_category_id" readonly="1" force_save="1"/>
-                                    <field name="product_id" readonly="1" force_save="1"/>
-                                    <field name="thickness_in" readonly="1" force_save="1"/>
-                                    <field name="width_in" readonly="1" force_save="1"/>
-                                    <field name="product_qty" readonly="1" force_save="1"
-                                           widget="integer"/>
-                                    <field name="no_of_slits" string="No. of Slits"
-                                           attrs="{'column_invisible': [('parent.operation', 'not in', ('slitting'))],'readonly':[('parent.send_for_production','!=', False)]}"/>
-                                    <field name="no_of_parts" string="No. of Parts"
-                                           attrs="{'column_invisible': [('parent.operation', 'not in', ('parting'))],'readonly':[('parent.send_for_production','!=', False)]}"/>
-                                    <field name="no_of_bundles" string="No. of Bundles"
-                                           attrs="{'column_invisible': [('parent.operation', 'not in', ('cutting'))],'readonly':[('parent.send_for_production','!=', False)]}"/>
-                                    <field name="product_uom_id" readonly="1" optional="hide"
-                                           force_save="1"/>
-                                    <field name="tagline_ref_id" invisible="1"/>
-                                    <field name="lot_status" readonly="1" optional="=hide"
-                                           force_save="1"/>
-                                    <field name="instruction_line_id" invisible="1"/>
+                        <field name="instruction_run_line_ids" nolabel="1">
+                            <tree editable="bottom">
+                                <field name="lot_id"
+                                       attrs="{'readonly': [('parent.send_for_production', '!=', False)]}"
+                                       string="Tag #"/>
+                                <field name="category_id" readonly="1" optional="hide"
+                                       force_save="1"/>
+                                <field name="sub_category_id" readonly="1" force_save="1"
+                                       optional="hide"/>
+                                <field name="setup_instruction_id"
+                                    context="{
+                                        'default_lot_id': lot_id,
+                                        'default_product_id': product_id,
+                                        'default_product_inst_tag_id': active_id,
+                                        'default_operation': parent.operation,
+                                        }"
+                                />
+                                <field name="product_id" readonly="1" force_save="1"/>
+                                <field name="thickness_in" readonly="1" force_save="1"/>
+                                <field name="width_in" readonly="1" force_save="1"/>
+                                <field name="product_qty" readonly="1" force_save="1"
+                                       widget="integer"/>
+<!--                                <field name="no_of_slits" string="No. of Slits"-->
+<!--                                       attrs="{'column_invisible': [('parent.operation', 'not in', ('slitting'))],'readonly':[('parent.send_for_production','!=', False)]}"/>-->
+<!--                                <field name="no_of_parts" string="No. of Parts"-->
+<!--                                       attrs="{'column_invisible': [('parent.operation', 'not in', ('parting'))],'readonly':[('parent.send_for_production','!=', False)]}"/>-->
+<!--                                <field name="no_of_bundles" string="No. of Bundles"-->
+<!--                                       attrs="{'column_invisible': [('parent.operation', 'not in', ('cutting'))],'readonly':[('parent.send_for_production','!=', False)]}"/>-->
+                                <field name="product_uom_id" readonly="1" optional="hide"
+                                       force_save="1"/>
+                                <field name="tagline_ref_id" invisible="1"/>
+                                <field name="lot_status" readonly="1" optional="=hide"
+                                       force_save="1"/>
+                                <field name="instruction_line_id" invisible="1"/>
 
-                                    <field name="src_warehouse_id" force_save="1" readonly="1"
-                                           optional="hide"/>
-                                    <button name="update_lines" string="Update Lines"
-                                            type="object" class="btn-primary"
-                                            attrs="{'invisible': [('parent.send_for_production', '!=', False)]}"/>
-                                </tree>
-                            </field>
-                        </group>
+                                <field name="src_warehouse_id" force_save="1" readonly="1"
+                                       optional="hide"/>
+<!--                                                    <button name="update_lines" string="Update Lines"-->
+<!--                                                            type="object" class="btn-primary"-->
+<!--                                                            attrs="{'invisible': [('parent.send_for_production', '!=', False)]}"/>-->
+                            </tree>
+                        </field>
+                        <button name="update_instruction_run_line" string="Update Lines"
+                            type="object" style="float:right;" class="btn-primary"
+                            attrs="{'invisible': [('send_for_production', '!=', False)]}"/>
+<!--                                            <button name="save_form" string="Save"-->
+<!--                                                    type="object" style="float:right;" class="btn-primary"/>-->
 
                         <notebook>
                             <page string="Production">
-                                <br/>
-                                <group>
-                                    <button name="add_scrap_line" string="Add Scrap Weight"
-                                            type="object" icon="fa-paperclip"/>
-                                </group>
-                                <br/>
                                 <field name="tag_line_ids" nolabel="1">
-                                    <tree editable="bottom">
+                                    <tree editable="bottom" create="false">
                                         <field name="lot_id" readonly="1" string="Parent Coil"/>
 
                                         <field name="finished_lot_id" readonly="1"
                                                string="Lot #"/>
                                         <field name="category_id" readonly="1" optional="hide"/>
-                                        <field name="sub_category_id" readonly="1"/>
+                                        <field name="sub_category_id" readonly="1" optional="hide"/>
                                         <field name="product_id" readonly="1"/>
                                         <field name="thickness_in" readonly="1"/>
                                         <field name="width_in"
                                                attrs="{'readonly':['|',('parent.send_for_production','!=', False),('parent.operation', 'not in', ('slitting'))]}"/>
+                                        <field name="no_of_pieces"/>
                                         <field name="length_in"
                                                attrs="{'column_invisible': [('parent.operation', 'not in', ('cutting'))],'readonly':[('parent.send_for_production','!=', False)]}"/>
                                         <field name="number_of_sheets"
@@ -103,14 +125,23 @@
                                         <field name="product_uom_id" readonly="1" optional="hide"/>
                                         <field name="material_type" optional="hide" readonly="1"
                                                force_save="1"/>
-                                        <field name="action"/>
-                                        <field name="lot_status"/>
+                                        <field name="action"
+                                               attrs="{'readonly':[('is_scrap','!=', False)]}"/>
+                                        <field name="lot_status" readonly="1"/>
                                         <field name="instruction_ref_line_id" invisible="1"/>
                                         <field name="is_scrap" optional="hide"/>
+                                        <field name="so_line_updated" invisible="1"/>
+                                        <field name="sale_order_id"
+                                               options="{'no_create_edit': True}"
+                                               attrs="{'readonly':['|',('is_scrap','!=', False),('action', '!=', 'finished_goods')]}"/>
+                                        <!--                                                             attrs="{'readonly':[('is_scrap','!=', False)],'column_invisible': [('action', '!=', 'finished_goods')]}"-->
+                                        <field name="order_line_id"
+                                               options="{'no_create_edit': True, 'no_open': True}"
+                                               attrs="{'readonly':['|',('is_scrap','!=', False),('action', '!=', 'finished_goods')]}"/>
                                         <button name="add_to_sale_order" string="Add to SO"
                                                 type="object"
                                                 class="btn-primary"
-                                                attrs="{'invisible': [('action', '!=', 'finished_goods')]}"/>
+                                                attrs="{'invisible': ['|','|',('action', '!=', 'finished_goods'),('parent.send_for_production','=', False),('so_line_updated','!=',False)]}"/>
                                     </tree>
                                 </field>
                             </page>
@@ -118,9 +149,16 @@
                                 <field name="pr_instructions"/>
                             </page>
                         </notebook>
+                        <button name="create_production" string="Create Production"
+                                type="object" style="float:right;" class="btn-primary"
+                                invisible="1"/>
+                        <button name="create_picking" string="Create Production"
+                                type="object" style="float:right;" class="btn-primary"
+                                attrs="{'invisible': [('send_for_production', '!=', False)]}"/>
+                        <button name="add_scrap_line" string="Add Scrap Weight"
+                                type="object" style="float:right;" icon="fa-paperclip"/>
                     </sheet>
                 </form>
-
             </field>
         </record>
 
@@ -129,6 +167,7 @@
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">instructions.run.line</field>
             <field name="view_mode">tree,form</field>
+            <field name="context">{'create': False}</field>
         </record>
 
         <menuitem id="menu_work_order_prun" name="Production Runs" action="action_production_run_view"

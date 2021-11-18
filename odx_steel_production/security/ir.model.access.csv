@@ -19,4 +19,6 @@ access_production_machine,access_production_machine,model_production_machine,,1,
 access_machine_scheduler,access_machine_scheduler,model_machine_scheduler,,1,1,1,1
 access_production_run_block_type,access_production_run_block_type,model_production_run_block_type,base.group_user,1,1,1,1
 access_production_run_block,access_production_run_block,model_production_run_block,base.group_user,1,1,1,1
+access_setup_instructions,access_setup_instructions,model_setup_instructions,base.group_user,1,1,1,1
+access_setup_instructions_line,access_setup_instructions_line,model_setup_instructions_line,base.group_user,1,1,1,1
 

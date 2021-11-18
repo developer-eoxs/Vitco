@@ -30,6 +30,24 @@ class ProductionInstructions(models.Model):
     production_count = fields.Integer(string="Count", compute="_compute_production_count")
     scrap_percent = fields.Float(string="Scrap %", compute='total_scrap_percent')
     warning_message = fields.Char(string='Warning', readonly=True, compute='show_warning_message')
+    # total_production_run = fields.Integer(compute='total_production_run', string="Total Production Run")
+    #
+    # def total_production_run(self):
+    #     for rec in self:
+    #         rec.total_production_run = len(rec.run_line_ids)
+
+    def action_production_run(self):
+        self.ensure_one()
+        ctx = self._context.copy()
+        ctx.update({
+            'default_prod_inst_ref_id': self.id,
+            'create': True,
+        })
+        action = self.env.ref('odx_steel_production.action_production_run_view').read([])[0]
+        if action:
+            action['context'] = ctx
+            action['domain'] = [('prod_inst_ref_id', '=', self.id)]
+            return action
 
     def total_scrap_percent(self):
         for rec in self:
@@ -294,7 +312,85 @@ class InstructionsRunLine(models.Model):
         self.save_form()
         self.tag_line_ids.unlink()
         for instruction_run_line_id in self.instruction_run_line_ids:
-            instruction_run_line_id.update_lines()
+            # instruction_run_line_id.update_lines()
+            if self.operation == 'slitting':
+                total_product_qty = 0.0
+                for setup_instructions_line_id in instruction_run_line_id.setup_instruction_id.setup_instructions_line_ids:
+                    product_qty = setup_instructions_line_id.no_of * setup_instructions_line_id.width / instruction_run_line_id.width_in * instruction_run_line_id.product_qty
+                    total_product_qty += product_qty
+                    self.write({
+                        'tag_line_ids': [(0, 0, {
+                            'lot_id': instruction_run_line_id.lot_id.id,
+                            'category_id': instruction_run_line_id.lot_id.category_id.id,
+                            'sub_category_id': instruction_run_line_id.lot_id.sub_category_id.id,
+                            'product_id': instruction_run_line_id.lot_id.product_id.id,
+                            'product_uom_id': instruction_run_line_id.lot_id.product_uom_id.id,
+                            'thickness_in': instruction_run_line_id.lot_id.thickness_in,
+                            'width_in': setup_instructions_line_id.width,
+                            'product_qty': int(product_qty),
+                            'material_type': 'coil',
+                            'no_of_pieces': setup_instructions_line_id.no_of,
+                        })]
+                    })
+                if total_product_qty > instruction_run_line_id.product_qty:
+                    raise UserError(_("Total Weight (%s) is exceed for %s Product, defined weight is (%s)!") % (
+                        round(total_product_qty, 2),
+                        instruction_run_line_id.product_id.display_name,
+                        round(instruction_run_line_id.product_qty, 2)))
+            elif self.operation == 'cutting':
+                total_product_qty = 0.0
+                for setup_instructions_line_id in instruction_run_line_id.setup_instruction_id.setup_instructions_line_ids:
+                    product_qty = setup_instructions_line_id.no_of * setup_instructions_line_id.width
+                    total_product_qty += product_qty
+                    unit_sheet_weight = instruction_run_line_id.lot_id.thickness_in * instruction_run_line_id.width_in * setup_instructions_line_id.width * 0.284
+                    product_qty = int(unit_sheet_weight * setup_instructions_line_id.no_of)
+                    self.write({
+                        'tag_line_ids': [(0, 0, {
+                            'lot_id': instruction_run_line_id.lot_id.id,
+                            'category_id': instruction_run_line_id.lot_id.category_id.id,
+                            'sub_category_id': instruction_run_line_id.lot_id.sub_category_id.id,
+                            'product_id': instruction_run_line_id.lot_id.product_id.id,
+                            'product_uom_id': instruction_run_line_id.lot_id.product_uom_id.id,
+                            'thickness_in': instruction_run_line_id.lot_id.thickness_in,
+                            'width_in': instruction_run_line_id.width_in,
+                            'length_in': setup_instructions_line_id.width,
+                            'product_qty': int(product_qty),
+                            'material_type': 'sheets',
+                            'no_of_pieces': setup_instructions_line_id.no_of,
+                            'number_of_sheets': setup_instructions_line_id.no_of,
+                        })]
+                    })
+                if total_product_qty > instruction_run_line_id.product_qty:
+                    raise UserError(_("Total Weight (%s) is exceed for %s Product, defined weight is (%s)!") % (
+                        round(total_product_qty, 2),
+                        instruction_run_line_id.product_id.display_name,
+                        round(instruction_run_line_id.product_qty, 2)))
+
+            elif self.operation == 'parting':
+                total_product_qty = 0.0
+                for setup_instructions_line_id in instruction_run_line_id.setup_instruction_id.setup_instructions_line_ids:
+                    product_qty = setup_instructions_line_id.no_of * setup_instructions_line_id.width
+                    total_product_qty += product_qty
+                    self.write({
+                        'tag_line_ids': [(0, 0, {
+                            'lot_id': instruction_run_line_id.lot_id.id,
+                            'category_id': instruction_run_line_id.lot_id.category_id.id,
+                            'sub_category_id': instruction_run_line_id.lot_id.sub_category_id.id,
+                            'product_id': instruction_run_line_id.lot_id.product_id.id,
+                            'product_uom_id': instruction_run_line_id.lot_id.product_uom_id.id,
+                            'thickness_in': instruction_run_line_id.lot_id.thickness_in,
+                            'width_in': setup_instructions_line_id.width,
+                            'product_qty': int(product_qty),
+                            'material_type': 'coil',
+                            'no_of_pieces': setup_instructions_line_id.no_of,
+                        })]
+                    })
+                if total_product_qty > instruction_run_line_id.product_qty:
+                    raise UserError(_("Total Weight (%s) is exceed for %s Product, defined weight is (%s)!") % (
+                        round(total_product_qty, 2),
+                        instruction_run_line_id.product_id.display_name,
+                        round(instruction_run_line_id.product_qty, 2)))
+
 
     def save_form(self):
         # self.write(vals)
@@ -611,6 +707,31 @@ class InstructionsRunLine(models.Model):
             # return {'type': 'ir.actions.client', 'tag': 'reload'}
 
 
+class SetupInstruction(models.Model):
+    _name = 'setup.instructions'
+    _description = 'Setup Instructions'
+    _rec_name = 'lot_id'
+
+    lot_id = fields.Many2one(comodel_name='stock.production.lot', string="Lot")
+    product_id = fields.Many2one('product.product', string='Product')
+    product_inst_tag_id = fields.Many2one('production.instructions.tag', string='Inst Tag')
+    setup_instructions_line_ids = fields.One2many('setup.instructions.line', 'setup_instruction_id')
+    operation = fields.Selection([
+        ('slitting', 'Slitting'),
+        ('cutting', 'Cut to Length'),
+        ('parting', 'Re-Winding'),
+    ], string='Operation', required=True, default='slitting')
+
+
+class SetupInstructionLine(models.Model):
+    _name = 'setup.instructions.line'
+    _description = 'Setup Instructions Line'
+
+    setup_instruction_id = fields.Many2one('setup.instructions', 'Setup Instruction')
+    no_of = fields.Integer('No. Of', required=True)
+    width = fields.Float('Width/Length/Weight')
+
+
 class ProductionInstructionsTag(models.Model):
     _name = 'production.instructions.tag'
     _description = 'Production Instructions Tag'
@@ -637,6 +758,7 @@ class ProductionInstructionsTag(models.Model):
         ('in_production', 'In production'),
         ('not_available', 'Not available')
     ], string='Stock Status')
+    setup_instruction_id = fields.Many2one('setup.instructions', 'Setup')
 
     @api.onchange('lot_id')
     def onchange_lot_id(self):
@@ -748,6 +870,7 @@ class ProductionInstructionsTagLine(models.Model):
         ('finished_good', 'Finished Good'),
         ('not_available', 'Not available')
     ], string='Status')
+    no_of_pieces = fields.Integer('No. Of Pieces')
 
     @api.onchange('width_in')
     def _onchange_width_in(self):

@@ -42,6 +42,16 @@
 
                                 </div>
                             </button>
+<!--                            <button-->
+<!--                                type="object"-->
+<!--                                class="oe_stat_button"-->
+<!--                                icon="fa-pencil-square-o"-->
+<!--                                name="action_production_run"-->
+<!--                                context="{'default_prod_inst_ref_id': active_id}">-->
+<!--                                <div class="o_form_field o_stat_info">-->
+<!--                                    <span class="o_stat_text">Production <br/> Run</span>-->
+<!--                                </div>-->
+<!--                            </button>-->
                         </div>
                         <group>
                             <group>
@@ -147,17 +157,20 @@
                                                            force_save="1"/>
                                                     <field name="sub_category_id" readonly="1" force_save="1"
                                                            optional="hide"/>
+                                                    <field name="setup_instruction_id"
+                                                           context="{'default_lot_id': lot_id, 'default_product_id': product_id, 'default_product_inst_tag_id': active_id}"
+                                                           domain="[('lot_id', '=', lot_id)]"/>
                                                     <field name="product_id" readonly="1" force_save="1"/>
                                                     <field name="thickness_in" readonly="1" force_save="1"/>
                                                     <field name="width_in" readonly="1" force_save="1"/>
                                                     <field name="product_qty" readonly="1" force_save="1"
                                                            widget="integer"/>
-                                                    <field name="no_of_slits" string="No. of Slits"
-                                                           attrs="{'column_invisible': [('parent.operation', 'not in', ('slitting'))],'readonly':[('parent.send_for_production','!=', False)]}"/>
-                                                    <field name="no_of_parts" string="No. of Parts"
-                                                           attrs="{'column_invisible': [('parent.operation', 'not in', ('parting'))],'readonly':[('parent.send_for_production','!=', False)]}"/>
-                                                    <field name="no_of_bundles" string="No. of Bundles"
-                                                           attrs="{'column_invisible': [('parent.operation', 'not in', ('cutting'))],'readonly':[('parent.send_for_production','!=', False)]}"/>
+<!--                                                    <field name="no_of_slits" string="No. of Slits"-->
+<!--                                                           attrs="{'column_invisible': [('parent.operation', 'not in', ('slitting'))],'readonly':[('parent.send_for_production','!=', False)]}"/>-->
+<!--                                                    <field name="no_of_parts" string="No. of Parts"-->
+<!--                                                           attrs="{'column_invisible': [('parent.operation', 'not in', ('parting'))],'readonly':[('parent.send_for_production','!=', False)]}"/>-->
+<!--                                                    <field name="no_of_bundles" string="No. of Bundles"-->
+<!--                                                           attrs="{'column_invisible': [('parent.operation', 'not in', ('cutting'))],'readonly':[('parent.send_for_production','!=', False)]}"/>-->
                                                     <field name="product_uom_id" readonly="1" optional="hide"
                                                            force_save="1"/>
                                                     <field name="tagline_ref_id" invisible="1"/>
@@ -198,6 +211,7 @@
                                                             <field name="thickness_in" readonly="1"/>
                                                             <field name="width_in"
                                                                    attrs="{'readonly':['|',('parent.send_for_production','!=', False),('parent.operation', 'not in', ('slitting'))]}"/>
+                                                            <field name="no_of_pieces"/>
                                                             <field name="length_in"
                                                                    attrs="{'column_invisible': [('parent.operation', 'not in', ('cutting'))],'readonly':[('parent.send_for_production','!=', False)]}"/>
                                                             <field name="number_of_sheets"
@@ -285,6 +299,28 @@
 
         <!--        <menuitem id="menu_work_orders" name="Work Orders" parent="menu_steel_production"  action="action_steel_production"-->
         <!--                  sequence="28" web_icon="odx_steel_production,static/description/production.png"/>-->
+
+
+        <record model="ir.ui.view" id="setup_instruction_form_view">
+            <field name="name">setup.instructions.form.view</field>
+            <field name="model">setup.instructions</field>
+            <field name="arch" type="xml">
+                <form string="Work Order">
+                    <group invisible="1">
+                        <field name="lot_id"/>
+                        <field name="product_id"/>
+                        <field name="product_inst_tag_id"/>
+                        <field name="operation"/>
+                    </group>
+                    <field name="setup_instructions_line_ids" nolabel="1">
+                        <tree editable="bottom">
+                            <field name="no_of"/>
+                            <field name="width"/>
+                        </tree>
+                    </field>
+                </form>
+            </field>
+        </record>
 
     </data>
 </odoo>
